@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(
+			function update() {
+				$.get("http://192.168.1.10:8080/temp/", function(data) {
+					$("#temperature").html(data);
+					setTimeout(update, 1000)
+				});
+			}
+		)
+	</script>
+	<style>
+		nav {
+			float: left
+		}
+	</style>
+</head>
+<body style="width:500px; background-color:#99ccff;">
+	
+	<nav class="nav">
+		<ul>
+			<li>
+				<button class="button">Temp1</button>
+			</li>
+		</ul>
+	</nav>
+	
+	<div>
+	<article class="article">
+		<form action="/image/snapshot/" method="post">
+		<fieldset>
+			<legend>Pi temperature</legend>
+			<p id="temperature">0.0C</p>
+		</fieldset>
+		<fieldset>
+			<legend>Camera Mode</legend>
+			<input type="radio" name="camera_mode" value="single" checked>Single
+			<input type="radio" name="camera_mode" value="timelapse">Timelapse
+			<input type="radio" name="camera_mode" value="video">Video
+		</fieldset>
+		<br>
+		<fieldset>
+			<legend>Image Encoding</legend>
+			<select>
+				<option value="jpg">JPG</option>
+				<option value="png">PNG</option>
+				<option value="bmp">BMP</option>
+				<option value="gif">GIF</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<legend>Exposure</legend>
+			<select>
+				<option value="off">off</option>
+				<option value="auto">auto</option>
+				<option value="night">night</option>
+				<option value="nightpreview">nightpreview</option>
+				<option value="backlight">backlight</option>
+				<option value="spotlight">spotlight</option>
+				<option value="sports">sports</option>
+				<option value="snow">snow</option>
+				<option value="beach">beach</option>
+				<option value="verylong">verylong</option>
+				<option value="fixedfps">fixedfps</option>
+				<option value="antishake">antishake</option>
+				<option value="fireworks">fireworks</option>
+			</select>
+		</fieldset>
+		<br>
+		<fieldset>
+			<legend>Dimensions</legend>
+			Width: <input type="text" name="width" value="800">
+			Height: <input type="text" name="height" value="640">
+		</fieldset>
+		<br>
+		File name: <input type="text" name="">
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+	</article>
+	</div>
+	</body>
+	
+</html>
