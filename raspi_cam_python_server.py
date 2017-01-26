@@ -55,7 +55,9 @@ class myHandler(BaseHTTPRequestHandler):
 				self.wfile.write(stored_images.get())
 				
 		if self.path=="/monitor":
-			
+			self.send_response(200)
+			self.end_headers()
+			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10"])
 	
 	def do_POST(self):
 		
