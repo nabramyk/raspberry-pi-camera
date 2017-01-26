@@ -53,6 +53,9 @@ class myHandler(BaseHTTPRequestHandler):
 			global stored_images
 			if not stored_images.empty():
 				self.wfile.write(stored_images.get())
+				
+		if self.path=="/monitor":
+			
 	
 	def do_POST(self):
 		

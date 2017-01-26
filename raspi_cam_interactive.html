@@ -9,78 +9,31 @@
 					setTimeout(update, 1000)
 				});
 			}
+			
+			var video = document.getElementById('video');
+			
+			
 		)
 	</script>
 	<style>
-		nav {
-			float: left
+		.navigation_button {
+			background-color: #2952a3;
+			color: white;
+			font-size: 16px;
+			border: none;
+			padding: 20px;
 		}
 	</style>
 </head>
-<body style="width:500px; background-color:#99ccff;">
-	
-	<nav class="nav">
-		<ul>
-			<li>
-				<button class="button">Temp1</button>
-			</li>
-		</ul>
-	</nav>
-	
-	<div>
-	<article class="article">
-		<form action="/image/snapshot/" method="post">
-		<fieldset>
-			<legend>Pi temperature</legend>
-			<p id="temperature">0.0C</p>
-		</fieldset>
-		<fieldset>
-			<legend>Camera Mode</legend>
-			<input type="radio" name="camera_mode" value="single" checked>Single
-			<input type="radio" name="camera_mode" value="timelapse">Timelapse
-			<input type="radio" name="camera_mode" value="video">Video
-		</fieldset>
-		<br>
-		<fieldset>
-			<legend>Image Encoding</legend>
-			<select>
-				<option value="jpg">JPG</option>
-				<option value="png">PNG</option>
-				<option value="bmp">BMP</option>
-				<option value="gif">GIF</option>
-			</select>
-		</fieldset>
-		<fieldset>
-			<legend>Exposure</legend>
-			<select>
-				<option value="off">off</option>
-				<option value="auto">auto</option>
-				<option value="night">night</option>
-				<option value="nightpreview">nightpreview</option>
-				<option value="backlight">backlight</option>
-				<option value="spotlight">spotlight</option>
-				<option value="sports">sports</option>
-				<option value="snow">snow</option>
-				<option value="beach">beach</option>
-				<option value="verylong">verylong</option>
-				<option value="fixedfps">fixedfps</option>
-				<option value="antishake">antishake</option>
-				<option value="fireworks">fireworks</option>
-			</select>
-		</fieldset>
-		<br>
-		<fieldset>
-			<legend>Dimensions</legend>
-			Width: <input type="text" name="width" value="800">
-			Height: <input type="text" name="height" value="640">
-		</fieldset>
-		<br>
-		File name: <input type="text" name="">
-		<br>
-		<input type="submit" value="Submit">
-	</form>
-	</article>
-	</div>
-	</body>
-	
+	<body style="background-color:#99ccff; width:100%">
+		<div style="width:800px; margin-left:auto; margin-right:auto; background: black">
+			<div class="navigation_menu">
+				<button class="navigation_button">MONITOR</button>
+				<button class="navigation_button">PHOTOGRAPHY</button>
+				<button class="navigation_button">VIDEO</button>
+				<button class="navigation_button">SYSTEM INFO</button>
+			</div>
+			<video id="video_stream" width="320" height="240" autoplay></video>
+		</div>
+	</body>	
 </html>
