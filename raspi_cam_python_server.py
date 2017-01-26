@@ -54,10 +54,10 @@ class myHandler(BaseHTTPRequestHandler):
 			if not stored_images.empty():
 				self.wfile.write(stored_images.get())
 				
-		if self.path=="/monitor":
+		if self.path=="/monitor/":
 			self.send_response(200)
 			self.end_headers()
-			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10"])
+			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10","-o","temp"])
 	
 	def do_POST(self):
 		
