@@ -4,7 +4,7 @@
 	<script>
 		$(document).ready(
 			function update() {
-				$.get("http://192.168.1.10:8080/temp/", function(data) {
+				$.get("http://localhost:8080/temp/", function(data) {
 					$("#temperature").html(data);
 					setTimeout(update, 1000)
 				});
@@ -29,6 +29,16 @@
 		
 		function system_info() {
 			
+		}
+		
+		function change_page(url, callback) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					callback(xmlHttp.responseText);
+			}
+			xmlHttp.open("GET", url, true);
+			xmlHttp.send(null);
 		}
 	</script>
 	<style>
@@ -64,10 +74,10 @@
 	<body>
 		<div class="main_panel">
 			<div id="navigation_menu">
-				<button class="navigation_button" onClick="monitor()">MONITOR</button>
-				<button class="navigation_button" onClick="photography()">PHOTOGRAPHY</button>
-				<button class="navigation_button" onClick="video()">VIDEO</button>
-				<button class="navigation_button" onClick="system_info()">SYSTEM INFO</button>
+				<button class="navigation_button" value="monitor" onClick="change_page(this)">MONITOR</button>
+				<button class="navigation_button" value="photography" onClick="change_page(this)">PHOTOGRAPHY</button>
+				<button class="navigation_button" value="video" onClick="change_page(this)">VIDEO</button>
+				<button class="navigation_button" value="system_info" onClick="change_page(this)">SYSTEM INFO</button>
 			</div>
 			<video id="video_stream" width="320" height="240" autoplay></video>
 		</div>
