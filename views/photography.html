@@ -4,14 +4,13 @@
 	<script>
 		$(document).ready(
 			function update() {
-				$.get("http://192.168.1.10:8080/temp/", function(data) {
+				$.get("http://localhost:8080/temp/", function(data) {
 					$("#temperature").html(data);
 					setTimeout(update, 1000)
 				});
 			}
 			
-			var video = document.getElementById('video');
-			
+			var video = document.getElementById('video');	
 			
 		)
 		
@@ -28,6 +27,14 @@
 		}
 		
 		function system_info() {
+			
+		}
+		
+		function start_timelapse() {
+			
+		}
+		
+		function end_timelapse() {
 			
 		}
 	</script>
@@ -93,6 +100,7 @@
 				<button class="navigation_button_unselected" type="submit" onClick="video()">VIDEO</button>
 				<button class="navigation_button_unselected" type="submit" onClick="system_info()">SYSTEM INFO</button>
 			</div>
+			<h6>Camera status: </h6>
 			<form action="">
 				Shooting mode
 				<input type="radio" class="selector" name="shooting_style" value="single" checked>Single
