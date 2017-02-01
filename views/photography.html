@@ -39,6 +39,11 @@
 		}
 	</script>
 	<style>
+		
+		body {
+			font-family: "Trebuchet MS", Helvetica, sans-serif
+		}
+		
 		.navigation_button_unselected {
 			background-color: #2952a3;
 			color: white;
@@ -94,13 +99,16 @@
 </head>
 	<body>
 		<div class="main_panel">
+			<header>
+				<h1>RasPiCam</h1>
+			</header>
 			<div id="navigation_menu">
 				<button class="navigation_button_unselected" type="submit" onClick="monitor()">MONITOR</button>
 				<button class="navigation_button_selected" type="submit" onClick="photography()">PHOTOGRAPHY</button>
 				<button class="navigation_button_unselected" type="submit" onClick="video()">VIDEO</button>
 				<button class="navigation_button_unselected" type="submit" onClick="system_info()">SYSTEM INFO</button>
 			</div>
-			<h6>Camera status: </h6>
+			<h3>Camera status: </h3>
 			<form action="">
 				Shooting mode
 				<input type="radio" class="selector" name="shooting_style" value="single" checked>Single
