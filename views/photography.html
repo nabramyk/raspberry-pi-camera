@@ -69,7 +69,7 @@
 			width: 33%;
 			padding: 16px;
 			margin-left: auto;
-			margin-right: -5px;
+			margin-right: auto;
 		}
 		
 		.navigation_button_selected {
@@ -99,12 +99,11 @@
 			width:800px; 
 			margin-left:auto; 
 			margin-right:auto;
-			background: white; 
+			background: white;
 		}
 		
 		body {
 			background-color:#c4cdd4; 
-			width:100%
 		}
 		
 		form {
@@ -113,16 +112,13 @@
 			margin-right: auto;
 		}
 		
-		li {
-			
-		}
-		
 		header {
 			background-color: #24478f;
 		}
 		
 		.shooting_modes {
-			
+			width:25%;
+			margin:-4px;
 		}
 	</style>
 </head>
@@ -133,7 +129,7 @@
 			</header>
 			<div id="navigation_menu">
 				<button class="navigation_button_unselected" type="submit" onClick="monitor()">MONITOR</button>
-				<button class="navigation_button_selected" type="submit" onClick="photography()">PHOTOGRAPHY</button>
+				<button class="navigation_button_selected" type="submit" onClick="photography()">CAMERA</button>
 				<button class="navigation_button_unselected" type="submit" onClick="system_info()">SYSTEM INFO</button>
 			</div>
 			<div style="padding: 10px">
@@ -142,10 +138,11 @@
 				<ol type="1">
 					<li>
 						Shooting mode
-						<button type="button" class="shooting_modes_selected" onClick="switch_modes(this.id);" id="single">Single</button>
-						<button type="button" class="shooting_modes_unselected" onClick="switch_modes(this.id)" value="yuv">YUV</button>
-						<button type="button" class="shooting_modes_unselected" onClick="switch_modes(this.id)" value="timelapse">Timelapse</button>
-						<button type="button" class="shooting_modes_unselected" onClick="switch_modes(this.id)" value="video">Video</button>
+						<br>
+						<button type="button" class="shooting_modes" value="selected" onClick="switch_modes(this.id);" id="single">Single</button>
+						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="yuv">YUV</button>
+						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="timelapse">Timelapse</button>
+						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="video">Video</button>
 					</li>
 					<div id="camera_options"></div>
 				</ol>
