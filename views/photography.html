@@ -54,6 +54,27 @@
 					break;
 			}
 		}
+		
+		function show_hide_options(pane) {
+			var x = document.getElementById(pane);
+			if(x.style.display === 'none') {
+				x.style.display = 'block';
+			} else {
+				x.style.display = 'none';
+			}
+		}
+		
+		function toggle_uv_mode(checked) {
+			if(checked) {
+				document.getElementById("u_channel").disabled = false;
+				document.getElementById("y_channel").disabled = false;
+				document.getElementById("encoding").disabled = true;
+			} else {
+				document.getElementById("u_channel").disabled = true;
+				document.getElementById("y_channel").disabled = true;
+				document.getElementById("encoding").disabled = false;
+			}
+		}
 	</script>
 	<style>
 		
@@ -114,12 +135,27 @@
 		
 		header {
 			background-color: #24478f;
+			color: white;
 		}
 		
-		.shooting_modes {
+		.shooting_modes #selected {
 			width:25%;
 			margin:-4px;
+			background-color: gray;
+			color: white;
+			border-color: yellow;
 		}
+		
+		.additional_camera_options {
+			width: 100%;
+			margin-left: -10px;
+			background-color: #2952a3;
+			color: white;
+			font-size: 16px;
+			border: 1px solid #24478f;
+			padding: 16px;
+		}
+		
 	</style>
 </head>
 	<body>
@@ -134,19 +170,177 @@
 			</div>
 			<div style="padding: 10px">
 				<h3>Camera status: </h3>
-			<form action="">
-				<ol type="1">
-					<li>
-						Shooting mode
-						<br>
-						<button type="button" class="shooting_modes" value="selected" onClick="switch_modes(this.id);" id="single">Single</button>
-						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="yuv">YUV</button>
-						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="timelapse">Timelapse</button>
-						<button type="button" class="shooting_modes" value="unselected" onClick="switch_modes(this.id)" id="video">Video</button>
-					</li>
-					<div id="camera_options"></div>
-				</ol>
-			</form>
+
+				Output filename
+				<input type="text">
+				
+				<button class="start_camera">Start</button>
+				
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
+				<div style="display:none;" id="resolution">
+					<select>
+						<option value="2592x1944">2592 x 1944 (max)</option>
+						<option value="2560x1920">2560 x 1920</option>
+						<option value="2240x1680">2240 x 1680</option>
+						<option value="2048x1536">2048 x 1536</option>
+						<option value="1600x1200">1600 x 1200</option>
+						<option value="1536x1180">1536 x 1180</option>
+						<option value="1280x960">1280 x 960</option>
+						<option value="1024x768">1024 x 768</option>
+						<option value="800x600">800 x 600</option>
+						<option value="640x480">640 x 480</option>
+						<option value="320x240">320 x 240</option>
+					</select>
+				</div>
+				
+				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
+				<div style="display:none;" id="encoding">
+					<select id="encoding_selector">
+						<option value="jpg">JPG</option>
+						<option value="gif">GIF</option>
+						<option value="png">PNG</option>
+						<option value="bmp">BMP</option>
+					</select>
+				</div>
+
+				<button class="additional_camera_options">Quality</button>
+				<div style="display:none;">
+					<input type="number" max="100" min="0" value="75" name="quality" style="width: 3em">
+				</div>
+				
+				<button class="additional_camera_options">Bayer Data</button>
+				<div style="display:none;">
+					Add raw Bayer data<input id="raw_bayer" type="checkbox">
+				</div>
+
+
+				<button class="additional_camera_options">Sharpess</button>
+				<div style="display:none;">
+					<input type="number" max="100" min="-100" value="0" name="sharpness" style="width: 4em">
+				</div>
+
+
+				<button class="additional_camera_options">Contrast</button>
+				<div style="display:none;">
+					<input type="number" max="100" min="-100" value="0" name="contrast" style="width: 4em">
+				</div>
+
+				<button class="additional_camera_options">Brightness</button>
+				<div style="display:none;">
+					<input type="number" max="100" min="0" value="50" name="brightness" style="width: 3em">
+				</div>
+
+				<button class="additional_camera_options">Saturation</button>
+				<div style="display:none;">
+					<input type="number" max="100" min="-100" value="0" name="saturation" style="width: 4em">
+				</div>
+
+				<button class="additional_camera_options">ISO</button>
+				<div style="display:none;">
+					<input type="number" max="800" min="100" value="400" name="iso" style="width: 3em">
+				</div>
+				
+				<button class="additional_camera_options">Video Stabilization</button>
+				<div style="display:none;">
+					Turn on video stabilization<input type="checkbox">
+				</div>
+
+				<button class="additional_camera_options">EV Compensation</button>
+				<div style="display:none;">
+					<input type="number" max="10" min="-10" value="0" name="ev_compensation" style="width: 3em">
+				</div>
+
+				<button class="additional_camera_options">Exposure Mode</button>
+				<div style="display:none;">
+					<select>
+						<option value="off">Off</option>
+						<option value="auto">Auto</option>
+						<option value="night">Night</option>
+						<option value="backlight">Backlight</option>
+						<option value="spotlight">Spotlight</option>
+						<option value="sports">Sports</option>
+						<option value="snow">Snow</option>
+						<option value="beach">Beach</option>
+						<option value="verylong">Very long</option>
+						<option value="fixedfps">Fixed FPS</option>
+						<option value="antishake">Anti-shake</option>
+						<option value="fireworks">Fireworks</option>
+					</select>
+				</div>
+				
+				<button class="additional_camera_options">Automatic White Balance</button>
+				<div style="display:none;">
+					<select>
+						<option value="off">Off</option>
+						<option value="auto">Auto</option>
+						<option value="sun">Sunny mode</option>
+						<option value="cloudshade">Cloudy mode</option>
+						<option value="tungsten">Tungsten lighting mode</option>
+						<option value="flourescent">Flourescent lighting mode</option>
+						<option value="incandescent">Incandescent lighting mode</option>
+						<option value="flash">Flash mode</option>
+						<option value="horizon">Horizon mode</option>
+					</select>
+				</div>
+
+				<button class="additional_camera_options">Image Effects</button>
+				<div style="display:none;">
+					<select>
+						<option value="none">None</option>
+						<option value="negative">Negative</option>
+						<option value="solarise">Solarise</option>
+						<option value="whiteboard">Whiteboard</option>
+						<option value="blackboard">Blackboard</option>
+						<option value="sketch">Sketch-style effect</option>
+						<option value="denoise">Denoise</option>
+						<option value="emboss">Emboss</option>
+						<option value="oilpaint">Oilpaint</option>
+						<option value="hatch">Cross-hatch sketch style</option>
+						<option value="gpen">Graphite sketch style</option>
+						<option value="pastel">Pastel</option>
+						<option value="watercolour">Watercolour</option>
+						<option value="film">Grainy film effect</option>
+						<option value="blur">Blur the image</option>
+						<option value="saturation">Colour-saturate the image</option>
+					</select>
+				</div>
+				
+				<button class="additional_camera_options">UV Mode</button>
+				<div style="display:none;">
+					Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
+					Set U:Y channels &nbsp U:<input type="number" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
+				</div>
+				
+				<button class="additional_camera_options">Metering Mode</button>
+				<div style="display:none;">
+					<input type="radio" class="metering" name="metering" value="average" checked>Average
+					<input type="radio" class="metering" name="metering" value="spot">Spot
+					<input type="radio" class="metering" name="metering" value="backlit">Backlit
+					<input type="radio" class="metering" name="metering" value="matrix">Matrix
+				</div>
+
+				<button class="additional_camera_options">Rotation & Orientation</button>
+				<div style="display:none;">
+					<input type="radio" class="rotation" name="rotation" value="0" checked>0
+					<input type="radio" class="rotation" name="rotation" value="90">90
+					<input type="radio" class="rotation" name="rotation" value="180">180
+					<input type="radio" class="rotation" name="rotation" value="270">270
+					<br>
+					<input type="radio" class="vertical_flip" name="vertical_flip">Vertical flip
+					<br>
+					<input type="radio" class="horizontal_flip" name="horizontal_flip">Horizontal flip
+					<br>
+				</div>
+
+				<button class="additional_camera_options">Timelapse</button>
+				<div style="display:none;">
+					Timelapse<input type="checkbox"><br>
+					Interval: Every <input type="number" value="1" min="0" max="100" disabled><br>
+					<input type="radio" checked disabled><label>seconds</label>
+					<input type="radio" disabled><label>minutes</label>
+					<input type="radio" disabled><label>hours</label>
+				</div>
+
 			</div>
 		</div>
 	</body>	

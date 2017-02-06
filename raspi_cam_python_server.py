@@ -66,7 +66,27 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
-			
+	
+		if self.path=="/views/yuv_camera_options.html":
+			f = open("views/yuv_camera_options.html")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()	
+	
+		if self.path=="/views/timelapse_camera_options.html":
+			f = open("views/timelapse_camera_options.html")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+	
+		if self.path=="/views/video_camera_options.html":
+			f = open("views/video_camera_options.html")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
 	
 	def do_POST(self):
 		
