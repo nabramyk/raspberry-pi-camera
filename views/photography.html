@@ -107,20 +107,8 @@
 			margin-right: -5px;
 		}
 		
-		#navigation_menu {
-			width: 100%;
-			background: gray;
-		}
-		
 		.selector {
 
-		}
-		
-		.main_panel {
-			width:800px; 
-			margin-left:auto; 
-			margin-right:auto;
-			background: white;
 		}
 		
 		body {
@@ -148,7 +136,6 @@
 		
 		.additional_camera_options {
 			width: 100%;
-			margin-left: -10px;
 			background-color: #2952a3;
 			color: white;
 			font-size: 16px;
@@ -156,10 +143,38 @@
 			padding: 16px;
 		}
 		
+		#camera_status {
+			width: 49%;
+			display: block;
+			border: 1px solid black;
+			float: right;
+			display: inline-block;
+		}
+		
+		#camera_options {
+			width: 50%;
+			border: 1px solid black;
+			float: left;
+			display: inline-block;
+		}
+		
+		#main_panel {
+			width:800px;
+			height: 100%;
+			margin-left:auto; 
+			margin-right:auto;
+			background: white;
+		}
+		
+		#navigation_menu {
+			width: 100%;
+			background: gray;
+		}
+		
 	</style>
 </head>
 	<body>
-		<div class="main_panel">
+		<div id="main_panel">
 			<header>
 				<h1>RasPiCam</h1>
 			</header>
@@ -168,14 +183,12 @@
 				<button class="navigation_button_selected" type="submit" onClick="photography()">CAMERA</button>
 				<button class="navigation_button_unselected" type="submit" onClick="system_info()">SYSTEM INFO</button>
 			</div>
-			<div style="padding: 10px">
-				<h3>Camera status: </h3>
-
+			<div style="margin-left:auto; margin-right:auto; width: 50%">
 				Output filename
 				<input type="text">
-				
 				<button class="start_camera">Start</button>
-				
+			</div>	
+			<div id="camera_options">
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
 				<div style="display:none;" id="resolution">
 					<select>
@@ -191,8 +204,7 @@
 						<option value="640x480">640 x 480</option>
 						<option value="320x240">320 x 240</option>
 					</select>
-				</div>
-				
+				</div>	
 				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
 				<div style="display:none;" id="encoding">
 					<select id="encoding_selector">
@@ -202,56 +214,44 @@
 						<option value="bmp">BMP</option>
 					</select>
 				</div>
-
-				<button class="additional_camera_options">Quality</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(quality.id)">Quality</button>
+				<div style="display:none;" id="quality">
 					<input type="number" max="100" min="0" value="75" name="quality" style="width: 3em">
 				</div>
-				
-				<button class="additional_camera_options">Bayer Data</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
+				<div style="display:none;" id="bayer_data">
 					Add raw Bayer data<input id="raw_bayer" type="checkbox">
 				</div>
-
-
-				<button class="additional_camera_options">Sharpess</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(sharpness.id)">Sharpess</button>
+				<div style="display:none;" id="sharpness">
 					<input type="number" max="100" min="-100" value="0" name="sharpness" style="width: 4em">
 				</div>
-
-
-				<button class="additional_camera_options">Contrast</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(contrast.id)">Contrast</button>
+				<div style="display:none;" id="contrast">
 					<input type="number" max="100" min="-100" value="0" name="contrast" style="width: 4em">
 				</div>
-
-				<button class="additional_camera_options">Brightness</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(brightness.id)">Brightness</button>
+				<div style="display:none;" id="brightness">
 					<input type="number" max="100" min="0" value="50" name="brightness" style="width: 3em">
 				</div>
-
-				<button class="additional_camera_options">Saturation</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(saturation.id)">Saturation</button>
+				<div style="display:none;" id="saturation">
 					<input type="number" max="100" min="-100" value="0" name="saturation" style="width: 4em">
 				</div>
-
-				<button class="additional_camera_options">ISO</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(iso.id)">ISO</button>
+				<div style="display:none;" id="iso">
 					<input type="number" max="800" min="100" value="400" name="iso" style="width: 3em">
 				</div>
-				
-				<button class="additional_camera_options">Video Stabilization</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="vid_stab.id">Video Stabilization</button>
+				<div style="display:none;" id="vid_stab">
 					Turn on video stabilization<input type="checkbox">
 				</div>
-
-				<button class="additional_camera_options">EV Compensation</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(ev_comp.id)">EV Compensation</button>
+				<div style="display:none;" id="ev_comp">
 					<input type="number" max="10" min="-10" value="0" name="ev_compensation" style="width: 3em">
 				</div>
-
-				<button class="additional_camera_options">Exposure Mode</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(exposure.id)">Exposure Mode</button>
+				<div style="display:none;" id="exposure">
 					<select>
 						<option value="off">Off</option>
 						<option value="auto">Auto</option>
@@ -267,9 +267,8 @@
 						<option value="fireworks">Fireworks</option>
 					</select>
 				</div>
-				
-				<button class="additional_camera_options">Automatic White Balance</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(aws.id)">Automatic White Balance</button>
+				<div style="display:none;" id="aws">
 					<select>
 						<option value="off">Off</option>
 						<option value="auto">Auto</option>
@@ -282,9 +281,8 @@
 						<option value="horizon">Horizon mode</option>
 					</select>
 				</div>
-
-				<button class="additional_camera_options">Image Effects</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(imfx.id)">Image Effects</button>
+				<div style="display:none;" id="imfx">
 					<select>
 						<option value="none">None</option>
 						<option value="negative">Negative</option>
@@ -304,23 +302,20 @@
 						<option value="saturation">Colour-saturate the image</option>
 					</select>
 				</div>
-				
-				<button class="additional_camera_options">UV Mode</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(uv_mode.id)">UV Mode</button>
+				<div style="display:none;" id="uv_mode">
 					Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
 					Set U:Y channels &nbsp U:<input type="number" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
 				</div>
-				
-				<button class="additional_camera_options">Metering Mode</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
+				<div style="display:none;" id="meter_mode">
 					<input type="radio" class="metering" name="metering" value="average" checked>Average
 					<input type="radio" class="metering" name="metering" value="spot">Spot
 					<input type="radio" class="metering" name="metering" value="backlit">Backlit
 					<input type="radio" class="metering" name="metering" value="matrix">Matrix
 				</div>
-
-				<button class="additional_camera_options">Rotation & Orientation</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
+				<div style="display:none;" id="rot_or">
 					<input type="radio" class="rotation" name="rotation" value="0" checked>0
 					<input type="radio" class="rotation" name="rotation" value="90">90
 					<input type="radio" class="rotation" name="rotation" value="180">180
@@ -331,16 +326,17 @@
 					<input type="radio" class="horizontal_flip" name="horizontal_flip">Horizontal flip
 					<br>
 				</div>
-
-				<button class="additional_camera_options">Timelapse</button>
-				<div style="display:none;">
+				<button class="additional_camera_options" onClick="show_hide_options(timelapse.id)">Timelapse</button>
+				<div style="display:none;" id="timelapse">
 					Timelapse<input type="checkbox"><br>
 					Interval: Every <input type="number" value="1" min="0" max="100" disabled><br>
 					<input type="radio" checked disabled><label>seconds</label>
 					<input type="radio" disabled><label>minutes</label>
 					<input type="radio" disabled><label>hours</label>
 				</div>
-
+			</div>
+			<div id="camera_status">
+				<h1>Camera status</h1>
 			</div>
 		</div>
 	</body>	
