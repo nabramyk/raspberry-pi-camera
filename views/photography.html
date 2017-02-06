@@ -79,7 +79,20 @@
 	<style>
 		
 		body {
-			font-family: "Trebuchet MS", Helvetica, sans-serif
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+			background-color:#c4cdd4;
+			height: 100%;
+		}
+		
+		form {
+			width:800px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		header {
+			background-color: #24478f;
+			color: white;
 		}
 		
 		.navigation_button_unselected {
@@ -107,25 +120,6 @@
 			margin-right: -5px;
 		}
 		
-		.selector {
-
-		}
-		
-		body {
-			background-color:#c4cdd4; 
-		}
-		
-		form {
-			width:800px;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		
-		header {
-			background-color: #24478f;
-			color: white;
-		}
-		
 		.shooting_modes #selected {
 			width:25%;
 			margin:-4px;
@@ -141,29 +135,32 @@
 			font-size: 16px;
 			border: 1px solid #24478f;
 			padding: 16px;
+			margin: 0%;
 		}
 		
 		#camera_status {
-			width: 49%;
-			display: block;
+			width: 48%;
+			height: 100%;
 			border: 1px solid black;
-			float: right;
 			display: inline-block;
+			clear: both;
+			margin: 0px;
+			vertical-align: top;
 		}
 		
 		#camera_options {
 			width: 50%;
 			border: 1px solid black;
-			float: left;
 			display: inline-block;
+			margin: 0px;
 		}
 		
 		#main_panel {
 			width:800px;
-			height: 100%;
+			min-height: 100%;
 			margin-left:auto; 
 			margin-right:auto;
-			background: white;
+			background: white;		
 		}
 		
 		#navigation_menu {
@@ -187,8 +184,10 @@
 				Output filename
 				<input type="text">
 				<button class="start_camera">Start</button>
-			</div>	
-			<div id="camera_options">
+			</div>
+			
+			<div>
+				<div id="camera_options">
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
 				<div style="display:none;" id="resolution">
 					<select>
@@ -335,8 +334,9 @@
 					<input type="radio" disabled><label>hours</label>
 				</div>
 			</div>
-			<div id="camera_status">
-				<h1>Camera status</h1>
+				<div id="camera_status">
+					<p>Camera status</p>
+				</div>
 			</div>
 		</div>
 	</body>	
