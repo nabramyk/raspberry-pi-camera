@@ -55,12 +55,19 @@
 			}
 		}
 		
-		function show_hide_options(pane) {
+		function show_hide_options(but, pane) {
 			var x = document.getElementById(pane);
+			var y = document.getElementById(but);
 			if(x.style.display === 'none') {
 				x.style.display = 'block';
+				y.style.background = 'white';
+				y.style.color = '#2952a3';
+				y.style.borderBottomColor = 'white';
 			} else {
 				x.style.display = 'none';
+				y.style.background = '#2952a3';
+				y.style.color = 'white';
+				y.style.borderBottomColor = '#24478f';
 			}
 		}
 		
@@ -95,15 +102,27 @@
 			color: white;
 		}
 		
+		select {
+			width: 100%;
+			border: none;
+			padding: 5px;
+			background-color: white;
+		}
+		
+		option {
+			font-size: 20px;
+			text-align: center;
+		}
+		
 		.navigation_button_unselected {
 			background-color: #2952a3;
 			color: white;
 			font-size: 16px;
 			border: 1px solid #24478f;
-			width: 33%;
+			width: 33.333%;
 			padding: 16px;
-			margin-left: auto;
-			margin-right: auto;
+			margin-left: 0px;
+			margin-right: -4px;
 		}
 		
 		.navigation_button_selected {
@@ -114,9 +133,9 @@
 			border-left: 1px solid #24478f;
 			border-right: 1px solid #24478f;
 			border-bottom: 1px solid white;
-			width: 33%;
+			width: 33.333%;
 			padding: 16px;
-			margin-left: auto;
+			margin-left: 0px;
 			margin-right: -5px;
 		}
 		
@@ -138,21 +157,32 @@
 			margin: 0%;
 		}
 		
+		.additional_camera_options #next {
+			width: 100%;
+			background-color: white;
+			color: #2952a3;
+			font-size: 16px;
+			border: 1px solid #24478f;
+			padding: 16px;
+			margin: 0%;
+		}
+		
 		#camera_status {
-			width: 48%;
+			width: 50%;
 			height: 100%;
 			border: 1px solid black;
 			display: inline-block;
 			clear: both;
-			margin: 0px;
+			margin-left: -5px;
+			margin-right: -5px;
 			vertical-align: top;
+			padding-left: 5px;
 		}
 		
 		#camera_options {
 			width: 50%;
-			border: 1px solid black;
 			display: inline-block;
-			margin: 0px;
+			margin: -1px;
 		}
 		
 		#main_panel {
@@ -168,6 +198,17 @@
 			background: gray;
 		}
 		
+		#start_camera {
+			width: 20%;
+			height: 100px;
+		}
+		
+		#output {
+			margin-left:auto;
+			margin-right:auto;
+			width: 100%;
+		}
+		
 	</style>
 </head>
 	<body>
@@ -175,20 +216,22 @@
 			<header>
 				<h1>RasPiCam</h1>
 			</header>
+			
 			<div id="navigation_menu">
 				<button class="navigation_button_unselected" type="submit" onClick="monitor()">MONITOR</button>
 				<button class="navigation_button_selected" type="submit" onClick="photography()">CAMERA</button>
 				<button class="navigation_button_unselected" type="submit" onClick="system_info()">SYSTEM INFO</button>
 			</div>
-			<div style="margin-left:auto; margin-right:auto; width: 50%">
+			
+			<div id="output">
 				Output filename
 				<input type="text">
-				<button class="start_camera">Start</button>
+				<button id="start_camera">Take Image</button>
 			</div>
 			
 			<div>
 				<div id="camera_options">
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution_button.id, resolution.id)" id="resolution_button">Resolution</button>
 				<div style="display:none;" id="resolution">
 					<select>
 						<option value="2592x1944">2592 x 1944 (max)</option>
@@ -204,7 +247,7 @@
 						<option value="320x240">320 x 240</option>
 					</select>
 				</div>	
-				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
+				<button class="additional_camera_options" onClick="show_hide_options(this.id, encoding.id)">Encoding</button>
 				<div style="display:none;" id="encoding">
 					<select id="encoding_selector">
 						<option value="jpg">JPG</option>
@@ -213,7 +256,7 @@
 						<option value="bmp">BMP</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(quality.id)">Quality</button>
+				<button class="additional_camera_options" onClick="show_hide_options(this.id, quality.id)">Quality</button>
 				<div style="display:none;" id="quality">
 					<input type="number" max="100" min="0" value="75" name="quality" style="width: 3em">
 				</div>
@@ -332,6 +375,10 @@
 					<input type="radio" checked disabled><label>seconds</label>
 					<input type="radio" disabled><label>minutes</label>
 					<input type="radio" disabled><label>hours</label>
+				</div>
+				<button class="additional_camera_options" onClick="show_hide_options(exif_tags.id)">EXIF Tags</button>
+				<div style="display:none;" id="exif_tags">
+
 				</div>
 			</div>
 				<div id="camera_status">
