@@ -2,6 +2,8 @@
 <head>
 	<script>
 		
+		var url = 'http://localhost:8080/';
+		
 		function update() {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
@@ -20,9 +22,10 @@
 		
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("POST", 'http://localhost:8080/image/');
-			xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-			xmlHttp.send("&temp=temp");
+			var params = "temp=temp&not=not";
+			xmlHttp.open("POST", url+"?"+params, true);
+
+			xmlHttp.send(null);
 		}
 		
 		function show_hide_options(pane) {

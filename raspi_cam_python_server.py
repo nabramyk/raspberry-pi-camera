@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 from collections import deque
 import subprocess, threading, time, ctypes
 
@@ -27,7 +27,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urlparse(self.path)
-		print temp.params
+		print temp.query
 		
 		if self.path=="/":
 			f = open('views/photography.html')
@@ -63,7 +63,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		
 		temp = urlparse(self.path)
-		print temp
+		print temp.query
 		
 		global timelapse_running, stored_images
 		
@@ -78,6 +78,11 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			timelapse_running.value = False
 	
+		if self.path=="/take_image/":
+			
+	
+		self.send_response(200)
+		self.end_headers()
 	
 	def log_message(self, format, *args):
 		return
