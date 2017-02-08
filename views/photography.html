@@ -3,71 +3,34 @@
 	<script>
 		
 		function update() {
-			//$.get("http://localhost:8080/temp/", function(data) {
-			//	$("#temperature").html(data);
-			//	setTimeout(update, 1000)
-			//});
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				i.innerHTML = xmlHttp.responseText;
+				setTimeout(update, 1000);
+				}
+			}					
+			xmlHttp.open("GET", 'http://localhost:8080/temp/');
+			xmlHttp.send(null);
 		}
 		
 		function monitor() {
 			
 		}
 		
-		function photography() {
-			
+		function take_image() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("POST", 'http://localhost:8080/image/');
+			xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+			xmlHttp.send("&temp=temp");
 		}
 		
-		function video() {
-			
-		}
-		
-		function system_info() {
-			
-		}
-		
-		function start_timelapse() {
-			
-		}
-		
-		function end_timelapse() {
-			
-		}
-		
-		function switch_modes(val) {
-			var i = document.getElementById('camera_options');
-			switch(val) {
-				case 'single':
-					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.onreadystatechange = function() {
-						if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-							i.innerHTML = xmlHttp.responseText;
-						}
-					}					
-					xmlHttp.open("GET", 'http://localhost:8080/views/single_camera_options.html');
-					xmlHttp.send(null);
-					break;
-				case "yuv":
-					break;
-				case "timelapse":
-					break;
-				case "video":
-					break;
-			}
-		}
-		
-		function show_hide_options(but, pane) {
+		function show_hide_options(pane) {
 			var x = document.getElementById(pane);
-			var y = document.getElementById(but);
 			if(x.style.display === 'none') {
 				x.style.display = 'block';
-				y.style.background = 'white';
-				y.style.color = '#2952a3';
-				y.style.borderBottomColor = 'white';
 			} else {
 				x.style.display = 'none';
-				y.style.background = '#2952a3';
-				y.style.color = 'white';
-				y.style.borderBottomColor = '#24478f';
 			}
 		}
 		
@@ -226,12 +189,12 @@
 			<div id="output">
 				Output filename
 				<input type="text">
-				<button id="start_camera">Take Image</button>
+				<button id="start_camera" onClick="take_image()">Take Image</button>
 			</div>
 			
 			<div>
 				<div id="camera_options">
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution_button.id, resolution.id)" id="resolution_button">Resolution</button>
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
 				<div style="display:none;" id="resolution">
 					<select>
 						<option value="2592x1944">2592 x 1944 (max)</option>
@@ -247,7 +210,7 @@
 						<option value="320x240">320 x 240</option>
 					</select>
 				</div>	
-				<button class="additional_camera_options" onClick="show_hide_options(this.id, encoding.id)">Encoding</button>
+				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
 				<div style="display:none;" id="encoding">
 					<select id="encoding_selector">
 						<option value="jpg">JPG</option>
@@ -256,7 +219,7 @@
 						<option value="bmp">BMP</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(this.id, quality.id)">Quality</button>
+				<button class="additional_camera_options" onClick="show_hide_options(quality.id)">Quality</button>
 				<div style="display:none;" id="quality">
 					<input type="number" max="100" min="0" value="75" name="quality" style="width: 3em">
 				</div>

@@ -27,7 +27,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urlparse(self.path)
-		print temp
+		print temp.params
 		
 		if self.path=="/":
 			f = open('views/photography.html')
@@ -59,38 +59,11 @@ class myHandler(BaseHTTPRequestHandler):
 			self.send_response(200)
 			self.end_headers()
 			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10","-o","temp"])
-			
-		if self.path=="/views/single_camera_options.html":
-			f = open("views/single_camera_options.html")
-			self.send_response(200)
-			self.end_headers()
-			self.wfile.write(f.read())
-			f.close()
-	
-		if self.path=="/views/yuv_camera_options.html":
-			f = open("views/yuv_camera_options.html")
-			self.send_response(200)
-			self.end_headers()
-			self.wfile.write(f.read())
-			f.close()	
-	
-		if self.path=="/views/timelapse_camera_options.html":
-			f = open("views/timelapse_camera_options.html")
-			self.send_response(200)
-			self.end_headers()
-			self.wfile.write(f.read())
-			f.close()
-	
-		if self.path=="/views/video_camera_options.html":
-			f = open("views/video_camera_options.html")
-			self.send_response(200)
-			self.end_headers()
-			self.wfile.write(f.read())
-			f.close()
 	
 	def do_POST(self):
 		
 		temp = urlparse(self.path)
+		print temp
 		
 		global timelapse_running, stored_images
 		
@@ -104,6 +77,7 @@ class myHandler(BaseHTTPRequestHandler):
 			self.send_response(200)
 			self.end_headers()
 			timelapse_running.value = False
+	
 	
 	def log_message(self, format, *args):
 		return
