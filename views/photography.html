@@ -22,10 +22,11 @@
 		
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
-			var params = "temp=temp&not=not";
-			xmlHttp.open("POST", url+"?"+params, true);
+			var params = document.getElementsByClassName("additional_camera_options");
+			alert(params[1]);
+			//xmlHttp.open("POST", url+"take_image/"+"?"+params, true);
 
-			xmlHttp.send(null);
+			//xmlHttp.send(null);
 		}
 		
 		function show_hide_options(pane) {
@@ -167,12 +168,16 @@
 		#start_camera {
 			width: 20%;
 			height: 100px;
+			position: static;
+			margin-right: 0;
+			margin-left: 50px;
 		}
 		
 		#output {
 			margin-left:auto;
 			margin-right:auto;
 			width: 100%;
+			border: 1px solid black;
 		}
 		
 	</style>
@@ -197,6 +202,13 @@
 			
 			<div>
 				<div id="camera_options">
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(camera_modes.id)">Camera Mode</button>
+				<div style="display:none;" id="camera_modes">
+					<input type="radio" class="camera_mode" checked>Still Capture<br>
+					<input type="radio" class="camera_mode">Video Capture<br>
+					<input type="radio" class="camera_mode">YUV Capture<br>
+					<input type="radio" class="camera_mode">Timelapse
+				</div>
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
 				<div style="display:none;" id="resolution">
 					<select>

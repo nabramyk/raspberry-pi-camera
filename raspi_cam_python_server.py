@@ -8,6 +8,10 @@ import subprocess, threading, time, ctypes
 stored_images = Queue()
 HTTP_PORT = 8080
 timelapse_running = Value(ctypes.c_bool, False)
+STILL_CAPTURE = "raspistill"
+VIDEO_CAPTURE = "raspivid"
+UV_STILL_CAPTURE = "raspistillyuv"
+NO_PREVIEW = "-n"
 
 def camera_interval_grab(interval, stored_images, timelapse_running):
 
@@ -63,7 +67,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		
 		temp = urlparse(self.path)
-		print temp.query
+		print self.path
 		
 		global timelapse_running, stored_images
 		
@@ -78,8 +82,9 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			timelapse_running.value = False
 	
-		if self.path=="/take_image/":
-			
+		if temp.path=="/take_image/":
+			self.send_response(200)
+			self.end_headers()
 	
 		self.send_response(200)
 		self.end_headers()
