@@ -3,6 +3,7 @@
 	<script>
 		
 		var url = 'http://localhost:8080/';
+		var yuv_disabled_options = ["exif_button","raw_button","encoding_button","quality_button"];
 		
 		function update() {
 			var xmlHttp = new XMLHttpRequest();
@@ -22,8 +23,14 @@
 		
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
-			var params = document.getElementById("encoding_selector");
-			alert(params.value);
+			var params = document.getElementsByClassName("options");
+			var temp = "";
+			
+			for(var i = 0; i < params.length; i++) {
+				temp = temp + params[i].name + "=" + params[i].value + "&";
+			}
+			alert(temp);
+			
 			xmlHttp.open("POST", url+"take_image/"+"?"+params, true);
 
 			xmlHttp.send(null);
@@ -35,6 +42,22 @@
 				x.style.display = 'block';
 			} else {
 				x.style.display = 'none';
+			}
+		}
+		
+		function switch_modes(mode) {
+			
+			switch(mode) {
+				case "still":
+					alert(mode);
+					break;
+				case "video":
+					break;
+				case "yuv":
+					for(var i=0; i<yuv_disabled_options.length;i++) {
+						document.getElementById(yuv_disabled_options[i]).disabled = 'true';
+					}
+					break;
 			}
 		}
 		
@@ -124,14 +147,8 @@
 			margin: 0%;
 		}
 		
-		.additional_camera_options #next {
-			width: 100%;
-			background-color: white;
-			color: #2952a3;
-			font-size: 16px;
-			border: 1px solid #24478f;
-			padding: 16px;
-			margin: 0%;
+		.additional_camera_options[disabled] {
+			background-color: gray;
 		}
 		
 		#camera_status {
@@ -202,18 +219,17 @@
 			
 			<div>
 				<div id="camera_options">
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(camera_modes.id)">Camera Mode</button>
-				<div style="display:none;" id="camera_modes">
-					<select id="camera_mode">
-						<option value="camera_mode">Still Capture</option>
-						<option value="camera_mode">Video Capture</option>
-						<option value="camera_mode">YUV Capture</option>
-						<option value="camera_mode">Timelapse</option>
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(camera_modes_pane.id)">Camera Mode</button>
+				<div style="display:none;" id="camera_modes_pane">
+					<select id="camera_mode" class="mode" onChange="switch_modes(this.value)">
+						<option id="still" value="still">Still Capture</option>
+						<option id="video" value="video">Video Capture</option>
+						<option id="yuv" value="yuv">YUV Capture</option>
 					</select>
 				</div>
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
+				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution_pane.id)">Resolution</button>
 				<div style="display:none;" id="resolution_pane">
-					<select id="resolution" class="options">
+					<select name="resolution" class="options">
 						<option value="2592x1944">2592 x 1944 (max)</option>
 						<option value="2560x1920">2560 x 1920</option>
 						<option value="2240x1680">2240 x 1680</option>
@@ -226,55 +242,67 @@
 						<option value="640x480">640 x 480</option>
 						<option value="320x240">320 x 240</option>
 					</select>
-				</div>	
-				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
+				</div>
+				<button class="additional_camera_options" id="encoding_button" onClick="show_hide_options(encoding_pane.id)">Encoding</button>
 				<div style="display:none;" id="encoding_pane">
-					<select id="encoding" class="options">
+					<select name="encoding" class="options">
 						<option value="jpg">JPG</option>
 						<option value="gif">GIF</option>
 						<option value="png">PNG</option>
 						<option value="bmp">BMP</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(quality.id)">Quality</button>
+				<button class="additional_camera_options" id="quality_button" onClick="show_hide_options(quality_pane.id)">Quality</button>
 				<div style="display:none;" id="quality_pane">
-					<input type="number" max="100" min="0" value="75" class="quality" style="width: 3em">
+					<input type="number" name="quality" class="options" max="100" min="0" value="75" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
+				<button class="additional_camera_options" id="raw_button" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
 				<div style="display:none;" id="bayer_data">
-					Add raw Bayer data<input id="raw_bayer" type="checkbox">
+					Add raw Bayer data<input type="checkbox" name="--raw" class="options">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(sharpness.id)">Sharpess</button>
 				<div style="display:none;" id="sharpness">
-					<input type="number" max="100" min="-100" value="0" name="sharpness" style="width: 4em">
+					<input type="number" name="sharpness" max="100" min="-100" value="0" style="width: 4em">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(contrast.id)">Contrast</button>
 				<div style="display:none;" id="contrast">
-					<input type="number" max="100" min="-100" value="0" name="contrast" style="width: 4em">
+					<input type="number" name="contrast" max="100" min="-100" value="0" style="width: 4em">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(brightness.id)">Brightness</button>
 				<div style="display:none;" id="brightness">
-					<input type="number" max="100" min="0" value="50" name="brightness" style="width: 3em">
+					<input type="number" name="brightness" max="100" min="0" value="50" style="width: 3em">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(saturation.id)">Saturation</button>
 				<div style="display:none;" id="saturation">
-					<input type="number" max="100" min="-100" value="0" name="saturation" style="width: 4em">
+					<input type="number" name="saturation" max="100" min="-100" value="0" style="width: 4em">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(iso.id)">ISO</button>
 				<div style="display:none;" id="iso">
-					<input type="number" max="800" min="100" value="400" name="iso" style="width: 3em">
+					<input type="number" name="ISO" max="800" min="100" value="400" style="width: 3em">
 				</div>
 				<button class="additional_camera_options" onClick="vid_stab.id">Video Stabilization</button>
 				<div style="display:none;" id="vid_stab">
-					Turn on video stabilization<input type="checkbox">
+					Turn on video stabilization<input type="checkbox" name="--vstab">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(ev_comp.id)">EV Compensation</button>
 				<div style="display:none;" id="ev_comp">
-					<input type="number" max="10" min="-10" value="0" name="ev_compensation" style="width: 3em">
+					<input type="number" name="ev" max="10" min="-10" value="0" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(exposure.id)">Exposure Mode</button>
-				<div style="display:none;" id="exposure">
-					<select>
+				<button class="additional_camera_options" onClick="show_hide_options(fps_pane.id)">Framerate</button>
+				<div style="display:none;" id="fps_pane">
+					<input type="number" name="fps" max="30" min="2" value="25" style="width: 3em">
+				</div>
+				<button class="additional_camera_options" onClick="show_hide_options(timeout_pane.id)">Timeout</button>
+				<div style="display:none;" id="timeout_pane">
+					<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
+				</div>
+				<button class="additional_camera_options" onClick="show_hide_options(bitrate_pane.id)">Bitrate</button>
+				<div style="display:none;" id="bitrate_pane">
+					<input type="number" name="bitrate" max="30" min="2" value="25" style="width: 3em">
+				</div>
+				<button class="additional_camera_options" onClick="show_hide_options(exposure_pane.id)">Exposure Mode</button>
+				<div style="display:none;" id="exposure_pane">
+					<select name="exposure" class="options">
 						<option value="off">Off</option>
 						<option value="auto">Auto</option>
 						<option value="night">Night</option>
@@ -291,7 +319,7 @@
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(aws.id)">Automatic White Balance</button>
 				<div style="display:none;" id="aws">
-					<select>
+					<select name="aws" class="options">
 						<option value="off">Off</option>
 						<option value="auto">Auto</option>
 						<option value="sun">Sunny mode</option>
@@ -305,7 +333,7 @@
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(imfx.id)">Image Effects</button>
 				<div style="display:none;" id="imfx">
-					<select>
+					<select name="imxfx" class="options">
 						<option value="none">None</option>
 						<option value="negative">Negative</option>
 						<option value="solarise">Solarise</option>
@@ -331,7 +359,7 @@
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
 				<div style="display:none;" id="meter_mode">
-					<select id="metering">
+					<select name="metering" class="options">
 						<option value="average">Average</option>
 						<option value="spot">Spot</option>
 						<option value="backlit">Backlit</option>
@@ -341,21 +369,19 @@
 				<button class="additional_camera_options" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
 				<div style="display:none;" id="rot_or">
 					Rotation:
-					<select id="rotation">
+					<select name="rotation" class="options">
 						<option value="0">0</option>
 						<option value="90">90</option>
 						<option value="180">180</option>
 						<option value="270">270</option>
 					</select>
 					Flip:
-					<select>
-						<option name="vertical_flip">Vertical
-						<option name="horizontal_flip">Horizontal
-					</select>
+					Vertical<input type="checkbox" name="--vflip" class="options">
+					Horizontal<input type="checkbox" name="--hflip" class="options">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(timelapse.id)">Timelapse</button>
-				<div style="display:none;" id="timelapse">
-					Interval: <input type="number" value="1" min="0" max="100" disabled><br>
+				<button class="additional_camera_options" id="timelapse_button" onClick="show_hide_options(timelapse_pane.id)">Timelapse</button>
+				<div style="display:none;" id="timelapse_pane">
+					Interval: <input type="number" value="1" min="0" max="100"><br>
 					Time unit:
 						<select>
 							<option>Seconds</option>
@@ -363,9 +389,142 @@
 							<option>Hours</option>
 						</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(exif_tags.id)">EXIF Tags</button>
-				<div style="display:none;" id="exif_tags">
-
+				<button class="additional_camera_options" id="tags_button" onClick="show_hide_options(tags.id)">Tags</button>
+				<div style="display:none;" id="tags">
+					<fieldset>
+					<legend>IFD</legend>
+					ImageWidth<input type="text"><br>
+					ImageLength<input type="text"><br>
+					BitsPerSample<input type="text"><br>
+					Compression<input type="text"><br>
+					PhotometricInterpretation<input type="text"><br>
+					ImageDescription<input type="text"><br>
+					Make<input type="text"><br>
+					Model<input type="text"><br>
+					StripOffsets<input type="text"><br>
+					Orientation<input type="text"><br>
+					SamplesPerPixel<input type="text"><br>
+					RowsPerString<input type="text"><br>
+					StripByteCounts<input type="text"><br>
+					Xresolution<input type="text"><br>
+					Yresolution<input type="text"><br>
+					PlanarConfiguration<input type="text"><br>
+					ResolutionUnit<input type="text"><br>
+					TransferFunction<input type="text"><br>
+					Software<input type="text"><br>
+					DateTime<input type="text"><br>
+					Artist<input type="text"><br>
+					WhitePoint<input type="text"><br>
+					PrimaryChromaticities<input type="text"><br>
+					JPEGInterchangeFormat<input type="text"><br>
+					JPEGInterchangeFormatLength<input type="text"><br>
+					YcbCrCoefficients<input type="text"><br>
+					YcbCrSubSampling<input type="text"><br>
+					YcbCrPositioning<input type="text"><br>
+					ReferenceBlackWhite<input type="text"><br>
+					Copyright<input type="text"><br>
+					</fieldset>
+					<fieldset>
+					<legend>EXIF</legend>
+					ExposureTime<input type="text"><br>
+					FNumber<input type="text"><br>
+					ExposureProgram<input type="text"><br>
+					SpectralSensitivity<input type="text"><br>
+					aISOSpeedRatings<input type="text"><br>
+					OECF<input type="text"><br>
+					ExifVersion<input type="text"><br>
+					DateTimeOriginal<input type="text"><br>
+					DateTimeDigitized<input type="text"><br>
+					ComponentsConfiguration<input type="text"><br>
+					CompressedBitsPerPixel<input type="text"><br>
+					ShutterSpeedValue<input type="text"><br>
+					ApertureValue<input type="text"><br>
+					BrightnessValue<input type="text"><br>
+					ExposureBiasValue<input type="text"><br>
+					MaxApertureValue<input type="text"><br>
+					SubjectDistance<input type="text"><br>
+					MeteringMode<input type="text"><br>
+					LightSource<input type="text"><br>
+					Flash<input type="text"><br>
+					FocalLength<input type="text"><br>
+					SubjectArea<input type="text"><br>
+					MakerNote<input type="text"><br>
+					UserComment<input type="text"><br>
+					SubSecTime<input type="text"><br>
+					SubSecTimeOriginal<input type="text"><br>
+					SubSecTimeDigitized<input type="text"><br>
+					FlashpixVersion<input type="text"><br>
+					ColorSpace<input type="text"><br>
+					PixelXDimension<input type="text"><br>
+					PixelYDimension<input type="text"><br>
+					RelatedSoundFile<input type="text"><br>
+					FlashEnergy<input type="text"><br>
+					SpacialFrequencyResponse<input type="text"><br>
+					FocalPlaneXResolution<input type="text"><br>
+					FocalPlaneYResolution<input type="text"><br>
+					FocalPlaneResolutionUnit<input type="text"><br>
+					SubjectLocation<input type="text"><br>
+					ExposureIndex<input type="text"><br>
+					SensingMethod<input type="text"><br>
+					FileSource<input type="text"><br>
+					SceneType<input type="text"><br>
+					CFAPattern<input type="text"><br>
+					CustomRendered<input type="text"><br>
+					ExposureMode<input type="text"><br>
+					WhiteBalance<input type="text"><br>
+					DigitalZoomRatio<input type="text"><br>
+					FocalLengthIn35mmFilm<input type="text"><br>
+					SceneCaptureType<input type="text"><br>
+					GainControl<input type="text"><br>
+					Contrast<input type="text"><br>
+					Saturation<input type="text"><br>
+					Sharpness<input type="text"><br>
+					DeviceSettingDescription<input type="text"><br>
+					SubjectDistanceRange<input type="text"><br>
+					ImageUniqueID<input type="text"><br>
+					</fieldset>
+					<fieldset>
+					<legend>GPS</legend>
+					GPSVersionID<input type="text"><br>
+					GPSLatitudeRef<input type="text"><br>
+					GPSLatitude<input type="text"><br>
+					GPSLongitudeRef<input type="text"><br>
+					GPSLogitude<input type="text"><br>
+					GPSAltitudeRef<input type="text"><br>
+					GPSAltitude<input type="text"><br>
+					GPSTimeStamp<input type="text"><br>
+					GPSSatellites<input type="text"><br>
+					GPSStatus<input type="text"><br>
+					GPSMeasureMode<input type="text"><br>
+					GPSDOP<input type="text"><br>
+					GPSSpeedRef<input type="text"><br>
+					GPSSpeed<input type="text"><br>
+					GPSTrackRef<input type="text"><br>
+					GPSTrack<input type="text"><br>
+					GPSImgDirectionRef<input type="text"><br>
+					GPSImgDirection<input type="text"><br>
+					GPSMapDatum<input type="text"><br>
+					GPSDestLatitudeRef<input type="text"><br>
+					GPSDestLatitude<input type="text"><br>
+					GPSDestLongitudeRef<input type="text"><br>
+					GPSDestLongitude<input type="text"><br>
+					GPSDestBearingRef<input type="text"><br>
+					GPSDestBearing<input type="text"><br>
+					GPSDestDistanceRef<input type="text"><br>
+					GPSDestDistance<input type="text"><br>
+					GPSProcessingMethod<input type="text"><br>
+					GPSAreaInformation<input type="text"><br>
+					GPSDateStamp<input type="text"><br>
+					GPSDifferential<input type="text"><br>
+					</fieldset>
+					<fieldset>
+					<legend>EINT</legend>
+					InteroperabilityIndex<input type="text"><br>
+					InteroperabilityVersion<input type="text"><br>
+					RelatedImageFileFormat<input type="text"><br>
+					RelatedImageWidth<input type="text"><br>
+					RelatedImageLength<input type="text"><br>
+					</fieldset>
 				</div>
 			</div>
 				<div id="camera_status">
