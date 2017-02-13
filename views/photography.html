@@ -22,11 +22,11 @@
 		
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
-			var params = document.getElementsByClassName("additional_camera_options");
-			alert(params[1]);
-			//xmlHttp.open("POST", url+"take_image/"+"?"+params, true);
+			var params = document.getElementById("encoding_selector");
+			alert(params.value);
+			xmlHttp.open("POST", url+"take_image/"+"?"+params, true);
 
-			//xmlHttp.send(null);
+			xmlHttp.send(null);
 		}
 		
 		function show_hide_options(pane) {
@@ -204,14 +204,16 @@
 				<div id="camera_options">
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(camera_modes.id)">Camera Mode</button>
 				<div style="display:none;" id="camera_modes">
-					<input type="radio" class="camera_mode" checked>Still Capture<br>
-					<input type="radio" class="camera_mode">Video Capture<br>
-					<input type="radio" class="camera_mode">YUV Capture<br>
-					<input type="radio" class="camera_mode">Timelapse
+					<select id="camera_mode">
+						<option value="camera_mode">Still Capture</option>
+						<option value="camera_mode">Video Capture</option>
+						<option value="camera_mode">YUV Capture</option>
+						<option value="camera_mode">Timelapse</option>
+					</select>
 				</div>
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution.id)">Resolution</button>
-				<div style="display:none;" id="resolution">
-					<select>
+				<div style="display:none;" id="resolution_pane">
+					<select id="resolution" class="options">
 						<option value="2592x1944">2592 x 1944 (max)</option>
 						<option value="2560x1920">2560 x 1920</option>
 						<option value="2240x1680">2240 x 1680</option>
@@ -226,8 +228,8 @@
 					</select>
 				</div>	
 				<button class="additional_camera_options" onClick="show_hide_options(encoding.id)">Encoding</button>
-				<div style="display:none;" id="encoding">
-					<select id="encoding_selector">
+				<div style="display:none;" id="encoding_pane">
+					<select id="encoding" class="options">
 						<option value="jpg">JPG</option>
 						<option value="gif">GIF</option>
 						<option value="png">PNG</option>
@@ -235,8 +237,8 @@
 					</select>
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(quality.id)">Quality</button>
-				<div style="display:none;" id="quality">
-					<input type="number" max="100" min="0" value="75" name="quality" style="width: 3em">
+				<div style="display:none;" id="quality_pane">
+					<input type="number" max="100" min="0" value="75" class="quality" style="width: 3em">
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
 				<div style="display:none;" id="bayer_data">
@@ -329,30 +331,37 @@
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
 				<div style="display:none;" id="meter_mode">
-					<input type="radio" class="metering" name="metering" value="average" checked>Average
-					<input type="radio" class="metering" name="metering" value="spot">Spot
-					<input type="radio" class="metering" name="metering" value="backlit">Backlit
-					<input type="radio" class="metering" name="metering" value="matrix">Matrix
+					<select id="metering">
+						<option value="average">Average</option>
+						<option value="spot">Spot</option>
+						<option value="backlit">Backlit</option>
+						<option value="matrix">Matrix</option>
+					</select>
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
 				<div style="display:none;" id="rot_or">
-					<input type="radio" class="rotation" name="rotation" value="0" checked>0
-					<input type="radio" class="rotation" name="rotation" value="90">90
-					<input type="radio" class="rotation" name="rotation" value="180">180
-					<input type="radio" class="rotation" name="rotation" value="270">270
-					<br>
-					<input type="radio" class="vertical_flip" name="vertical_flip">Vertical flip
-					<br>
-					<input type="radio" class="horizontal_flip" name="horizontal_flip">Horizontal flip
-					<br>
+					Rotation:
+					<select id="rotation">
+						<option value="0">0</option>
+						<option value="90">90</option>
+						<option value="180">180</option>
+						<option value="270">270</option>
+					</select>
+					Flip:
+					<select>
+						<option name="vertical_flip">Vertical
+						<option name="horizontal_flip">Horizontal
+					</select>
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(timelapse.id)">Timelapse</button>
 				<div style="display:none;" id="timelapse">
-					Timelapse<input type="checkbox"><br>
-					Interval: Every <input type="number" value="1" min="0" max="100" disabled><br>
-					<input type="radio" checked disabled><label>seconds</label>
-					<input type="radio" disabled><label>minutes</label>
-					<input type="radio" disabled><label>hours</label>
+					Interval: <input type="number" value="1" min="0" max="100" disabled><br>
+					Time unit:
+						<select>
+							<option>Seconds</option>
+							<option>Minutes</option>
+							<option>Hours</option>
+						</select>
 				</div>
 				<button class="additional_camera_options" onClick="show_hide_options(exif_tags.id)">EXIF Tags</button>
 				<div style="display:none;" id="exif_tags">
