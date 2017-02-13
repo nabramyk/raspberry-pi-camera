@@ -24,14 +24,14 @@
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
 			var params = document.getElementsByClassName("options");
-			var temp = "";
+			var sendToServer = "?mode=" + document.getElementById("camera_mode").value + "&";
 			
 			for(var i = 0; i < params.length; i++) {
-				temp = temp + params[i].name + "=" + params[i].value + "&";
+				sendToServer = sendToServer + params[i].name + "=" + params[i].value + "&";
 			}
-			alert(temp);
+			alert(sendToServer);
 			
-			xmlHttp.open("POST", url+"take_image/"+"?"+params, true);
+			xmlHttp.open("POST", url+"take_image/"+sendToServer, true);
 
 			xmlHttp.send(null);
 		}
@@ -70,6 +70,17 @@
 				document.getElementById("u_channel").disabled = true;
 				document.getElementById("y_channel").disabled = true;
 				document.getElementById("encoding").disabled = false;
+			}
+		}
+		
+		function scale_aspect_ratio(axis, amount) {
+			var ratio = document.getElementById("aspect_ratio").value;
+			var width = ratio.split(":")[0];
+			var height = ratio.split(":")[1];
+			if(axis=="width") {
+				document.getElementById("aspect_width").value = Math.round(amount * width / height);
+			} else {
+				document.getElementById("aspect_height").value = Math.round(amount * height / width);
 			}
 		}
 	</script>
@@ -229,6 +240,17 @@
 				</div>
 				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution_pane.id)">Resolution</button>
 				<div style="display:none;" id="resolution_pane">
+					Width<input type="number" id="aspect_width" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
+					Height<input type="number" id="aspect_height" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
+					Lock<input type="checkbox" id="aspect_ratio_lock"><br>
+					Aspect Ratio
+					<select id="aspect_ratio" class="options">
+						<option value="4:3">4:3</option>
+						<option value="3:2">3:2</option>
+						<option value="5:4">5:4</option>
+						<option value="3:1">3:1</option>
+						<option value="16:9">16:9</option>
+					</select>
 					<select name="resolution" class="options">
 						<option value="2592x1944">2592 x 1944 (max)</option>
 						<option value="2560x1920">2560 x 1920</option>
