@@ -3,7 +3,10 @@
 	<script>
 		
 		var url = 'http://localhost:8080/';
-		var yuv_disabled_options = ["exif_button","raw_button","encoding_button","quality_button"];
+		
+		var yuv_options = ["tags_button","raw_button","encoding_button","quality_button","vstab_button","bitrate_button","framerate_button","timeout_button"];
+		var still_options = ["vstab_button","framerate_button","bitrate_button","timeout_button"];
+		var video_options = ["tags_button","raw_button","timelapse_button"];
 		
 		function update() {
 			var xmlHttp = new XMLHttpRequest();
@@ -29,7 +32,6 @@
 			for(var i = 0; i < params.length; i++) {
 				sendToServer = sendToServer + params[i].name + "=" + params[i].value + "&";
 			}
-			alert(sendToServer);
 			
 			xmlHttp.open("POST", url+"take_image/"+sendToServer, true);
 
@@ -45,19 +47,22 @@
 			}
 		}
 		
-		function switch_modes(mode) {
-			
-			switch(mode) {
-				case "still":
-					alert(mode);
-					break;
-				case "video":
-					break;
-				case "yuv":
-					for(var i=0; i<yuv_disabled_options.length;i++) {
-						document.getElementById(yuv_disabled_options[i]).disabled = 'true';
-					}
-					break;
+		function switch_modes(mode) {	
+			var options = null;
+			if(mode==="still") {
+				options = still_options;
+			} else if(mode==="video") {
+				options = video_options;
+			} else if(mode==="yuv") {
+				options = yuv_options;
+			}
+
+			var temp = document.querySelectorAll(".additional_camera_options");
+			for(var i=0; i<temp.length; i++) {
+				temp[i].style.display = 'block';
+			}
+			for(var i=0; i<options.length; i++) {
+				document.getElementById(options[i]).style.display = 'none';
 			}
 		}
 		
@@ -74,13 +79,15 @@
 		}
 		
 		function scale_aspect_ratio(axis, amount) {
-			var ratio = document.getElementById("aspect_ratio").value;
-			var width = ratio.split(":")[0];
-			var height = ratio.split(":")[1];
-			if(axis=="width") {
-				document.getElementById("aspect_width").value = Math.round(amount * width / height);
-			} else {
-				document.getElementById("aspect_height").value = Math.round(amount * height / width);
+			if(document.getElementById("aspect_ratio_lock").checked) {
+				var ratio = document.getElementById("aspect_ratio").value;
+				var width = ratio.split(":")[0];
+				var height = ratio.split(":")[1];
+				if(axis=="width") {
+					document.getElementById("aspect_width").value = Math.round(amount * width / height);
+				} else {
+					document.getElementById("aspect_height").value = Math.round(amount * height / width);
+				}
 			}
 		}
 	</script>
@@ -148,7 +155,7 @@
 			border-color: yellow;
 		}
 		
-		.additional_camera_options {
+		.additional_camera_options, .camera_modes {
 			width: 100%;
 			background-color: #2952a3;
 			color: white;
@@ -156,10 +163,6 @@
 			border: 1px solid #24478f;
 			padding: 16px;
 			margin: 0%;
-		}
-		
-		.additional_camera_options[disabled] {
-			background-color: gray;
 		}
 		
 		#camera_status {
@@ -230,28 +233,28 @@
 			
 			<div>
 				<div id="camera_options">
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(camera_modes_pane.id)">Camera Mode</button>
+				<button type="button" class="camera_modes" onClick="show_hide_options(camera_modes_pane.id)">Camera Mode</button>
 				<div style="display:none;" id="camera_modes_pane">
-					<select id="camera_mode" class="mode" onChange="switch_modes(this.value)">
+					<select id="camera_mode" class="mode" onchange="switch_modes(this.value)">
 						<option id="still" value="still">Still Capture</option>
 						<option id="video" value="video">Video Capture</option>
 						<option id="yuv" value="yuv">YUV Capture</option>
 					</select>
 				</div>
-				<button type="button" class="additional_camera_options" onClick="show_hide_options(resolution_pane.id)">Resolution</button>
+				<button type="button"  id="resolution_button" class="additional_camera_options" onClick="show_hide_options(resolution_pane.id)">Resolution</button>
 				<div style="display:none;" id="resolution_pane">
-					Width<input type="number" id="aspect_width" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
-					Height<input type="number" id="aspect_height" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
-					Lock<input type="checkbox" id="aspect_ratio_lock"><br>
+					Width<input type="number" id="aspect_width" name="width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
+					Height<input type="number" id="aspect_height" name="height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
+					Lock<input type="checkbox" id="aspect_ratio_lock" value="off"><br>
 					Aspect Ratio
-					<select id="aspect_ratio" class="options">
+					<select id="aspect_ratio">
 						<option value="4:3">4:3</option>
 						<option value="3:2">3:2</option>
 						<option value="5:4">5:4</option>
 						<option value="3:1">3:1</option>
 						<option value="16:9">16:9</option>
 					</select>
-					<select name="resolution" class="options">
+					<select name="resolution">
 						<option value="2592x1944">2592 x 1944 (max)</option>
 						<option value="2560x1920">2560 x 1920</option>
 						<option value="2240x1680">2240 x 1680</option>
@@ -280,49 +283,49 @@
 				</div>
 				<button class="additional_camera_options" id="raw_button" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
 				<div style="display:none;" id="bayer_data">
-					Add raw Bayer data<input type="checkbox" name="--raw" class="options">
+					Add raw Bayer data<input type="checkbox" name="raw" class="options">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(sharpness.id)">Sharpess</button>
+				<button class="additional_camera_options" id="sharpness_button" onClick="show_hide_options(sharpness.id)">Sharpess</button>
 				<div style="display:none;" id="sharpness">
 					<input type="number" name="sharpness" max="100" min="-100" value="0" style="width: 4em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(contrast.id)">Contrast</button>
+				<button class="additional_camera_options" id="contrast_cutton" onClick="show_hide_options(contrast.id)">Contrast</button>
 				<div style="display:none;" id="contrast">
 					<input type="number" name="contrast" max="100" min="-100" value="0" style="width: 4em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(brightness.id)">Brightness</button>
+				<button class="additional_camera_options" id="brightness_button" onClick="show_hide_options(brightness.id)">Brightness</button>
 				<div style="display:none;" id="brightness">
 					<input type="number" name="brightness" max="100" min="0" value="50" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(saturation.id)">Saturation</button>
+				<button class="additional_camera_options" id="saturation_button" onClick="show_hide_options(saturation.id)">Saturation</button>
 				<div style="display:none;" id="saturation">
 					<input type="number" name="saturation" max="100" min="-100" value="0" style="width: 4em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(iso.id)">ISO</button>
+				<button class="additional_camera_options" id="iso_button" onClick="show_hide_options(iso.id)">ISO</button>
 				<div style="display:none;" id="iso">
 					<input type="number" name="ISO" max="800" min="100" value="400" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="vid_stab.id">Video Stabilization</button>
+				<button id="vstab_button" class="additional_camera_options" onClick="vid_stab.id">Video Stabilization</button>
 				<div style="display:none;" id="vid_stab">
 					Turn on video stabilization<input type="checkbox" name="--vstab">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(ev_comp.id)">EV Compensation</button>
+				<button class="additional_camera_options" id="ev_compensation_button" onClick="show_hide_options(ev_comp.id)">EV Compensation</button>
 				<div style="display:none;" id="ev_comp">
 					<input type="number" name="ev" max="10" min="-10" value="0" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(fps_pane.id)">Framerate</button>
+				<button class="additional_camera_options" id="framerate_button" onClick="show_hide_options(fps_pane.id)">Framerate</button>
 				<div style="display:none;" id="fps_pane">
 					<input type="number" name="fps" max="30" min="2" value="25" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(timeout_pane.id)">Timeout</button>
+				<button class="additional_camera_options" id="timeout_button" onClick="show_hide_options(timeout_pane.id)">Timeout</button>
 				<div style="display:none;" id="timeout_pane">
 					<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(bitrate_pane.id)">Bitrate</button>
+				<button class="additional_camera_options" id="bitrate_button" onClick="show_hide_options(bitrate_pane.id)">Bitrate</button>
 				<div style="display:none;" id="bitrate_pane">
 					<input type="number" name="bitrate" max="30" min="2" value="25" style="width: 3em">
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(exposure_pane.id)">Exposure Mode</button>
+				<button class="additional_camera_options" id="exposure_mode_button" onClick="show_hide_options(exposure_pane.id)">Exposure Mode</button>
 				<div style="display:none;" id="exposure_pane">
 					<select name="exposure" class="options">
 						<option value="off">Off</option>
@@ -339,7 +342,7 @@
 						<option value="fireworks">Fireworks</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(aws.id)">Automatic White Balance</button>
+				<button class="additional_camera_options" id="aws_button" onClick="show_hide_options(aws.id)">Automatic White Balance</button>
 				<div style="display:none;" id="aws">
 					<select name="aws" class="options">
 						<option value="off">Off</option>
@@ -353,7 +356,7 @@
 						<option value="horizon">Horizon mode</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(imfx.id)">Image Effects</button>
+				<button class="additional_camera_options" id="imgfx_button" onClick="show_hide_options(imfx.id)">Image Effects</button>
 				<div style="display:none;" id="imfx">
 					<select name="imxfx" class="options">
 						<option value="none">None</option>
@@ -374,12 +377,12 @@
 						<option value="saturation">Colour-saturate the image</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(uv_mode.id)">UV Mode</button>
+				<button class="additional_camera_options" id="colour_effect_button" onClick="show_hide_options(uv_mode.id)">Colour Effect</button>
 				<div style="display:none;" id="uv_mode">
 					Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
-					Set U:Y channels &nbsp U:<input type="number" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
+					Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
+				<button class="additional_camera_options" id="mm_button" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
 				<div style="display:none;" id="meter_mode">
 					<select name="metering" class="options">
 						<option value="average">Average</option>
@@ -388,7 +391,7 @@
 						<option value="matrix">Matrix</option>
 					</select>
 				</div>
-				<button class="additional_camera_options" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
+				<button class="additional_camera_options" id="rao_button" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
 				<div style="display:none;" id="rot_or">
 					Rotation:
 					<select name="rotation" class="options">
@@ -410,6 +413,10 @@
 							<option>Minutes</option>
 							<option>Hours</option>
 						</select>
+				</div>
+				<button class="additional_camera_options" id="roi_button" onClick="show_hide_options(roi_pane.id)">Region of Interest</button>
+				<div style="display:none;" id="roi_pane">
+					Coming Soon!
 				</div>
 				<button class="additional_camera_options" id="tags_button" onClick="show_hide_options(tags.id)">Tags</button>
 				<div style="display:none;" id="tags">
@@ -551,6 +558,8 @@
 			</div>
 				<div id="camera_status">
 					<p>Camera status</p>
+					Activity:<br>
+					CPU Temperature:
 				</div>
 			</div>
 		</div>
