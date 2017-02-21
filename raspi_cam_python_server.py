@@ -34,7 +34,7 @@ class myHandler(BaseHTTPRequestHandler):
 		print temp.query
 		
 		if self.path=="/":
-			f = open('views/photography.html')
+			f = open('views/' + self.path + '.html')
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
