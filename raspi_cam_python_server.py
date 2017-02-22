@@ -31,15 +31,36 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urlparse(self.path)
-		print temp.query
+		print temp
 		
 		if self.path=="/":
-			f = open('views/' + self.path + '.html')
+			f = open('views/view.html')
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
 		
+		if self.path=="/views/monitor/":
+			f = open('views/monitor.html')
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+		
+		if self.path=="/views/camera/":
+			f = open('views/camera.html')
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+	
+		if self.path=="/views/system_info/":
+			f = open('views/system_info.html')
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+			
 		if self.path=="/temperature/":
 			self.send_response(200)
 			self.end_headers()
@@ -64,10 +85,26 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10","-o","temp"])
 	
+		if self.path=="/views/style.css":
+			f = open('views/style.css')
+			self.send_response(200)
+			self.end_headers()
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+	
+		if self.path=="/views/photography.js":
+			f = open('views/photography.js')
+			self.send_response(200)
+			self.end_headers()
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+	
 	def do_POST(self):
 		
 		temp = urlparse(self.path)
-		print temp.query
+		print temp
 		
 		global timelapse_running, stored_images
 		

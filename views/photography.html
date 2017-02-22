@@ -9,10 +9,6 @@
 		var still_options = ["vstab_button","framerate_button","bitrate_button","timeout_button"];
 		var video_options = ["tags_button","raw_button","timelapse_button","quality_button"];
 		
-		window.onload = function() {
-			
-		}
-		
 		function update() {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
@@ -241,7 +237,7 @@
 				<button id="shutter_button" onClick="take_image()">Take Image</button>
 			</div>
 			
-			<div>
+			<div id="selection_pane">
 				<div id="camera_options">
 				<button type="button" class="camera_modes" onClick="show_hide_options(camera_modes_pane.id)">Camera Mode</button>
 				<div style="display:none;" id="camera_modes_pane">

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+	<script>
+		function take_image() {
+			/*var xmlHttp = new XMLHttpRequest();
+			var params = document.getElementsByClassName("options");
+			var sendToServer = "?mode=" + document.getElementById("camera_mode").value + "&";
+			
+			for(var i = 0; i < params.length; i++) {
+				sendToServer = sendToServer + params[i].name + "=" + params[i].value + "&";
+			}
+			
+			xmlHttp.open("POST", url+"take_image/"+sendToServer, true);
+
+			xmlHttp.send(null);*/
+
+			alert("hello");
+		}
+
+		var url = 'http://localhost:8080/';
+
+		window.onload = function() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+				}
+			};
+			xmlHttp.open("GET", 'http://localhost:8080/views/monitor/');
+			xmlHttp.send(null);
+		}
+		
+		function update() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				i.innerHTML = xmlHttp.responseText;
+				setTimeout(update, 1000);
+				}
+			}					
+			xmlHttp.open("GET", 'http://localhost:8080/temp/');
+			xmlHttp.send(null);
+		}
+		
+		function show_hide_options(pane) {
+			var x = document.getElementById(pane);
+			if(x.style.display === 'none') {
+				x.style.display = 'block';
+			} else {
+				x.style.display = 'none';
+			}
+		}
+	</script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
+	<script type="text/javascript" src="http://localhost:8080/views/photography.js"></script>
+</head>
+	<body>
+		<div id="main_panel">
+		<div class="main_panel">
+			<header>
+				<h1 id="header">RasPiCam</h1>
+			</header>
+			<div id="navigation_menu">
+				<button id="monitor" type="button" class="navigation_button" value="selected" onClick="switch_modes(this.id)">MONITOR</button>
+				<button id="camera" type="button" class="navigation_button" value="unselected" onClick="switch_modes(this.id)">CAMERA</button>
+				<button id="system_info" type="button" class="navigation_button" value="unselected" onclick="switch_modes(this.id)">SYSTEM INFO</button>
+			</div>
+			<script>
+				function switch_modes(mode) {
+					var xmlHttp = new XMLHttpRequest();
+					xmlHttp.onreadystatechange = function() {
+						if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+						document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+					}
+				};
+				
+				xmlHttp.open("GET", 'http://localhost:8080/views/' + mode + '/');
+				xmlHttp.send(null);
+
+				var params = document.getElementsByClassName("navigation_button");
+				for(var i = 0; i < params.length; i++) {
+					params[i].value="unselected";
+				}
+				document.getElementById(mode).value="selected";
+			}
+			</script>
+			<div id="selection_pane"></div>
+		</div>
+		</div>
+	</body>	
+</html>
