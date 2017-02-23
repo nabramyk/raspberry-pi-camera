@@ -23,6 +23,7 @@
 			xmlHttp.onreadystatechange = function() {
 				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+					retrieve();
 				}
 			};
 			xmlHttp.open("GET", 'http://localhost:8080/views/monitor/');
@@ -54,6 +55,9 @@
 	var yuv_options = ["tags_button","raw_button","encoding_button","quality_button","vstab_button","bitrate_button","framerate_button","timeout_button"];
 	var still_options = ["vstab_button","framerate_button","bitrate_button","timeout_button"];
 	var video_options = ["tags_button","raw_button","timelapse_button","quality_button"];
+	
+	var monitor_data_points = ["camera_status","cpu_temperature","platform_machine","platform_version","platform_system","platform_processor"];
+	
 	function switch_camera_modes(mode) {	
 		var options = null;
 		if(mode==="still") {
@@ -75,18 +79,18 @@
 		}
 	}
 	
-				function scale_aspect_ratio(axis, amount) {
-				if(document.getElementById("aspect_ratio_lock").checked) {
-					var ratio = document.getElementById("aspect_ratio").value;
-					var width = ratio.split(":")[0];
-					var height = ratio.split(":")[1];
-					if(axis=="width") {
-						document.getElementById("aspect_width").value = Math.round(amount * width / height);
-					} else {
-						document.getElementById("aspect_height").value = Math.round(amount * height / width);
-					}
+		function scale_aspect_ratio(axis, amount) {
+			if(document.getElementById("aspect_ratio_lock").checked) {
+				var ratio = document.getElementById("aspect_ratio").value;
+				var width = ratio.split(":")[0];
+				var height = ratio.split(":")[1];
+				if(axis=="width") {
+					document.getElementById("aspect_width").value = Math.round(amount * width / height);
+				} else {
+					document.getElementById("aspect_height").value = Math.round(amount * height / width);
 				}
 			}
+		}
 			
 		function toggle_uv_mode(checked) {
 			if(checked) {
@@ -109,6 +113,38 @@
 				document.getElementById("timelapse_time_unit").disabled = true;
 			}
 		}
+		
+		function retrieve() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					var p = xmlHttp.responseXML;
+					for (var i = 0; i < monitor_data_points.length; i++) {
+						document.getElementById(monitor_data_points[i]).innerHTML = p.getElementsByTagName(monitor_data_points[i])[0].childNodes[0].nodeValue;
+					}
+					setTimeout(retrieve, 1000);
+				}
+			};
+			xmlHttp.open("GET", 'http://localhost:8080/monitor/');
+			xmlHttp.send(null);
+		}
+	
+		function switch_modes(mode) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+				}
+			};
+				
+			xmlHttp.open("GET", 'http://localhost:8080/views/' + mode + '/');
+			xmlHttp.send(null);
+			var params = document.getElementsByClassName("navigation_button");
+			for(var i = 0; i < params.length; i++) {
+				params[i].value="unselected";
+			}
+			document.getElementById(mode).value="selected";
+		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
 </head>
@@ -123,25 +159,6 @@
 				<button id="camera" type="button" class="navigation_button" value="unselected" onClick="switch_modes(this.id)">CAMERA</button>
 				<button id="system_info" type="button" class="navigation_button" value="unselected" onclick="switch_modes(this.id)">SYSTEM INFO</button>
 			</div>
-			<script>
-				function switch_modes(mode) {
-					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.onreadystatechange = function() {
-						if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-						document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
-					}
-				};
-				
-				xmlHttp.open("GET", 'http://localhost:8080/views/' + mode + '/');
-				xmlHttp.send(null);
-
-				var params = document.getElementsByClassName("navigation_button");
-				for(var i = 0; i < params.length; i++) {
-					params[i].value="unselected";
-				}
-				document.getElementById(mode).value="selected";
-			}
-			</script>
 			<div id="selection_pane"></div>
 		</div>
 		</div>
