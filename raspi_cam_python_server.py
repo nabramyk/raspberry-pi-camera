@@ -93,14 +93,6 @@ class myHandler(BaseHTTPRequestHandler):
 			self.wfile.write(f.read())
 			f.close()
 	
-		if self.path=="/views/photography.js":
-			f = open('views/photography.js')
-			self.send_response(200)
-			self.end_headers()
-			self.end_headers()
-			self.wfile.write(f.read())
-			f.close()
-	
 	def do_POST(self):
 		
 		temp = urlparse(self.path)

@@ -4,17 +4,21 @@
 	<button id="shutter_button" onClick="take_image()">Take Image</button>
 </div>
 <div id="camera_options">
-	<button type="button" class="camera_modes" onClick="show_hide_options(camera_modes_pane.id)">Camera Mode</button>
-	<div style="display:none;" id="camera_modes_pane">
+	
+	<div id="camera_modes_pane">
+		<fieldset>
+		<legend>Camera Mode</legend>
 		<select id="camera_mode" class="mode" onchange="switch_camera_modes(this.value)">
 			<option id="still" value="still">Still Capture</option>
 			<option id="video" value="video">Video Capture</option>
 			<option id="yuv" value="yuv">YUV Capture</option>
 		</select>
+		</fieldset>
 	</div>
-
-	<button type="button"  id="resolution_button" class="additional_camera_options" onClick="show_hide_options(resolution_pane.id)">Resolution</button>
-	<div style="display:none;" id="resolution_pane">
+	
+	<div id="resolution_pane">
+		<fieldset>
+		<legend>Resolution</legend>
 		Width<input type="number" id="aspect_width" name="width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
 		Height<input type="number" id="aspect_height" name="height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
 		Lock<input type="checkbox" id="aspect_ratio_lock" value="off"><br>
@@ -39,66 +43,108 @@
 			<option value="640x480">640 x 480</option>
 			<option value="320x240">320 x 240</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="encoding_button" onClick="show_hide_options(encoding_pane.id)">Encoding</button>
-	<div style="display:none;" id="encoding_pane">
+	
+	<div id="encoding_pane">
+		<fieldset>
+		<legend>Encoding</legend>
 		<select name="encoding" class="options">
 			<option value="jpg">JPG</option>
 			<option value="gif">GIF</option>
 			<option value="png">PNG</option>
 			<option value="bmp">BMP</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="quality_button" onClick="show_hide_options(quality_pane.id)">Quality</button>
-	<div style="display:none;" id="quality_pane">
+	
+	<div id="quality_pane">
+		<fieldset>
+		<legend>Quality</legend>
 		<input type="number" name="quality" class="options" max="100" min="0" value="75" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="raw_button" onClick="show_hide_options(bayer_data.id)">Bayer Data</button>
-	<div style="display:none;" id="bayer_data">
+	
+	<div id="bayer_data">
+		<fieldset>
+		<legend>Bayer Data</legend>
 		Add raw Bayer data<input type="checkbox" name="raw" class="options">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="sharpness_button" onClick="show_hide_options(sharpness.id)">Sharpess</button>
-	<div style="display:none;" id="sharpness">
+	
+	<div id="sharpness">
+		<fieldset>
+		<legend>Sharpness</legend>
 		<input type="number" name="sharpness" max="100" min="-100" value="0" style="width: 4em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="contrast_cutton" onClick="show_hide_options(contrast.id)">Contrast</button>
-	<div style="display:none;" id="contrast">
+	
+	<div id="contrast">
+		<fieldset>
+		<legend>Contrast</legend>
 		<input type="number" name="contrast" max="100" min="-100" value="0" style="width: 4em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="brightness_button" onClick="show_hide_options(brightness.id)">Brightness</button>
-	<div style="display:none;" id="brightness">
+	
+	<div id="brightness">
+		<fieldset>
+			<legend>Brightness</legend>
 		<input type="number" name="brightness" max="100" min="0" value="50" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="saturation_button" onClick="show_hide_options(saturation.id)">Saturation</button>
-	<div style="display:none;" id="saturation">
+	
+	<div id="saturation">
+		<fieldset>
+		<legend>Saturation</legend>
 		<input type="number" name="saturation" max="100" min="-100" value="0" style="width: 4em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="iso_button" onClick="show_hide_options(iso.id)">ISO</button>
-	<div style="display:none;" id="iso">
+	
+	<div id="iso">
+		<fieldset>
+			<legend>ISO</legend>
 		<input type="number" name="ISO" max="800" min="100" value="400" style="width: 3em">
+		</fieldset>
 	</div>
-	<button id="vstab_button" class="additional_camera_options" onClick="vid_stab.id">Video Stabilization</button>
-	<div style="display:none;" id="vid_stab">
-		Turn on video stabilization<input type="checkbox" name="--vstab">
+	
+	<div id="vid_stab">
+		<fieldset>
+			<legend>Video Stabilization</legend>
+			Turn on video stabilization<input type="checkbox" name="--vstab">
+			</fieldset>
 	</div>
-	<button class="additional_camera_options" id="ev_compensation_button" onClick="show_hide_options(ev_comp.id)">EV Compensation</button>
-	<div style="display:none;" id="ev_comp">
+	
+	<div id="ev_comp">
+		<fieldset>
+			<legend>EV Compensation</legend>
 		<input type="number" name="ev" max="10" min="-10" value="0" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="framerate_button" onClick="show_hide_options(fps_pane.id)">Framerate</button>
-	<div style="display:none;" id="fps_pane">
+	
+	<div id="fps_pane">
+		<fieldset>
+			<legend>Framerate</legend>
 		<input type="number" name="fps" max="30" min="2" value="25" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="timeout_button" onClick="show_hide_options(timeout_pane.id)">Timeout</button>
-		<div style="display:none;" id="timeout_pane">
-	<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
+	
+	<div id="timeout_pane">
+		<fieldset>
+			<legend>Timeout</legend>
+		<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="bitrate_button" onClick="show_hide_options(bitrate_pane.id)">Bitrate</button>
-	<div style="display:none;" id="bitrate_pane">
+	
+	<div id="bitrate_pane">
+		<fieldset>
+			<legend>Bitrate</legend>
 		<input type="number" name="bitrate" max="30" min="2" value="25" style="width: 3em">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="exposure_mode_button" onClick="show_hide_options(exposure_pane.id)">Exposure Mode</button>
-	<div style="display:none;" id="exposure_pane">
+	
+	<div id="exposure_pane">
+		<fieldset>
+			<legend>Exposure Mode</legend>
 		<select name="exposure" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
@@ -113,9 +159,12 @@
 			<option value="antishake">Anti-shake</option>
 			<option value="fireworks">Fireworks</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="aws_button" onClick="show_hide_options(aws.id)">Automatic White Balance</button>
-	<div style="display:none;" id="aws">
+	
+	<div id="aws">
+		<fieldset>
+			<legend>Automatic White Balance</legend>
 		<select name="aws" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
@@ -127,9 +176,12 @@
 			<option value="flash">Flash mode</option>
 			<option value="horizon">Horizon mode</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="imgfx_button" onClick="show_hide_options(imfx.id)">Image Effects</button>
-	<div style="display:none;" id="imfx">
+	
+	<div id="imfx">
+		<fieldset>
+			<legend>Image Effects</legend>
 		<select name="imxfx" class="options">
 			<option value="none">None</option>
 			<option value="negative">Negative</option>
@@ -148,23 +200,32 @@
 			<option value="blur">Blur the image</option>
 			<option value="saturation">Colour-saturate the image</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="colour_effect_button" onClick="show_hide_options(uv_mode.id)">Colour Effect</button>
-	<div style="display:none;" id="uv_mode">
+	
+	<div id="uv_mode">
+		<fieldset>
+			<legend>Colour Effect</legend>
 		Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
 		Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="mm_button" onClick="show_hide_options(meter_mode.id)">Metering Mode</button>
-	<div style="display:none;" id="meter_mode">
+	
+	<div id="meter_mode">
+		<fieldset>
+			<legend>Metering Mode</legend>
 		<select name="metering" class="options">
 			<option value="average">Average</option>
 			<option value="spot">Spot</option>
 			<option value="backlit">Backlit</option>
 			<option value="matrix">Matrix</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="rao_button" onClick="show_hide_options(rot_or.id)">Rotation & Orientation</button>
-	<div style="display:none;" id="rot_or">
+	
+	<div id="rot_or">
+		<fieldset>
+			<legend>Rotation & Orientation</legend>
 		Rotation:
 		<select name="rotation" class="options">
 			<option value="0">0</option>
@@ -175,9 +236,12 @@
 		Flip:
 		Vertical<input type="checkbox" name="--vflip" class="options">
 		Horizontal<input type="checkbox" name="--hflip" class="options">
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="timelapse_button" onClick="show_hide_options(timelapse_pane.id)">Timelapse</button>
-	<div style="display:none;" id="timelapse_pane">
+	
+	<div id="timelapse_pane">
+		<fieldset>
+			<legend>Timelapse</legend>
 		<input type="checkbox" name="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
 		Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" disabled><br>
 		Time unit:
@@ -186,13 +250,19 @@
 			<option>Minutes</option>
 			<option>Hours</option>
 		</select>
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="roi_button" onClick="show_hide_options(roi_pane.id)">Region of Interest</button>
-	<div style="display:none;" id="roi_pane">
+	
+	<div id="roi_pane">
+		<fieldset>
+			<legend>Region of Interest</legend>
 		Coming Soon!
+		</fieldset>
 	</div>
-	<button class="additional_camera_options" id="tags_button" onClick="show_hide_options(tags.id)">Tags</button>
-	<div style="display:none;" id="tags">
+	
+	<div id="tags">
+		<fieldset>
+			<legend>Tags</legend>
 		<fieldset>
 		<legend>IFD</legend>
 		ImageWidth<input type="text"><br>
@@ -326,5 +396,6 @@
 		RelatedImageFileFormat<input type="text"><br>
 		RelatedImageWidth<input type="text"><br>
 		RelatedImageLength<input type="text"><br>
+		</fieldset>
 		</fieldset>
 </div>
