@@ -3,7 +3,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
 from urlparse import urlparse, parse_qs
 from collections import deque
-import subprocess, threading, time, ctypes
+import subprocess, threading, time, ctypes, urllib, psutil, platform
 
 stored_images = Queue()
 HTTP_PORT = 8080
@@ -82,8 +82,36 @@ class myHandler(BaseHTTPRequestHandler):
 				
 		if self.path=="/monitor/":
 			self.send_response(200)
+			self.send_header("Content-type","xml")
 			self.end_headers()
-			output = subprocess.Popen(["raspivid","-w","320","-h","240","-fps","10","-o","temp"])
+			xmlTemplate = """<root>
+								<camera_status>%(camera_status)s</camera_status>
+								<cpu_temperature>%(cpu_temperature)s</cpu_temperature>
+								<platform_machine>%(platform_machine)s</platform_machine>
+								<platform_version>%(platform_version)s</platform_version>
+								<platform_system>%(platform_system)s</platform_system>
+								<platform_processor>%(platform_processor)s</platform_processor>
+							</root>"""
+			
+			# Uncomment this line for use on the raspberry pi
+			#output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
+			#temperature = output.communicate()[0]
+			
+			platform_machine = platform.machine()
+			platform_version = platform.version()
+			platform_system = platform.system()
+			platform_processor = platform.processor()
+			
+			data = 	{
+					'camera_status':'not running',
+					'cpu_temperature':'blank',
+					'cpu_percent':psutil.
+					'platform_machine':platform.machine(),
+					'platform_version':platform.version(),
+					'platform_system':platform.system(),
+					'platform_processor':platform.processor(),
+					}
+			self.wfile.write(xmlTemplate%data)
 	
 		if self.path=="/views/style.css":
 			f = open('views/style.css')
