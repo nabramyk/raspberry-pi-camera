@@ -155,6 +155,6 @@ class myHandler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
 	server = HTTPServer(('', HTTP_PORT), myHandler)
-	print 'RaspiCam server running'
+	print('RaspiCam server running')
 		
 	server.serve_forever()
