@@ -128,7 +128,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		
 		temp = urlparse(self.path)
-		print temp
+		print(temp)
 		
 		global timelapse_running, stored_images
 		
