@@ -31,7 +31,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urlparse(self.path)
-		print temp
+		print(temp)
 		
 		if self.path=="/":
 			f = open('views/view.html')
