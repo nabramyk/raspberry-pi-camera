@@ -87,6 +87,7 @@ class myHandler(BaseHTTPRequestHandler):
 			xmlTemplate = """<root>
 								<camera_status>%(camera_status)s</camera_status>
 								<cpu_temperature>%(cpu_temperature)s</cpu_temperature>
+								<cpu_percent>%(cpu_percent)s</cpu_percent>
 								<platform_machine>%(platform_machine)s</platform_machine>
 								<platform_version>%(platform_version)s</platform_version>
 								<platform_system>%(platform_system)s</platform_system>
@@ -105,7 +106,7 @@ class myHandler(BaseHTTPRequestHandler):
 			data = 	{
 					'camera_status':'not running',
 					'cpu_temperature':'blank',
-					'cpu_percent':psutil.
+					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
 					'platform_system':platform.system(),
