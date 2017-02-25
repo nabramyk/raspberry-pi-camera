@@ -30,7 +30,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_GET(self):
 
-		temp = urlparse(self.path)
+		temp = parse(self.path)
 		print(temp)
 		
 		if self.path=="/":
@@ -127,7 +127,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 		
-		temp = urllib.parse(self.path)
+		temp = parse(self.path)
 		print(temp)
 		
 		global timelapse_running, stored_images
