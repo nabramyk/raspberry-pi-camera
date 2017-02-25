@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
-from urlparse import urlparse, parse_qs
+from urlparse import parse, parse_qs
 from collections import deque
 import subprocess, threading, time, ctypes, urllib, psutil, platform
 
@@ -127,7 +127,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 		
-		temp = urlparse(self.path)
+		temp = urllib.parse(self.path)
 		print(temp)
 		
 		global timelapse_running, stored_images
