@@ -30,32 +30,32 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_GET(self):
 
-		temp = urllib.parse(self.path)
+		temp = urllib.parse.urlparse(self.path)
 		print(temp)
 		
 		if self.path=="/":
-			f = open('views/view.html')
+			f = open('views/view.html',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
 		
 		if self.path=="/views/monitor/":
-			f = open('views/monitor.html')
+			f = open('views/monitor.html',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
 		
 		if self.path=="/views/camera/":
-			f = open('views/camera.html')
+			f = open('views/camera.html',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
 	
 		if self.path=="/views/system_info/":
-			f = open('views/system_info.html')
+			f = open('views/system_info.html',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
@@ -115,10 +115,11 @@ class myHandler(BaseHTTPRequestHandler):
 					'storage_free':psutil.disk_usage('/').free,
 					'storage_percent':psutil.disk_usage('/').percent,
 					}
-			self.wfile.write(xmlTemplate%data)
+			t = bytes(xmlTemplate%data, 'utf-8')
+			self.wfile.write(t)
 	
 		if self.path=="/views/style.css":
-			f = open('views/style.css')
+			f = open('views/style.css',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.end_headers()
@@ -127,7 +128,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 		
-		temp = urllib.parse(self.path)
+		temp = urllib.parse.urlparse(self.path)
 		print(temp)
 		
 		global timelapse_running, stored_images
