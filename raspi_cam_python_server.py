@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
-from urllib import parse, parse_qs
+from urllib import parse
 from collections import deque
 import subprocess, threading, time, ctypes, urllib, psutil, platform
 
