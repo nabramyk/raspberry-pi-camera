@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
 from urlparse import urlparse, parse_qs
 from collections import deque
