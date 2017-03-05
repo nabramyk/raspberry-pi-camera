@@ -14,9 +14,7 @@ except ImportError:
 stored_images = Queue()
 HTTP_PORT = 8080
 timelapse_running = Value(ctypes.c_bool, False)
-STILL_CAPTURE = "raspistill"
-VIDEO_CAPTURE = "raspivid"
-UV_STILL_CAPTURE = "raspistillyuv"
+
 NO_PREVIEW = "-n"
 
 def camera_interval_grab(interval, stored_images, timelapse_running):
@@ -37,7 +35,6 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urllib.parse.urlparse(self.path)
-		print(temp)
 		
 		if self.path=="/":
 			f = open('views/view.html',"rb")
@@ -135,24 +132,20 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		
 		temp = urllib.parse.urlparse(self.path)
-		print(temp)
+		params = temp.query.split('&')
+		print(len(params))
 		
 		global timelapse_running, stored_images
 		
 		if self.path=="/timelapse/start/":
-			self.send_response(200)
-			self.end_headers()
 			timelapse_running.value = True
 			p = Process(target=camera_interval_grab, args=('5', stored_images, timelapse_running)).start()
 				
 		if self.path=="/timelapse/stop/":
-			self.send_response(200)
-			self.end_headers()
 			timelapse_running.value = False
 	
 		if temp.path=="/take_image/":
-			self.send_response(200)
-			self.end_headers()
+			print("Image taken")
 	
 		self.send_response(200)
 		self.end_headers()
