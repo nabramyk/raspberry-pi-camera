@@ -7,7 +7,7 @@
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
 			var params = document.getElementsByClassName("options");
-			var sendToServer = "?mode=" + document.getElementById("camera_mode").value + "&";
+			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
 			
 			for(var i = 0; i < params.length; i++) {
 				sendToServer = sendToServer + params[i].name + "=" + params[i].value + "&";
@@ -52,9 +52,9 @@
 		}
 		
 			//Arrays of object names which will be invisible depending on the camera mode
-	var yuv_options = ["tags_button","raw_button","encoding_button","quality_button","vstab_button","bitrate_button","framerate_button","timeout_button"];
-	var still_options = ["vstab_button","framerate_button","bitrate_button","timeout_button"];
-	var video_options = ["tags_button","raw_button","timelapse_button","quality_button"];
+	var yuv_options = ["tags_pane","raw_pane","encoding_pane","quality_pane","vstab_pane","bitrate_pane","framerate_pane","timeout_pane"];
+	var still_options = ["vstab_pane","framerate_pane","bitrate_pane","timeout_pane"];
+	var video_options = ["tags_pane","raw_pane","timelapse_pane","quality_pane","encoding_pane"];
 	
 	var monitor_data_points = [	"camera_status",
 								"cpu_temperature",
@@ -70,13 +70,13 @@
 	
 	function switch_camera_modes(mode) {	
 		var options = null;
-		if(mode==="still") {
+		if(mode==="raspistill") {
 			options = still_options;
 			document.getElementById("shutter_button").innerHTML = "Take Image";
-		} else if(mode==="video") {
+		} else if(mode==="raspivid") {
 			options = video_options;
 			document.getElementById("shutter_button").innerHTML = "Record Video";
-		} else if(mode==="yuv") {
+		} else if(mode==="raspiyuv") {
 			options = yuv_options;
 			document.getElementById("shutter_button").innerHTML = "Reocrd Image";
 		}
@@ -121,6 +121,14 @@
 			} else {
 				document.getElementById("timelapse_interval").disabled = true;
 				document.getElementById("timelapse_time_unit").disabled = true;
+			}
+		}
+		
+		function toggle_encoding(val) {
+			if(val==="jpg") {
+				document.getElementById("quality_pane").style.display = 'block';
+			} else {
+				document.getElementById("quality_pane").style.display = 'none';
 			}
 		}
 		
