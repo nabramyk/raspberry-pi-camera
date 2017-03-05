@@ -4,19 +4,18 @@
 	<button id="shutter_button" onClick="take_image()">Take Image</button>
 </div>
 <div id="camera_options">
-	
 	<div id="camera_modes_pane">
 		<fieldset>
 		<legend>Camera Mode</legend>
 		<select id="camera_mode" class="mode" onchange="switch_camera_modes(this.value)">
-			<option id="still" value="still">Still Capture</option>
-			<option id="video" value="video">Video Capture</option>
-			<option id="yuv" value="yuv">YUV Capture</option>
+			<option id="still" value="raspistill">Still Capture</option>
+			<option id="video" value="raspivid">Video Capture</option>
+			<option id="yuv" value="raspiyuv">YUV Capture</option>
 		</select>
 		</fieldset>
 	</div>
 	
-	<div id="resolution_pane">
+	<div id="resolution_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Resolution</legend>
 		Width<input type="number" id="aspect_width" name="width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
@@ -46,10 +45,10 @@
 		</fieldset>
 	</div>
 	
-	<div id="encoding_pane">
+	<div id="encoding_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Encoding</legend>
-		<select name="encoding" class="options">
+		<select name="encoding" class="options" onchange="toggle_encoding(this.value)">
 			<option value="jpg">JPG</option>
 			<option value="gif">GIF</option>
 			<option value="png">PNG</option>
@@ -58,91 +57,91 @@
 		</fieldset>
 	</div>
 	
-	<div id="quality_pane">
+	<div id="quality_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Quality</legend>
 		<input type="number" name="quality" class="options" max="100" min="0" value="75" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="bayer_data">
+	<div id="raw_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Bayer Data</legend>
 		Add raw Bayer data<input type="checkbox" name="raw" class="options">
 		</fieldset>
 	</div>
 	
-	<div id="sharpness">
+	<div id="sharpness_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Sharpness</legend>
 		<input type="number" name="sharpness" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
-	<div id="contrast">
+	<div id="contrast_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Contrast</legend>
 		<input type="number" name="contrast" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
-	<div id="brightness">
+	<div id="brightness_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Brightness</legend>
 		<input type="number" name="brightness" max="100" min="0" value="50" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="saturation">
+	<div id="saturation_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Saturation</legend>
 		<input type="number" name="saturation" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
-	<div id="iso">
+	<div id="iso_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>ISO</legend>
 		<input type="number" name="ISO" max="800" min="100" value="400" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="vid_stab">
+	<div id="vid_stab_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Video Stabilization</legend>
 			Turn on video stabilization<input type="checkbox" name="--vstab">
 			</fieldset>
 	</div>
 	
-	<div id="ev_comp">
+	<div id="ev_comp_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>EV Compensation</legend>
 		<input type="number" name="ev" max="10" min="-10" value="0" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="fps_pane">
+	<div id="fps_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Framerate</legend>
 		<input type="number" name="fps" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="timeout_pane">
+	<div id="timeout_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timeout</legend>
 		<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="bitrate_pane">
+	<div id="bitrate_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Bitrate</legend>
 		<input type="number" name="bitrate" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="exposure_pane">
+	<div id="exposure_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Exposure Mode</legend>
 		<select name="exposure" class="options">
@@ -162,7 +161,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="aws">
+	<div id="aws" class="additional_camera_options">
 		<fieldset>
 			<legend>Automatic White Balance</legend>
 		<select name="aws" class="options">
@@ -179,7 +178,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="imfx">
+	<div id="imfx" class="additional_camera_options">
 		<fieldset>
 			<legend>Image Effects</legend>
 		<select name="imxfx" class="options">
@@ -203,7 +202,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="uv_mode">
+	<div id="uv_mode" class="additional_camera_options">
 		<fieldset>
 			<legend>Colour Effect</legend>
 		Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
@@ -211,7 +210,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="meter_mode">
+	<div id="meter_mode" class="additional_camera_options">
 		<fieldset>
 			<legend>Metering Mode</legend>
 		<select name="metering" class="options">
@@ -223,7 +222,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="rot_or">
+	<div id="rot_or" class="additional_camera_options">
 		<fieldset>
 			<legend>Rotation & Orientation</legend>
 		Rotation:
@@ -239,7 +238,7 @@
 		</fieldset>
 	</div>
 	
-	<div id="timelapse_pane">
+	<div id="timelapse_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timelapse</legend>
 		<input type="checkbox" name="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
@@ -253,14 +252,14 @@
 		</fieldset>
 	</div>
 	
-	<div id="roi_pane">
+	<div id="roi_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Region of Interest</legend>
 		Coming Soon!
 		</fieldset>
 	</div>
 	
-	<div id="tags">
+	<div id="tags_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Tags</legend>
 		<fieldset>
