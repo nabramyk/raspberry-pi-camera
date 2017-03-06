@@ -149,8 +149,8 @@ class myHandler(BaseHTTPRequestHandler):
 		if self.path=="/timelapse/stop/":
 			timelapse_running.value = False
 	
-		if temp.path=="/take_image/":
-			print("Image taken")
+		#if temp.path=="/take_image/":
+
 	
 		self.send_response(200)
 		self.end_headers()
