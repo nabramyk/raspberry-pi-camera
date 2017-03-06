@@ -18,8 +18,8 @@
 	<div id="resolution_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Resolution</legend>
-		Width<input type="number" id="aspect_width" name="width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
-		Height<input type="number" id="aspect_height" name="height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
+		Width<input type="number" id="aspect_width" name="--width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
+		Height<input type="number" id="aspect_height" name="--height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
 		Lock<input type="checkbox" id="aspect_ratio_lock" value="off"><br>
 		Aspect Ratio
 		<select id="aspect_ratio">
@@ -29,7 +29,8 @@
 			<option value="3:1">3:1</option>
 			<option value="16:9">16:9</option>
 		</select>
-		<select name="resolution">
+		Select preset resolution
+		<select name="resolution" onchange="set_aspect_ratio(this.value)">
 			<option value="2592x1944">2592 x 1944 (max)</option>
 			<option value="2560x1920">2560 x 1920</option>
 			<option value="2240x1680">2240 x 1680</option>
@@ -48,7 +49,7 @@
 	<div id="encoding_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Encoding</legend>
-		<select name="encoding" class="options" onchange="toggle_encoding(this.value)">
+		<select name="--encoding" class="options" onchange="toggle_encoding(this.value)">
 			<option value="jpg">JPG</option>
 			<option value="gif">GIF</option>
 			<option value="png">PNG</option>
@@ -60,49 +61,49 @@
 	<div id="quality_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Quality</legend>
-		<input type="number" name="quality" class="options" max="100" min="0" value="75" style="width: 3em">
+		<input type="number" name="--quality" class="options" max="100" min="0" value="75" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="raw_pane" class="additional_camera_options">
+	<div id="bayer_data_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Bayer Data</legend>
-		Add raw Bayer data<input type="checkbox" name="raw" class="options">
+		Add raw Bayer data<input type="checkbox" name="--raw" class="options">
 		</fieldset>
 	</div>
 	
 	<div id="sharpness_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Sharpness</legend>
-		<input type="number" name="sharpness" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" name="--sharpness" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="contrast_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Contrast</legend>
-		<input type="number" name="contrast" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" name="--contrast" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="brightness_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Brightness</legend>
-		<input type="number" name="brightness" max="100" min="0" value="50" style="width: 3em">
+		<input type="number" name="--brightness" max="100" min="0" value="50" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="saturation_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Saturation</legend>
-		<input type="number" name="saturation" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" name="--saturation" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="iso_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>ISO</legend>
-		<input type="number" name="ISO" max="800" min="100" value="400" style="width: 3em">
+		<input type="number" name="--iso" max="800" min="100" value="400" style="width: 3em">
 		</fieldset>
 	</div>
 	
@@ -116,35 +117,35 @@
 	<div id="ev_comp_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>EV Compensation</legend>
-		<input type="number" name="ev" max="10" min="-10" value="0" style="width: 3em">
+		<input type="number" name="--ev" max="10" min="-10" value="0" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="fps_pane" class="additional_camera_options">
+	<div id="framerate_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Framerate</legend>
-		<input type="number" name="fps" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" name="--fps" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="timeout_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timeout</legend>
-		<input type="number" name="timeout" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" name="--timeout" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="bitrate_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Bitrate</legend>
-		<input type="number" name="bitrate" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" name="--bitrate" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="exposure_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Exposure Mode</legend>
-		<select name="exposure" class="options">
+		<select name="--exposure" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
 			<option value="night">Night</option>
@@ -164,7 +165,7 @@
 	<div id="aws" class="additional_camera_options">
 		<fieldset>
 			<legend>Automatic White Balance</legend>
-		<select name="aws" class="options">
+		<select name="--aws" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
 			<option value="sun">Sunny mode</option>
@@ -205,7 +206,7 @@
 	<div id="uv_mode" class="additional_camera_options">
 		<fieldset>
 			<legend>Colour Effect</legend>
-		Set camera to UV mode<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
+		Manually set the colour effect<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
 		Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
 		</fieldset>
 	</div>
