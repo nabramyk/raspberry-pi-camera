@@ -4,6 +4,7 @@
 	<button id="shutter_button" onClick="take_image()">Take Image</button>
 </div>
 <div id="camera_options">
+	
 	<div id="camera_modes_pane">
 		<fieldset>
 		<legend>Camera Mode</legend>
@@ -49,7 +50,7 @@
 	<div id="encoding_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Encoding</legend>
-		<select name="--encoding" class="options" onchange="toggle_encoding(this.value)">
+		<select id="encoding" name="--encoding" class="options" onchange="toggle_encoding(this.value)">
 			<option value="jpg">JPG</option>
 			<option value="gif">GIF</option>
 			<option value="png">PNG</option>
@@ -61,91 +62,91 @@
 	<div id="quality_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Quality</legend>
-		<input type="number" name="--quality" class="options" max="100" min="0" value="75" style="width: 3em">
+		<input type="number" id="quality" name="--quality" class="options" max="100" min="0" value="75" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="bayer_data_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Bayer Data</legend>
-		Add raw Bayer data<input type="checkbox" name="--raw" class="options">
+		Add raw Bayer data<input id="raw" type="checkbox" name="--raw" class="options">
 		</fieldset>
 	</div>
 	
 	<div id="sharpness_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Sharpness</legend>
-		<input type="number" name="--sharpness" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" id="sharpness" name="--sharpness" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="contrast_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Contrast</legend>
-		<input type="number" name="--contrast" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" id="contrast" name="--contrast" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="brightness_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Brightness</legend>
-		<input type="number" name="--brightness" max="100" min="0" value="50" style="width: 3em">
+		<input type="number" id="brightness" name="--brightness" max="100" min="0" value="50" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="saturation_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Saturation</legend>
-		<input type="number" name="--saturation" max="100" min="-100" value="0" style="width: 4em">
+		<input type="number" id="saturation" name="--saturation" max="100" min="-100" value="0" style="width: 4em">
 		</fieldset>
 	</div>
 	
 	<div id="iso_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>ISO</legend>
-		<input type="number" name="--iso" max="800" min="100" value="400" style="width: 3em">
+		<input type="number" id="iso" name="--iso" max="800" min="100" value="400" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="vid_stab_pane" class="additional_camera_options">
+	<div id="vid_stab_pane" class="additional_camera_options" style="display:none">
 		<fieldset>
 			<legend>Video Stabilization</legend>
-			Turn on video stabilization<input type="checkbox" name="--vstab">
+			Turn on video stabilization<input type="checkbox" id="vstab" name="--vstab">
 			</fieldset>
 	</div>
 	
 	<div id="ev_comp_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>EV Compensation</legend>
-		<input type="number" name="--ev" max="10" min="-10" value="0" style="width: 3em">
+		<input type="number" id="ev" name="--ev" max="10" min="-10" value="0" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="framerate_pane" class="additional_camera_options">
+	<div id="framerate_pane" class="additional_camera_options" style="display:none">
 		<fieldset>
 			<legend>Framerate</legend>
-		<input type="number" name="--fps" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" id="fps" name="--fps" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="timeout_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timeout</legend>
-		<input type="number" name="--timeout" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" id="timeout" name="--timeout" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
-	<div id="bitrate_pane" class="additional_camera_options">
+	<div id="bitrate_pane" class="additional_camera_options" style="display:none">
 		<fieldset>
 			<legend>Bitrate</legend>
-		<input type="number" name="--bitrate" max="30" min="2" value="25" style="width: 3em">
+		<input type="number" id="bitrate" name="--bitrate" max="30" min="2" value="25" style="width: 3em">
 		</fieldset>
 	</div>
 	
 	<div id="exposure_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Exposure Mode</legend>
-		<select name="--exposure" class="options">
+		<select id="exposure" name="--exposure" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
 			<option value="night">Night</option>
@@ -162,10 +163,10 @@
 		</fieldset>
 	</div>
 	
-	<div id="aws" class="additional_camera_options">
+	<div id="aws_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Automatic White Balance</legend>
-		<select name="--aws" class="options">
+		<select id="aws" name="--aws" class="options">
 			<option value="off">Off</option>
 			<option value="auto">Auto</option>
 			<option value="sun">Sunny mode</option>
@@ -179,10 +180,10 @@
 		</fieldset>
 	</div>
 	
-	<div id="imfx" class="additional_camera_options">
+	<div id="imxfx_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Image Effects</legend>
-		<select name="imxfx" class="options">
+		<select id="imxfx" name="--imxfx" class="options">
 			<option value="none">None</option>
 			<option value="negative">Negative</option>
 			<option value="solarise">Solarise</option>
@@ -203,53 +204,53 @@
 		</fieldset>
 	</div>
 	
-	<div id="uv_mode" class="additional_camera_options">
+	<div id="uv_mode_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Colour Effect</legend>
-		Manually set the colour effect<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
-		Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
+			Manually set the colour effect<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
+			Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
 		</fieldset>
 	</div>
 	
-	<div id="meter_mode" class="additional_camera_options">
+	<div id="metering_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Metering Mode</legend>
-		<select name="metering" class="options">
-			<option value="average">Average</option>
-			<option value="spot">Spot</option>
-			<option value="backlit">Backlit</option>
-			<option value="matrix">Matrix</option>
-		</select>
+			<select id="metering" name="--metering" class="options">
+				<option value="average">Average</option>
+				<option value="spot">Spot</option>
+				<option value="backlit">Backlit</option>
+				<option value="matrix">Matrix</option>
+			</select>
 		</fieldset>
 	</div>
 	
-	<div id="rot_or" class="additional_camera_options">
+	<div id="rot_or_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Rotation & Orientation</legend>
 		Rotation:
-		<select name="rotation" class="options">
+		<select id="rotation" name="--rotation" class="options">
 			<option value="0">0</option>
 			<option value="90">90</option>
 			<option value="180">180</option>
 			<option value="270">270</option>
 		</select>
 		Flip:
-		Vertical<input type="checkbox" name="--vflip" class="options">
-		Horizontal<input type="checkbox" name="--hflip" class="options">
+		Vertical<input type="checkbox" id="vflip" name="--vflip" class="options">
+		Horizontal<input type="checkbox" id="hflip" name="--hflip" class="options">
 		</fieldset>
 	</div>
 	
 	<div id="timelapse_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timelapse</legend>
-		<input type="checkbox" name="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
-		Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" disabled><br>
-		Time unit:
-		<select id="timelapse_time_unit" disabled>
-			<option>Seconds</option>
-			<option>Minutes</option>
-			<option>Hours</option>
-		</select>
+			<input type="checkbox" name="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
+			Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" disabled><br>
+			Time unit:
+			<select id="timelapse_time_unit" disabled>
+				<option value="seconds">Seconds</option>
+				<option value="minutes">Minutes</option>
+				<option value="hours">Hours</option>
+			</select>
 		</fieldset>
 	</div>
 	
@@ -263,53 +264,54 @@
 	<div id="tags_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Tags</legend>
-		<fieldset>
-		<legend>IFD</legend>
-		ImageWidth<input type="text"><br>
-		ImageLength<input type="text"><br>
-		BitsPerSample<input type="text"><br>
-		Compression<input type="text"><br>
-		PhotometricInterpretation<input type="text"><br>
-		ImageDescription<input type="text"><br>
-		Make<input type="text"><br>
-		Model<input type="text"><br>
-		StripOffsets<input type="text"><br>
-		Orientation<input type="text"><br>
-		SamplesPerPixel<input type="text"><br>
-		RowsPerString<input type="text"><br>
-		StripByteCounts<input type="text"><br>
-		Xresolution<input type="text"><br>
-		Yresolution<input type="text"><br>
-		PlanarConfiguration<input type="text"><br>
-		ResolutionUnit<input type="text"><br>
-		TransferFunction<input type="text"><br>
-		Software<input type="text"><br>
-		DateTime<input type="text"><br>
-		Artist<input type="text"><br>
-		WhitePoint<input type="text"><br>
-		PrimaryChromaticities<input type="text"><br>
-		JPEGInterchangeFormat<input type="text"><br>
-		JPEGInterchangeFormatLength<input type="text"><br>
-		YcbCrCoefficients<input type="text"><br>
-		YcbCrSubSampling<input type="text"><br>
-		YcbCrPositioning<input type="text"><br>
-		ReferenceBlackWhite<input type="text"><br>
-		Copyright<input type="text"><br>
-		</fieldset>
-		<fieldset>
-		<legend>EXIF</legend>
-		ExposureTime<input type="text"><br>
-		FNumber<input type="text"><br>
-		ExposureProgram<input type="text"><br>
-		SpectralSensitivity<input type="text"><br>
-		aISOSpeedRatings<input type="text"><br>
-		OECF<input type="text"><br>
-		ExifVersion<input type="text"><br>
-		DateTimeOriginal<input type="text"><br>
-		DateTimeDigitized<input type="text"><br>
-		ComponentsConfiguration<input type="text"><br>
-		CompressedBitsPerPixel<input type="text"><br>
-		ShutterSpeedValue<input type="text"><br>
+			<fieldset>
+				<legend>IFD</legend>
+				Image Width<input name="ImageWidth" class="ifd_tags" type="text"><br>
+				Image Length<input name="ImageLength" class="ifd_tags" type="text"><br>
+				Bits Per Sample<input name="BitsPerSample" class="ifd_tags" type="text"><br>
+				Compression<input name="Compression" class="ifd_tags" type="text"><br>
+				Photometric Interpretation<input name="PhotometricInterpretation" class="ifd_tags" type="text"><br>
+				Image Description<input name="ImageDescription" class="ifd_tags" type="text"><br>
+				Make<input name="Make" class="ifd_tags" type="text"><br>
+				Model<input name="Model" class="ifd_tags" type="text"><br>
+				Strip Offsets<input name="StripOffsets" class="ifd_tags" type="text"><br>
+				Orientation<input name="Orientation" class="ifd_tags" type="text"><br>
+				Samples Per Pixel<input name="SamplesPerPixel" class="ifd_tags" type="text"><br>
+				Rows Per String<input name="RowsPerString" class="ifd_tags" type="text"><br>
+				StripByteCounts<input name="StripByteCounts" class="ifd_tags" type="text"><br>
+				X Resolution<input name="Xresolution" class="ifd_tags" type="text"><br>
+				Y Resolution<input name="Yresolution" class="ifd_tags" type="text"><br>
+				Planar Configuration<input name="PlanarConfiguration" class="ifd_tags" type="text"><br>
+				Resolution Unit<input name="ResolutionUnit" class="ifd_tags" type="text"><br>
+				Transfer Function<input name="TransferFunction" class="ifd_tags" type="text"><br>
+				Software<input name="Software" class="ifd_tags" type="text"><br>
+				Date/Time<input name="DateTime" class="ifd_tags" type="text"><br>
+				Artist<input name="Artist" class="ifd_tags" type="text"><br>
+				White Point<input name="WhitePoint" class="ifd_tags" type="text"><br>
+				Primary Chromaticities<input name="PrimaryChromaticities" class="ifd_tags" type="text"><br>
+				JPEG Interchange Format<input name="JPEGInterchangeFormat" class="ifd_tags" type="text"><br>
+				JPEGInterchangeFormatLength<input name="JPEGInterchangeFormatLength" class="ifd_tags" type="text"><br>
+				Ycb Cr Coefficients<input name="YcbCrCoefficients" class="ifd_tags" type="text"><br>
+				Ycb Cr SubSampling<input name="YcbCrSubSampling" class="ifd_tags" type="text"><br>
+				Ycb Cr Positioning<input name="YcbCrPositionioning" class="ifd_tags" type="text"><br>
+				Reference Black White<input name="ReferenceBlackWhite" class="ifd_tags" type="text"><br>
+				Copyright<input name="Copyright" class="ifd_tags" type="text"><br>
+			</fieldset>
+		
+			<fieldset>
+				<legend>EXIF</legend>
+				Exposure Time<input name="ExposureTime" class="exif_tags" type="text"><br>
+				F Number<input name="FNumber" class="exif_tags" type="text"><br>
+				Exposure Program<input name="ExposureProgram" class="exif_tags" type="text"><br>
+				Spectral Sensitivity<input name="SpectralSensitivity" class="exif_tags" type="text"><br>
+				aISOSpeedRatings<input name="aISOSpeedRatings" class="exif_tags" type="text"><br>
+				OECF<input name="OECF" class="exif_tags" type="text"><br>
+				Exif Version<input name="ExifVersion" class="exif_tags" type="text"><br>
+				Date Time Original<input name="DateTimeOriginal" class="exif_tags" type="text"><br>
+				Date Time Digitized<input name="DateTimeDigitized" class="exif_tags" type="text"><br>
+				Components Configuration<input name="ComponentsConfiguration" class="exif_tags" type="text"><br>
+				Compressed Bits Per Pixel<input name="CompressedBitsPerPixel" class="exif_tags" type="text"><br>
+				ShutterSpeedValue<input name="ShutterSpeedValue" type="text"><br>
 		ApertureValue<input type="text"><br>
 		BrightnessValue<input type="text"><br>
 		ExposureBiasValue<input type="text"><br>
