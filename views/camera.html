@@ -20,9 +20,9 @@
 		<legend>Resolution</legend>
 		Width<input type="number" id="aspect_width" name="--width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
 		Height<input type="number" id="aspect_height" name="--height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
-		Lock<input type="checkbox" id="aspect_ratio_lock" value="off"><br>
+		Lock<input type="checkbox" id="aspect_ratio_lock" onchange="toggle_aspect_ratio(this.checked)"><br>
 		Aspect Ratio
-		<select id="aspect_ratio">
+		<select id="aspect_ratio" disabled>
 			<option value="4:3">4:3</option>
 			<option value="3:2">3:2</option>
 			<option value="5:4">5:4</option>
