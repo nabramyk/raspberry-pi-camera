@@ -136,6 +136,10 @@
 			}
 		}
 		
+		function toggle_aspect_ratio(checked) {
+				document.getElementById("aspect_ratio").disabled = !checked;
+		}
+		
 		function retrieve() {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
@@ -169,9 +173,9 @@
 		}
 		
 		function set_aspect_ratio(ratio) {
-			if(ratio == '') {
-				
-			}
+			var res = ratio.split("x");
+			document.getElementById("aspect_width").value = res[0];
+			document.getElementById("aspect_height").value = res[1];
 		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
