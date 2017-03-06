@@ -132,8 +132,13 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		
 		temp = urllib.parse.urlparse(self.path)
-		params = temp.query.split('&')
-		print(len(params))
+		temp2 = temp.query.split('&')
+		params = []
+		for p in temp2:
+			t = p.split('=')
+			for t2 in t:
+				params.append(t2)
+		print(params)
 		
 		global timelapse_running, stored_images
 		
