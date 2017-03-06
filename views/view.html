@@ -4,13 +4,25 @@
 
 		var url = 'http://localhost:8080/';
 
+		var still = ["aspect_width","aspect_height","encoding","quality","sharpness","contrast","brightness","saturation","iso","ev","exposure","aws","imxfx","metering","rotation","vflip","hflip","raw","output"];
+		var yuv = ["aspect_width","aspect_height","sharpness","contrast","brightness","saturation","iso","ev","exposure","awb","imxfx","metering","rotation","hflip","vflip","vstab"];
+		var video = ["aspect_width","aspect_height"];
+
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
-			var params = document.getElementsByClassName("options");
+			var params = [];
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
 			
+			if(document.getElementById("camera_mode").value==="raspistill") {
+				params = still;
+			} else if(document.getElementById("camera_mode").value==="raspivid") {
+				params = video;
+			} else {
+				params = yuv;
+			}
+			
 			for(var i = 0; i < params.length; i++) {
-				sendToServer = sendToServer + params[i].name + "=" + params[i].value + "&";
+				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 			}
 			
 			xmlHttp.open("POST", url+"take_image/"+sendToServer, true);
@@ -51,7 +63,7 @@
 			}
 		}
 		
-			//Arrays of object names which will be invisible depending on the camera mode
+	//Arrays of object names which will be invisible depending on the camera mode
 	var yuv_options = ["tags_pane","bayer_data_pane","encoding_pane","quality_pane","vid_stab_pane","bitrate_pane","framerate_pane","timeout_pane"];
 	var still_options = ["vid_stab_pane","framerate_pane","bitrate_pane","timeout_pane"];
 	var video_options = ["tags_pane","bayer_data_pane","timelapse_pane","quality_pane","encoding_pane"];
@@ -161,8 +173,7 @@
 				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
 				}
-			};
-				
+			};			
 			xmlHttp.open("GET", 'http://localhost:8080/views/' + mode + '/');
 			xmlHttp.send(null);
 			var params = document.getElementsByClassName("navigation_button");
@@ -177,6 +188,7 @@
 			document.getElementById("aspect_width").value = res[0];
 			document.getElementById("aspect_height").value = res[1];
 		}
+		
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
 </head>
