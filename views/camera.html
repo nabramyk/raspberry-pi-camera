@@ -1,6 +1,6 @@
-<div id="output">
+<div id="output_pane">
 	Output filename
-	<input type="text">
+	<input id="output" type="text">
 	<button id="shutter_button" onClick="take_image()">Take Image</button>
 </div>
 <div id="camera_options">
@@ -147,8 +147,8 @@
 		<fieldset>
 			<legend>Exposure Mode</legend>
 		<select id="exposure" name="--exposure" class="options">
-			<option value="off">Off</option>
 			<option value="auto">Auto</option>
+			<option value="off">Off</option>
 			<option value="night">Night</option>
 			<option value="backlight">Backlight</option>
 			<option value="spotlight">Spotlight</option>
@@ -167,8 +167,8 @@
 		<fieldset>
 			<legend>Automatic White Balance</legend>
 		<select id="aws" name="--aws" class="options">
-			<option value="off">Off</option>
 			<option value="auto">Auto</option>
+			<option value="off">Off</option>
 			<option value="sun">Sunny mode</option>
 			<option value="cloudshade">Cloudy mode</option>
 			<option value="tungsten">Tungsten lighting mode</option>
@@ -243,10 +243,10 @@
 	<div id="timelapse_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Timelapse</legend>
-			<input type="checkbox" name="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
-			Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" disabled><br>
+			<input type="checkbox" name="timelapse" id="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
+			Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" name="interval" disabled><br>
 			Time unit:
-			<select id="timelapse_time_unit" disabled>
+			<select id="timelapse_time_unit" name="time-unit" disabled>
 				<option value="seconds">Seconds</option>
 				<option value="minutes">Minutes</option>
 				<option value="hours">Hours</option>
