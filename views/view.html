@@ -4,9 +4,47 @@
 
 		var url = 'http://localhost:8080/';
 
-		var still = ["aspect_width","aspect_height","encoding","quality","sharpness","contrast","brightness","saturation","iso","ev","exposure","aws","imxfx","metering","rotation","vflip","hflip","raw","output"];
-		var yuv = ["aspect_width","aspect_height","sharpness","contrast","brightness","saturation","iso","ev","exposure","awb","imxfx","metering","rotation","hflip","vflip","vstab"];
-		var video = ["aspect_width","aspect_height"];
+		var still = [	"aspect_width",
+						"aspect_height",
+						"encoding",
+						"sharpness",
+						"contrast",
+						"brightness",
+						"saturation",
+						"iso",
+						"ev",
+						"exposure",
+						"aws",
+						"imxfx",
+						"metering",
+						"rotation",
+						"vflip",
+						"hflip",
+						"raw",
+						"timelapse_enabled",
+						"timelapse_interval",
+						"timelapse_time_unit",
+						"output" ];
+					
+		var yuv = [	"aspect_width",
+					"aspect_height",
+					"sharpness",
+					"contrast",
+					"brightness",
+					"saturation",
+					"iso",
+					"ev",
+					"exposure",
+					"awb","imxfx",
+					"metering",
+					"rotation",
+					"hflip",
+					"vflip",
+					"vstab"];
+					
+		var video = [	"aspect_width",
+						"aspect_height",
+						"vstab" ];
 
 		function take_image() {
 			var xmlHttp = new XMLHttpRequest();
@@ -22,7 +60,19 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
-				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
+				if(document.getElementById(params[i]).type==="checkbox") {
+					sendToServer = sendToServer + document.getElementById(params[i]).name;
+					if(params[i]==="timelapse_enabled") {
+						sendToServer = sendToServer + "=" + document.getElementById(params[i]).checked + "&";
+					} else {
+						sendToServer += "&";
+					}
+				} else {
+					sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
+					if(document.getElementById(params[i]).value==="jpg") {
+						sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
+					} 
+				}
 			}
 			
 			xmlHttp.open("POST", url+"take_image/"+sendToServer, true);
