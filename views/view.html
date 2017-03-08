@@ -2,7 +2,9 @@
 <head>
 	<script>
 
-		var url = 'http://localhost:8080/';
+		var server_url = '192.168.1.21';
+		var server_port = ':8080';
+		var url = 'http://' + server_url + server_port + '/';
 
 		var still = [	"aspect_width",
 						"aspect_height",
@@ -88,7 +90,7 @@
 					retrieve();
 				}
 			};
-			xmlHttp.open("GET", 'http://localhost:8080/views/monitor/');
+			xmlHttp.open("GET", url + 'views/monitor/');
 			xmlHttp.send(null);
 		}
 		
@@ -100,7 +102,7 @@
 				setTimeout(update, 1000);
 				}
 			}					
-			xmlHttp.open("GET", 'http://localhost:8080/temp/');
+			xmlHttp.open("GET", url + 'temp/');
 			xmlHttp.send(null);
 		}
 		
@@ -213,7 +215,7 @@
 					setTimeout(retrieve, 1000);
 				}
 			};
-			xmlHttp.open("GET", 'http://localhost:8080/monitor/');
+			xmlHttp.open("GET", url + 'monitor/');
 			xmlHttp.send(null);
 		}
 	
@@ -224,7 +226,7 @@
 					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
 				}
 			};			
-			xmlHttp.open("GET", 'http://localhost:8080/views/' + mode + '/');
+			xmlHttp.open("GET", url + 'views/' + mode + '/');
 			xmlHttp.send(null);
 			var params = document.getElementsByClassName("navigation_button");
 			for(var i = 0; i < params.length; i++) {
