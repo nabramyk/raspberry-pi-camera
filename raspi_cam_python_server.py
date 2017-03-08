@@ -138,7 +138,7 @@ class myHandler(BaseHTTPRequestHandler):
 			for t2 in t:
 				params.append(t2)
 		print(params)
-		print(socket.gethostname())
+		print(socket.gethostbyname(socket.gethostname()))
 		
 		global timelapse_running, stored_images
 		
