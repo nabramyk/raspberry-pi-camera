@@ -94,7 +94,6 @@ class myHandler(BaseHTTPRequestHandler):
 								<platform_machine>%(platform_machine)s</platform_machine>
 								<platform_version>%(platform_version)s</platform_version>
 								<platform_system>%(platform_system)s</platform_system>
-								<platform_processor>%(platform_processor)s</platform_processor>
 								<storage_total>%(storage_total)s</storage_total>
 								<storage_used>%(storage_used)s</storage_used>
 								<storage_free>%(storage_free)s</storage_free>
@@ -112,7 +111,6 @@ class myHandler(BaseHTTPRequestHandler):
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
 					'platform_system':platform.system(),
-					'platform_processor':'',
 					'storage_total':psutil.disk_usage('/').total,
 					'storage_used':psutil.disk_usage('/').used,
 					'storage_free':psutil.disk_usage('/').free,
