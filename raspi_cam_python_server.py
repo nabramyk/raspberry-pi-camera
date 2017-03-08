@@ -1,10 +1,9 @@
 #!/usr/bin/python
-import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
 from urllib import parse
 from collections import deque
-import subprocess, threading, time, ctypes, urllib, platform
+import subprocess, threading, time, ctypes, urllib, platform, sys, socket
 
 try:
 	import psutil
@@ -35,6 +34,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urllib.parse.urlparse(self.path)
+		print(self.path)
 		
 		if self.path=="/":
 			f = open('views/view.html',"rb")
@@ -130,7 +130,6 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 	
 	def do_POST(self):
-		
 		temp = urllib.parse.urlparse(self.path)
 		temp2 = temp.query.split('&')
 		params = []
@@ -139,6 +138,7 @@ class myHandler(BaseHTTPRequestHandler):
 			for t2 in t:
 				params.append(t2)
 		print(params)
+		print(self.path)
 		
 		global timelapse_running, stored_images
 		
