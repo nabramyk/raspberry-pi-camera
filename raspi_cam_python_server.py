@@ -101,12 +101,12 @@ class myHandler(BaseHTTPRequestHandler):
 							</root>"""
 			
 			# Uncomment this line for use on the raspberry pi
-			#output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
-			#temperature = output.communicate()[0]
+			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
+			temperature = output.communicate()[0]
 			
 			data = 	{
 					'camera_status':'not running',
-					'cpu_temperature':'blank',
+					'cpu_temperature':temperature,
 					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
