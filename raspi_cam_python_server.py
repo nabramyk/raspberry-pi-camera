@@ -112,7 +112,7 @@ class myHandler(BaseHTTPRequestHandler):
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
 					'platform_system':platform.system(),
-					#'platform_processor':platform.processor(),
+					'platform_processor':'',
 					'storage_total':psutil.disk_usage('/').total,
 					'storage_used':psutil.disk_usage('/').used,
 					'storage_free':psutil.disk_usage('/').free,
