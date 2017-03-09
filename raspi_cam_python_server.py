@@ -27,6 +27,7 @@ def camera_interval_grab(interval, stored_images, timelapse_running):
 		stored_images.put(temp)
 		time.sleep(float(interval))
 
+
 #This is the local server
 
 class myHandler(BaseHTTPRequestHandler):
