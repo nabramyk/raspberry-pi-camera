@@ -19,8 +19,8 @@
 	<div id="resolution_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Resolution</legend>
-		Width<input type="number" id="aspect_width" name="--width" class="options" max="2592" min="320" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
-		Height<input type="number" id="aspect_height" name="--height" class="options" max="1944" min="240" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
+		Width<input type="number" id="aspect_width" name="--width" class="options" value="1280" max="2592" min="320" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
+		Height<input type="number" id="aspect_height" name="--height" class="options" value="960" max="1944" min="240" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
 		Lock<input type="checkbox" id="aspect_ratio_lock" onchange="toggle_aspect_ratio(this.checked)"><br>
 		Aspect Ratio
 		<select id="aspect_ratio" disabled>
