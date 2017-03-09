@@ -19,8 +19,8 @@
 	<div id="resolution_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Resolution</legend>
-		Width<input type="number" id="aspect_width" name="--width" class="options" max="2592" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
-		Height<input type="number" id="aspect_height" name="--height" class="options" max="1944" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
+		Width<input type="number" id="aspect_width" name="--width" class="options" max="1280" min="320" value="1920" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
+		Height<input type="number" id="aspect_height" name="--height" class="options" max="960" min="240" value="1080" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
 		Lock<input type="checkbox" id="aspect_ratio_lock" onchange="toggle_aspect_ratio(this.checked)"><br>
 		Aspect Ratio
 		<select id="aspect_ratio" disabled>
@@ -38,7 +38,7 @@
 			<option value="2048x1536">2048 x 1536</option>
 			<option value="1600x1200">1600 x 1200</option>
 			<option value="1536x1180">1536 x 1180</option>
-			<option value="1280x960">1280 x 960</option>
+			<option value="1280x960" selected="selected">1280 x 960</option>
 			<option value="1024x768">1024 x 768</option>
 			<option value="800x600">800 x 600</option>
 			<option value="640x480">640 x 480</option>
