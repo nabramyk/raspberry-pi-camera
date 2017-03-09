@@ -232,6 +232,9 @@
 				params[i].value="unselected";
 			}
 			document.getElementById(mode).value="selected";
+			if(mode==="monitor") {
+				retrieve();
+			}
 		}
 		
 		function set_aspect_ratio(ratio) {
