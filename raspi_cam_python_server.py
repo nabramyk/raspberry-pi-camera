@@ -103,6 +103,7 @@ class myHandler(BaseHTTPRequestHandler):
 			# Uncomment this line for use on the raspberry pi
 			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
 			temperature = output.communicate()[0].decode()
+			print(temperature)
 			temp = temperature[7:8] + '.' + temperature[9]
 			
 			data = 	{
