@@ -117,6 +117,7 @@ th, td {
 	color: white;
 	background-color: #2952a3;
 	border: 5px solid black;
+	margin: auto;
 }
 		
 #output {
