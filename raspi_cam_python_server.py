@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
 from urllib import parse
 from collections import deque
-import subprocess, threading, time, ctypes, urllib, platform, sys, socket
+import subprocess, threading, time, ctypes, urllib, platform, sys, socket, math
 
 try:
 	import psutil
@@ -27,6 +27,11 @@ def camera_interval_grab(interval, stored_images, timelapse_running):
 		stored_images.put(temp)
 		time.sleep(float(interval))
 
+
+def convert_bytes(b):
+	sizes = ['Bytes', 'KB', 'MB', 'GB']
+	i = parseInt(math.floor(math.log10(b) / math.log10(1024)))
+	return math.round(b / math.pow(1024, i), 2) + ' ' + sizes[i]
 
 #This is the local server
 
@@ -112,7 +117,7 @@ class myHandler(BaseHTTPRequestHandler):
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
 					'platform_system':platform.system(),
-					'storage_total':psutil.disk_usage('/').total,
+					'storage_total':convert_bytes(psutil.disk_usage('/').total),
 					'storage_used':psutil.disk_usage('/').used,
 					'storage_free':psutil.disk_usage('/').free,
 					'storage_percent':psutil.disk_usage('/').percent,
