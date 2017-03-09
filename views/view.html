@@ -61,6 +61,11 @@
 				params = yuv;
 			}
 			
+			if(document.getElementById("output").value==="") {
+				alert("Need an output file name");
+				return;
+			}
+			
 			for(var i = 0; i < params.length; i++) {
 				if(document.getElementById(params[i]).type==="checkbox") {
 					sendToServer = sendToServer + document.getElementById(params[i]).name;
