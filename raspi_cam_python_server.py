@@ -142,6 +142,7 @@ class myHandler(BaseHTTPRequestHandler):
 			for t2 in t:
 				params.append(t2)
 		
+		print(params)
 		output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
 		global timelapse_running, stored_images
