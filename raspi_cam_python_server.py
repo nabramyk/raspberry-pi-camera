@@ -104,7 +104,7 @@ class myHandler(BaseHTTPRequestHandler):
 			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
 			temperature = output.communicate()[0].decode()
 			print(temperature)
-			temp = temperature[7:8] + '.' + temperature[9]
+			temp = temperature[5:7] + '.' + temperature[9]
 			
 			data = 	{
 					'camera_status':'not running',
