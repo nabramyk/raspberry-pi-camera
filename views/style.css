@@ -36,6 +36,10 @@ table, th, td {
 	border: 1px solid black;
 }
 		
+th, td {
+	text-align: center;
+}
+
 .navigation_button[value=unselected] {
 	background-color: #2952a3;
 	color: white;
