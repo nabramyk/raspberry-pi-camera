@@ -35,7 +35,6 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 
 		temp = urllib.parse.urlparse(self.path)
-		print(self.path)
 		
 		if self.path=="/":
 			f = open('views/view.html',"rb")
@@ -136,8 +135,6 @@ class myHandler(BaseHTTPRequestHandler):
 			t = p.split('=')
 			for t2 in t:
 				params.append(t2)
-		print(params)
-		print(socket.gethostbyname(socket.gethostname()))
 		
 		global timelapse_running, stored_images
 		
