@@ -155,6 +155,8 @@ class myHandler(BaseHTTPRequestHandler):
 				elif t2=='time-unit':
 					timelapse_time_unit = t[1]
 					break
+				elif t2=='':
+					break
 				else:
 					params.append(t2)
 		
