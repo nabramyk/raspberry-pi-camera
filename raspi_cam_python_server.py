@@ -31,7 +31,7 @@ def camera_interval_grab(interval, stored_images, timelapse_running):
 def convert_bytes(b):
 	sizes = ['Bytes', 'KB', 'MB', 'GB']
 	i = math.floor(math.log10(b) / math.log10(1024))
-	return math.round(b / math.pow(1024, i), 2) + ' ' + sizes[i]
+	return round(b / math.pow(1024, i), 2) + ' ' + sizes[i]
 
 #This is the local server
 
