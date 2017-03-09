@@ -26,6 +26,10 @@ option {
 	font-size: 20px;
 	text-align: center;
 }
+
+table {
+	width: 100%;
+}
 		
 .navigation_button[value=unselected] {
 	background-color: #2952a3;
