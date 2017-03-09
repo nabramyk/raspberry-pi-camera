@@ -12,7 +12,10 @@ except ImportError:
 
 stored_images = Queue()
 HTTP_PORT = 8080
+
 timelapse_running = Value(ctypes.c_bool, False)
+timelapse_interval = 0
+timelapse_time_unit = ''
 
 NO_PREVIEW = "-n"
 
@@ -134,18 +137,31 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 	
 	def do_POST(self):
+
+		global timelapse_running, stored_images
+		
 		temp = urllib.parse.urlparse(self.path)
 		temp2 = temp.query.split('&')
 		params = []
 		for p in temp2:
 			t = p.split('=')
 			for t2 in t:
-				params.append(t2)
+				if t2=='timelapse':
+					timelapse_running.value = t[1]
+					continue
+				elif t2=='interval':
+					timelapse_interval = t[1]
+					continue
+				elif t2=='time-unit':
+					timelapse_time_unit = t[1]
+					continue
+				else:
+					params.append(t2)
 		
 		print(params)
 		output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
-		global timelapse_running, stored_images
+
 		
 		if self.path=="/timelapse/start/":
 			timelapse_running.value = True
