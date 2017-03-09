@@ -27,7 +27,7 @@ option {
 	text-align: center;
 }
 
-table {
+table, th, td {
 	width: 100%;
 	border-collapse: collapse;
 	border: 1px solid black;
