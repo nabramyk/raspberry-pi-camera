@@ -118,8 +118,8 @@ class myHandler(BaseHTTPRequestHandler):
 					'platform_version':platform.version(),
 					'platform_system':platform.system(),
 					'storage_total':convert_bytes(psutil.disk_usage('/').total),
-					'storage_used':psutil.disk_usage('/').used,
-					'storage_free':psutil.disk_usage('/').free,
+					'storage_used':convert_bytes(psutil.disk_usage('/').used),
+					'storage_free':convert_bytes(psutil.disk_usage('/').free),
 					'storage_percent':psutil.disk_usage('/').percent,
 					}
 			t = bytes(xmlTemplate%data, 'utf-8')
