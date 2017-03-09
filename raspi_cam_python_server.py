@@ -148,10 +148,13 @@ class myHandler(BaseHTTPRequestHandler):
 			for t2 in t:
 				if t2=='timelapse':
 					timelapse_running.value = t[1]
+					break
 				elif t2=='interval':
 					timelapse_interval = t[1]
+					break
 				elif t2=='time-unit':
 					timelapse_time_unit = t[1]
+					break
 				else:
 					params.append(t2)
 		
