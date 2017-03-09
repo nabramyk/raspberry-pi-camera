@@ -103,8 +103,7 @@ class myHandler(BaseHTTPRequestHandler):
 			# Uncomment this line for use on the raspberry pi
 			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
 			temperature = output.communicate()[0].decode()
-			print(temperature)
-			temp = temperature[5:7] + '.' + temperature[9]
+			temp = temperature[5:7] + '.' + temperature[8]
 			
 			data = 	{
 					'camera_status':'not running',
