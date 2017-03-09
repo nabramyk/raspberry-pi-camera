@@ -149,7 +149,7 @@ class myHandler(BaseHTTPRequestHandler):
 				if t2=='timelapse':
 					timelapse_running.value = t[1]
 				elif t2=='interval':
-					timelapse_interval = t[[1]
+					timelapse_interval = t[1]
 				elif t2=='time-unit':
 					timelapse_time_unit = t[1]
 				else:
