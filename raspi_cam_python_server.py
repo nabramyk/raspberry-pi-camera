@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from multiprocessing import Process, Queue, Value
 from urllib import parse
 from collections import deque
-import subprocess, threading, time, ctypes, urllib, platform, sys, socket, math
+import subprocess, threading, time, ctypes, urllib, platform, sys, socket, math, os
 
 try:
 	import psutil
@@ -16,6 +16,8 @@ HTTP_PORT = 8080
 timelapse_running = Value(ctypes.c_bool, False)
 timelapse_interval = 0
 timelapse_time_unit = ''
+
+image_directory = "/"
 
 NO_PREVIEW = "-n"
 
@@ -159,11 +161,9 @@ class myHandler(BaseHTTPRequestHandler):
 					break
 				else:
 					params.append(t2)
-		
-		print(params)
+
 		output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
-
 		
 		if self.path=="/timelapse/start/":
 			timelapse_running.value = True
@@ -171,9 +171,6 @@ class myHandler(BaseHTTPRequestHandler):
 				
 		if self.path=="/timelapse/stop/":
 			timelapse_running.value = False
-	
-		#if temp.path=="/take_image/":
-
 	
 		self.send_response(200)
 		self.end_headers()
