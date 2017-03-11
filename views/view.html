@@ -66,6 +66,7 @@
 		function take_image() {
 			
 			document.getElementById("shutter_button").disabled = true;
+			document.getElementById("shutter_button").innerHTML = "Starting..."
 			var xmlHttp = new XMLHttpRequest();
 			var params = [];
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
