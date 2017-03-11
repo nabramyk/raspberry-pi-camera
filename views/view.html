@@ -64,6 +64,8 @@
 						"intra" ];
 
 		function take_image() {
+			
+			document.getElementById("shutter_button").disabled = true;
 			var xmlHttp = new XMLHttpRequest();
 			var params = [];
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
