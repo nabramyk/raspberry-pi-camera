@@ -21,15 +21,16 @@ image_directory = "/"
 
 NO_PREVIEW = "-n"
 
-def camera_interval_grab(interval, stored_images, timelapse_running):
+def camera_interval_grab(parameters, interval, stored_images, timelapse_running):
 
 	while timelapse_running.value:
-		output = subprocess.Popen(["raspistill","-n","-q","40","-w","800","-h","640","-e","jpg","-o","-"], stdout=subprocess.PIPE)
+		#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
 		#i = Image()
 		#i.data = output.communicate()[0]
 		#i.timestamp = time.ctime()
-		temp = output.communicate()[0]
-		stored_images.put(temp)
+		#temp = output.communicate()[0]
+		#stored_images.put(temp)
+		print(parameters)
 		time.sleep(float(interval))
 
 
@@ -164,17 +165,20 @@ class myHandler(BaseHTTPRequestHandler):
 				else:
 					params.append(t2)
 
+		#Convert the interval from seconds to the requested time unit
+		if timelapse_time_unit=='minutes':
+			timelapse_interval = timelapse_interval * 60
+		elif timelapse_time_unit=='hours':
+			timelapse_interval = timelapse_interval * 60 * 60
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
 		# on a device that is not a raspberry pi
 		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
-		if self.path=="/timelapse/start/":
-			timelapse_running.value = True
-			p = Process(target=camera_interval_grab, args=(timelapse_interval, stored_images, timelapse_running)).start()
-				
-		if self.path=="/timelapse/stop/":
-			timelapse_running.value = False
+		print("Taking image")
+		
+		if timelapse_running:
+			p = Process(target=camera_interval_grab, args=(params, timelapse_interval, stored_images, timelapse_running)).start()
 	
 		self.send_response(200)
 		self.end_headers()
