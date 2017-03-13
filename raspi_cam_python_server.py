@@ -30,8 +30,8 @@ def camera_interval_grab(parameters, interval, stored_images, timelapse_running)
 		#i.timestamp = time.ctime()
 		#temp = output.communicate()[0]
 		#stored_images.put(temp)
-		print(parameters)
-		time.sleep(float(interval))
+		print(interval)
+		time.sleep(int(interval))
 
 
 def convert_bytes(b):
@@ -155,7 +155,7 @@ class myHandler(BaseHTTPRequestHandler):
 					timelapse_running.value = t[1]
 					break
 				elif t2=='interval':
-					timelapse_interval = t[1]
+					timelapse_interval = int(t[1])
 					break
 				elif t2=='time-unit':
 					timelapse_time_unit = t[1]
@@ -170,15 +170,16 @@ class myHandler(BaseHTTPRequestHandler):
 			timelapse_interval = timelapse_interval * 60
 		elif timelapse_time_unit=='hours':
 			timelapse_interval = timelapse_interval * 60 * 60
-		# Sends the parameters string to the os and calls the camera function
-		# The next line is commented out for the purposes of testing the program
-		# on a device that is not a raspberry pi
-		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
 		print("Taking image")
 		
 		if timelapse_running:
 			p = Process(target=camera_interval_grab, args=(params, timelapse_interval, stored_images, timelapse_running)).start()
+		#else:
+			# Sends the parameters string to the os and calls the camera function
+			# The next line is commented out for the purposes of testing the program
+			# on a device that is not a raspberry pi
+			# output = subprocess.Popen(params, stdout=subprocess.PIPE)
 	
 		self.send_response(200)
 		self.end_headers()
