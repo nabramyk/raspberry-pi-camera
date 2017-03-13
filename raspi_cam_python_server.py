@@ -21,17 +21,55 @@ image_directory = "/"
 
 NO_PREVIEW = "-n"
 
-def camera_interval_grab(parameters, interval, stored_images, timelapse_running):
+camera_status = "Not Running"
 
-	while timelapse_running.value:
-		#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
-		#i = Image()
-		#i.data = output.communicate()[0]
-		#i.timestamp = time.ctime()
-		#temp = output.communicate()[0]
-		#stored_images.put(temp)
-		print(interval)
-		time.sleep(int(interval))
+def camera_grab(parameters):
+
+	global timelapse_running, stored_images
+	p = urllib.parse.urlparse(parameters)
+	temp = p.query.split('&')
+	params = []
+	for p in temp:
+		t = p.split('=')
+		for t2 in t:
+			if t2=='timelapse':
+				timelapse_running.value = t[1]
+				break
+			elif t2=='interval':
+				timelapse_interval = int(t[1])
+				break
+			elif t2=='time-unit':
+				timelapse_time_unit = t[1]
+				break
+			elif t2=='':
+				break
+			else:
+				params.append(t2)
+	
+	camera_status = "Running"
+		
+	if timelapse_running.value:
+		#Convert the interval from seconds to the requested time unit
+		if timelapse_time_unit=='minutes':
+			timelapse_interval = timelapse_interval * 60
+		elif timelapse_time_unit=='hours':
+			timelapse_interval = timelapse_interval * 60 * 60
+		while timelapse_running.value:
+			#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
+			#i = Image()
+			#i.data = output.communicate()[0]
+			#i.timestamp = time.ctime()
+			#temp = output.communicate()[0]
+			#stored_images.put(temp)
+			print(interval)
+			time.sleep(int(timelapse_interval))
+	else:
+		# Sends the parameters string to the os and calls the camera function
+		# The next line is commented out for the purposes of testing the program
+		# on a device that is not a raspberry pi
+		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
+		camera_status = "Not Running"
+		print(camera_status)
 
 
 def convert_bytes(b):
@@ -119,7 +157,7 @@ class myHandler(BaseHTTPRequestHandler):
 			temp = 'blank'
 			
 			data = 	{
-					'camera_status':'not running',
+					'camera_status':camera_status,
 					'cpu_temperature': temp,
 					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
@@ -142,44 +180,8 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 	
 	def do_POST(self):
-
-		global timelapse_running, stored_images
-		
-		temp = urllib.parse.urlparse(self.path)
-		temp2 = temp.query.split('&')
-		params = []
-		for p in temp2:
-			t = p.split('=')
-			for t2 in t:
-				if t2=='timelapse':
-					timelapse_running.value = t[1]
-					break
-				elif t2=='interval':
-					timelapse_interval = int(t[1])
-					break
-				elif t2=='time-unit':
-					timelapse_time_unit = t[1]
-					break
-				elif t2=='':
-					break
-				else:
-					params.append(t2)
-
-		#Convert the interval from seconds to the requested time unit
-		if timelapse_time_unit=='minutes':
-			timelapse_interval = timelapse_interval * 60
-		elif timelapse_time_unit=='hours':
-			timelapse_interval = timelapse_interval * 60 * 60
-		
-		print("Taking image")
-		
-		if timelapse_running:
-			p = Process(target=camera_interval_grab, args=(params, timelapse_interval, stored_images, timelapse_running)).start()
-		#else:
-			# Sends the parameters string to the os and calls the camera function
-			# The next line is commented out for the purposes of testing the program
-			# on a device that is not a raspberry pi
-			# output = subprocess.Popen(params, stdout=subprocess.PIPE)
+		print(self.path)
+		p = Process(target=camera_grab, args=([self.path])).start()
 	
 		self.send_response(200)
 		self.end_headers()
