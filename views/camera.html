@@ -1,17 +1,13 @@
 <div id="output_pane">
-	<table>
-		<tr>
-			<td>
-				<fieldset>
-					<legend>Output Settings</legend>
-					Output filename<input id="output" name="-o" type="text">
-				</fieldset>
-			</td>
-			<td>
-				<button id="shutter_button" onClick="take_image()">Take Image</button>
-			</td>
-		</tr>
-	</table>
+	<div id="output_settings_pane">
+	<fieldset>
+		<legend>Output Settings</legend>
+		Output filename<input id="output" name="-o" type="text">
+	</fieldset>
+	</div>
+	<div id="output_button_pane">
+		<button id="shutter_button" onClick="take_image()">Take Image</button>
+	</div>
 </div>
 <div id="camera_options">
 	

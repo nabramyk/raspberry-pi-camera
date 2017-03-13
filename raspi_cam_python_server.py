@@ -110,10 +110,12 @@ class myHandler(BaseHTTPRequestHandler):
 								<storage_percent>%(storage_percent)s</storage_percent>
 							</root>"""
 			
+			# Grabs the temperature of the raspberry pi's cpu
 			# Uncomment this line for use on the raspberry pi
-			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
-			temperature = output.communicate()[0].decode()
-			temp = temperature[5:7] + '.' + temperature[8]
+			# output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
+			# temperature = output.communicate()[0].decode()
+			# temp = temperature[5:7] + '.' + temperature[8]
+			temp = 'blank'
 			
 			data = 	{
 					'camera_status':'not running',
@@ -162,12 +164,14 @@ class myHandler(BaseHTTPRequestHandler):
 				else:
 					params.append(t2)
 
-		output = subprocess.Popen(params, stdout=subprocess.PIPE)
-		
+		# Sends the parameters string to the os and calls the camera function
+		# The next line is commented out for the purposes of testing the program
+		# on a device that is not a raspberry pi
+		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
 		
 		if self.path=="/timelapse/start/":
 			timelapse_running.value = True
-			p = Process(target=camera_interval_grab, args=('5', stored_images, timelapse_running)).start()
+			p = Process(target=camera_interval_grab, args=(timelapse_interval, stored_images, timelapse_running)).start()
 				
 		if self.path=="/timelapse/stop/":
 			timelapse_running.value = False

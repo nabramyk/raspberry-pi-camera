@@ -136,3 +136,9 @@ th, td {
 	margin-right:auto;
 	border: 1px solid black;
 }
+
+#output_button_pane, #output_settings_pane {
+	display: inline-block;
+	width: 49%;
+	height: 100%;
+}
