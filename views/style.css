@@ -87,7 +87,6 @@ th, td {
 #camera_status {
 	width: 50%;
 	height: 100%;
-	border: 1px solid black;
 	display: inline-block;
 	clear: both;
 	margin-left: -5px;
