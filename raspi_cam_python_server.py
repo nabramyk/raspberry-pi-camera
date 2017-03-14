@@ -10,22 +10,21 @@ try:
 except ImportError:
 	print('Package psutil not installed.')
 
-stored_images = Queue()
 HTTP_PORT = 8080
 
 timelapse_running = Value(ctypes.c_bool, False)
 timelapse_interval = 0
 timelapse_time_unit = ''
 
-image_directory = "/"
+image_directory = "images/"
+output_format = ""
 
 NO_PREVIEW = "-n"
 
-camera_status = "Not Running"
-
+#Functionality for camera handling
 def camera_grab(parameters):
 
-	global timelapse_running, stored_images
+	global timelapse_running
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
@@ -40,6 +39,12 @@ def camera_grab(parameters):
 				break
 			elif t2=='time-unit':
 				timelapse_time_unit = t[1]
+				break
+			elif t2=='-o':
+				params.append(image_directory + t[1])
+				break
+			elif t2=='--encoding':
+				output_format = t[1]
 				break
 			elif t2=='':
 				break
@@ -60,7 +65,6 @@ def camera_grab(parameters):
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
-			#stored_images.put(temp)
 			print(interval)
 			time.sleep(int(timelapse_interval))
 	else:
@@ -72,13 +76,14 @@ def camera_grab(parameters):
 		print(camera_status)
 
 
+#A small function for converting memory sizes to human readable strings
 def convert_bytes(b):
 	sizes = ['Bytes', 'KB', 'MB', 'GB']
 	i = math.floor(math.log10(b) / math.log10(1024))
 	return str(round(b / math.pow(1024, i), 2)) + ' ' + sizes[i]
 
-#This is the local server
 
+#This is the local server
 class myHandler(BaseHTTPRequestHandler):
 	
 	def do_GET(self):
@@ -112,25 +117,6 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
-			
-		if self.path=="/temperature/":
-			self.send_response(200)
-			self.end_headers()
-			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
-			self.wfile.write(output.communicate()[0])
-
-		if self.path=="/image/":
-			self.send_response(200)
-			self.end_headers()
-			output = subprocess.Popen(["raspistill","-n","-q","40","-w","800","-h","640","-e","jpg","-o","-"], stdout=subprocess.PIPE)
-			self.wfile.write(output.communicate()[0])
-		
-		if self.path=="/timelapse/download/":
-			self.send_response(200)
-			self.end_headers()
-			global stored_images
-			if not stored_images.empty():
-				self.wfile.write(stored_images.get())
 				
 		if self.path=="/monitor/":
 			self.send_response(200)
@@ -158,7 +144,7 @@ class myHandler(BaseHTTPRequestHandler):
 			
 			data = 	{
 					'camera_status':camera_status,
-					'cpu_temperature': temp,
+					'cpu_temperature':temp,
 					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
 					'platform_version':platform.version(),
@@ -180,7 +166,7 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 	
 	def do_POST(self):
-		print(self.path)
+
 		p = Process(target=camera_grab, args=([self.path])).start()
 	
 		self.send_response(200)
