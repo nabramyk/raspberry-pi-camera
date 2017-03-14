@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend>Output Settings</legend>
 		Output filename<input id="output" name="-o" type="text">
-		<div style="display:none">Session Title<input id="output_session_title"></div>
+		<div style="display:none" id="output_session_title">Session Title<input id="output_session"></div>
 	</fieldset>
 	</div>
 	<div id="output_button_pane">
@@ -249,15 +249,43 @@
 	
 	<div id="timelapse_pane" class="additional_camera_options">
 		<fieldset>
-			<legend>Timelapse</legend>
-			<input type="checkbox" name="timelapse" id="timelapse_enabled" onChange="toggle_timelapse_mode(this.checked)">Enabled<br>
-			Interval: <input type="number" value="1" min="0" max="100" id="timelapse_interval" name="interval" disabled><br>
-			Time unit:
-			<select id="timelapse_time_unit" name="time-unit" disabled>
-				<option value="seconds">Seconds</option>
-				<option value="minutes">Minutes</option>
-				<option value="hours">Hours</option>
-			</select>
+			<legend><input type="checkbox" name="timelapse" id="timelapse_enabled" onchange="toggle_timelapse_mode(this.checked)">Timelapse</legend>
+			<table>
+				<tr>
+					<td>Take an image every</td>
+					<td><input type="number" value="1" min="1" max="100" id="timelapse_interval" name="interval" style="width: 4em" disabled></td>
+					<td>
+						<select id="timelapse_time_unit" name="time-unit" disabled>
+							<option value="seconds">Seconds</option>
+							<option value="minutes">Minutes</option>
+							<option value="hours">Hours</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td colspan="7"><input type="checkbox" id="timelapse_window" onchange="toggle_timelapse_window(this.checked)" disabled>Use a Time Window</td>
+				</tr>
+				<tr>
+					<td>Start Time</td>
+					<td>=</td>
+					<td><input type="number" max="12" min="1" placeholder="12" id="timelapse_start_hours" style="width: 3em" disabled></td>
+					<td>:</td>
+					<td><input type="number" max="59" min="0" placeholder="0" id="timelapse_start_minutes" style="width: 3em" disabled></td>
+					<td>,</td>
+					<td><select style="width:60px" id="timelapse_start_period" disabled><option>AM</option><option>PM</option></select></td>
+				</tr>
+				<tr>
+					<td>End Time</td>
+					<td>=</td>
+					<td><input type="number" max="12" min="1" value="12" id="timelapse_end_hours" style="width: 3em" disabled></td>
+					<td>:</td>
+					<td><input type="number" max="59" min="00" value="00" id="timelapse_end_minutes" style="width: 3em" disabled></td>
+					<td>,</td>
+					<td><select style="width:60px" id="timelapse_end_period" disabled><option>AM</option><option>PM</option></select></td>
+				</tr>
+			</table>
 		</fieldset>
 	</div>
 	
@@ -319,92 +347,93 @@
 				Components Configuration<input name="ComponentsConfiguration" class="exif_tags" type="text"><br>
 				Compressed Bits Per Pixel<input name="CompressedBitsPerPixel" class="exif_tags" type="text"><br>
 				ShutterSpeedValue<input name="ShutterSpeedValue" type="text"><br>
-		ApertureValue<input type="text"><br>
-		BrightnessValue<input type="text"><br>
-		ExposureBiasValue<input type="text"><br>
-		MaxApertureValue<input type="text"><br>
-		SubjectDistance<input type="text"><br>
-		MeteringMode<input type="text"><br>
-		LightSource<input type="text"><br>
-		Flash<input type="text"><br>
-		FocalLength<input type="text"><br>
-		SubjectArea<input type="text"><br>
-		MakerNote<input type="text"><br>
-		UserComment<input type="text"><br>
-		SubSecTime<input type="text"><br>
-		SubSecTimeOriginal<input type="text"><br>
-		SubSecTimeDigitized<input type="text"><br>
-		FlashpixVersion<input type="text"><br>
-		ColorSpace<input type="text"><br>
-		PixelXDimension<input type="text"><br>
-		PixelYDimension<input type="text"><br>
-		RelatedSoundFile<input type="text"><br>
-		FlashEnergy<input type="text"><br>
-		SpacialFrequencyResponse<input type="text"><br>
-		FocalPlaneXResolution<input type="text"><br>
-		FocalPlaneYResolution<input type="text"><br>
-		FocalPlaneResolutionUnit<input type="text"><br>
-		SubjectLocation<input type="text"><br>
-		ExposureIndex<input type="text"><br>
-		SensingMethod<input type="text"><br>
-		FileSource<input type="text"><br>
-		SceneType<input type="text"><br>
-		CFAPattern<input type="text"><br>
-		CustomRendered<input type="text"><br>
-		ExposureMode<input type="text"><br>
-		WhiteBalance<input type="text"><br>
-		DigitalZoomRatio<input type="text"><br>
-		FocalLengthIn35mmFilm<input type="text"><br>
-		SceneCaptureType<input type="text"><br>
-		GainControl<input type="text"><br>
-		Contrast<input type="text"><br>
-		Saturation<input type="text"><br>
-		Sharpness<input type="text"><br>
-		DeviceSettingDescription<input type="text"><br>
-		SubjectDistanceRange<input type="text"><br>
-		ImageUniqueID<input type="text"><br>
+				ApertureValue<input type="text"><br>
+				BrightnessValue<input type="text"><br>
+				ExposureBiasValue<input type="text"><br>
+				MaxApertureValue<input type="text"><br>
+				SubjectDistance<input type="text"><br>
+				MeteringMode<input type="text"><br>
+				LightSource<input type="text"><br>
+				Flash<input type="text"><br>
+				FocalLength<input type="text"><br>
+				SubjectArea<input type="text"><br>
+				MakerNote<input type="text"><br>
+				UserComment<input type="text"><br>
+				SubSecTime<input type="text"><br>
+				SubSecTimeOriginal<input type="text"><br>
+				SubSecTimeDigitized<input type="text"><br>
+				FlashpixVersion<input type="text"><br>
+				ColorSpace<input type="text"><br>
+				PixelXDimension<input type="text"><br>
+				PixelYDimension<input type="text"><br>
+				RelatedSoundFile<input type="text"><br>
+				FlashEnergy<input type="text"><br>
+				SpacialFrequencyResponse<input type="text"><br>
+				FocalPlaneXResolution<input type="text"><br>
+				FocalPlaneYResolution<input type="text"><br>
+				FocalPlaneResolutionUnit<input type="text"><br>
+				SubjectLocation<input type="text"><br>
+				ExposureIndex<input type="text"><br>
+				SensingMethod<input type="text"><br>
+				FileSource<input type="text"><br>
+				SceneType<input type="text"><br>
+				CFAPattern<input type="text"><br>
+				CustomRendered<input type="text"><br>
+				ExposureMode<input type="text"><br>
+				WhiteBalance<input type="text"><br>
+				DigitalZoomRatio<input type="text"><br>
+				FocalLengthIn35mmFilm<input type="text"><br>
+				SceneCaptureType<input type="text"><br>
+				GainControl<input type="text"><br>
+				Contrast<input type="text"><br>
+				Saturation<input type="text"><br>
+				Sharpness<input type="text"><br>
+				DeviceSettingDescription<input type="text"><br>
+				SubjectDistanceRange<input type="text"><br>
+				ImageUniqueID<input type="text"><br>
+			</fieldset>
+			<fieldset>
+				<legend>GPS</legend>
+				GPSVersionID<input type="text"><br>
+				GPSLatitudeRef<input type="text"><br>
+				GPSLatitude<input type="text"><br>
+				GPSLongitudeRef<input type="text"><br>
+				GPSLogitude<input type="text"><br>
+				GPSAltitudeRef<input type="text"><br>
+				GPSAltitude<input type="text"><br>
+				GPSTimeStamp<input type="text"><br>
+				GPSSatellites<input type="text"><br>
+				GPSStatus<input type="text"><br>
+				GPSMeasureMode<input type="text"><br>
+				GPSDOP<input type="text"><br>
+				GPSSpeedRef<input type="text"><br>
+				GPSSpeed<input type="text"><br>
+				GPSTrackRef<input type="text"><br>
+				GPSTrack<input type="text"><br>
+				GPSImgDirectionRef<input type="text"><br>
+				GPSImgDirection<input type="text"><br>
+				GPSMapDatum<input type="text"><br>
+				GPSDestLatitudeRef<input type="text"><br>
+				GPSDestLatitude<input type="text"><br>
+				GPSDestLongitudeRef<input type="text"><br>
+				GPSDestLongitude<input type="text"><br>
+				GPSDestBearingRef<input type="text"><br>
+				GPSDestBearing<input type="text"><br>
+				GPSDestDistanceRef<input type="text"><br>
+				GPSDestDistance<input type="text"><br>
+				GPSProcessingMethod<input type="text"><br>
+				GPSAreaInformation<input type="text"><br>
+				GPSDateStamp<input type="text"><br>
+				GPSDifferential<input type="text"><br>
+			</fieldset>
+			<fieldset>
+				<legend>EINT</legend>
+				InteroperabilityIndex<input type="text"><br>
+				InteroperabilityVersion<input type="text"><br>
+				RelatedImageFileFormat<input type="text"><br>
+				RelatedImageWidth<input type="text"><br>
+				RelatedImageLength<input type="text"><br>
+			</fieldset>
 		</fieldset>
-		<fieldset>
-		<legend>GPS</legend>
-		GPSVersionID<input type="text"><br>
-		GPSLatitudeRef<input type="text"><br>
-		GPSLatitude<input type="text"><br>
-		GPSLongitudeRef<input type="text"><br>
-		GPSLogitude<input type="text"><br>
-		GPSAltitudeRef<input type="text"><br>
-		GPSAltitude<input type="text"><br>
-		GPSTimeStamp<input type="text"><br>
-		GPSSatellites<input type="text"><br>
-		GPSStatus<input type="text"><br>
-		GPSMeasureMode<input type="text"><br>
-		GPSDOP<input type="text"><br>
-		GPSSpeedRef<input type="text"><br>
-		GPSSpeed<input type="text"><br>
-		GPSTrackRef<input type="text"><br>
-		GPSTrack<input type="text"><br>
-		GPSImgDirectionRef<input type="text"><br>
-		GPSImgDirection<input type="text"><br>
-		GPSMapDatum<input type="text"><br>
-		GPSDestLatitudeRef<input type="text"><br>
-		GPSDestLatitude<input type="text"><br>
-		GPSDestLongitudeRef<input type="text"><br>
-		GPSDestLongitude<input type="text"><br>
-		GPSDestBearingRef<input type="text"><br>
-		GPSDestBearing<input type="text"><br>
-		GPSDestDistanceRef<input type="text"><br>
-		GPSDestDistance<input type="text"><br>
-		GPSProcessingMethod<input type="text"><br>
-		GPSAreaInformation<input type="text"><br>
-		GPSDateStamp<input type="text"><br>
-		GPSDifferential<input type="text"><br>
-		</fieldset>
-		<fieldset>
-		<legend>EINT</legend>
-		InteroperabilityIndex<input type="text"><br>
-		InteroperabilityVersion<input type="text"><br>
-		RelatedImageFileFormat<input type="text"><br>
-		RelatedImageWidth<input type="text"><br>
-		RelatedImageLength<input type="text"><br>
-		</fieldset>
-		</fieldset>
+	</div>
 </div>
