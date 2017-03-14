@@ -143,7 +143,7 @@ class myHandler(BaseHTTPRequestHandler):
 			temp = 'blank'
 			
 			data = 	{
-					'camera_status':camera_status,
+					'camera_status':'not running',
 					'cpu_temperature':temp,
 					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
