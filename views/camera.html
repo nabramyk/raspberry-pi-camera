@@ -25,35 +25,54 @@
 	
 	<div id="resolution_pane" class="additional_camera_options">
 		<fieldset>
-		<legend>Resolution</legend>
-		Width<input type="number" id="aspect_width" name="--width" class="options" value="1280" max="2592" min="320" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em">
-		Height<input type="number" id="aspect_height" name="--height" class="options" value="960" max="1944" min="240" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"><br>
-		Lock<input type="checkbox" id="aspect_ratio_lock" onchange="toggle_aspect_ratio(this.checked)"><br>
-		Aspect Ratio
-		<select id="aspect_ratio" disabled>
-			<option value="4:3">4:3</option>
-			<option value="3:2">3:2</option>
-			<option value="5:4">5:4</option>
-			<option value="3:1">3:1</option>
-			<option value="16:9">16:9</option>
-		</select>
-		Select preset resolution
-		<select name="resolution" onchange="set_aspect_ratio(this.value)">
-			<option value="2592x1944">2592 x 1944 (max)</option>
-			<option value="2560x1920">2560 x 1920</option>
-			<option value="2240x1680">2240 x 1680</option>
-			<option value="2048x1536">2048 x 1536</option>
-			<option value="1600x1200">1600 x 1200</option>
-			<option value="1536x1180">1536 x 1180</option>
-			<option value="1280x960" selected="selected">1280 x 960</option>
-			<option value="1024x768">1024 x 768</option>
-			<option value="800x600">800 x 600</option>
-			<option value="640x480">640 x 480</option>
-			<option value="320x240">320 x 240</option>
-		</select>
+			<legend>Resolution</legend>
+			<table>
+				<tr>
+					<td>Width</td>
+					<td>Lock</td>
+					<td>Height</td>
+				</tr>
+				<tr>
+					<td><input type="number" id="aspect_width" name="--width" class="options" value="1280" max="2592" min="320" onchange="scale_aspect_ratio('height', this.value)" style="width: 6em"></td>
+					<td><input type="checkbox" id="aspect_ratio_lock" onchange="toggle_aspect_ratio(this.checked)"></td>
+					<td><input type="number" id="aspect_height" name="--height" class="options" value="960" max="1944" min="240" onchange="scale_aspect_ratio('width', this.value)" style="width: 6em"></td>
+				</tr>
+				</tr>
+					<td colspan="3"><hr></td>
+				<tr>
+				<tr>
+					<td colspan="2">Aspect Ratio</td>
+					<td>
+						<select id="aspect_ratio" disabled>
+							<option value="4:3">4:3</option>
+							<option value="3:2">3:2</option>
+							<option value="5:4">5:4</option>
+							<option value="3:1">3:1</option>
+							<option value="16:9">16:9</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">Use a preset resolution</td>
+					<td>
+						<select name="resolution" onchange="set_aspect_ratio(this.value)">
+							<option value="2592x1944">2592 x 1944 (max)</option>
+							<option value="2560x1920">2560 x 1920</option>
+							<option value="2240x1680">2240 x 1680</option>
+							<option value="2048x1536">2048 x 1536</option>
+							<option value="1600x1200">1600 x 1200</option>
+							<option value="1536x1180">1536 x 1180</option>
+							<option value="1280x960" selected="selected">1280 x 960</option>
+							<option value="1024x768">1024 x 768</option>
+							<option value="800x600">800 x 600</option>
+							<option value="640x480">640 x 480</option>
+							<option value="320x240">320 x 240</option>
+						</select>
+					</td>
+				</tr>
+			</table>
 		</fieldset>
 	</div>
-	
 	<div id="encoding_pane" class="additional_camera_options">
 		<fieldset>
 		<legend>Encoding</legend>
@@ -213,8 +232,7 @@
 	
 	<div id="uv_mode_pane" class="additional_camera_options">
 		<fieldset>
-			<legend>Colour Effect</legend>
-			Manually set the colour effect<input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)"><br>
+			<legend><input type="checkbox" class="uv_mode" name="uv_mode" onclick="toggle_uv_mode(this.checked)">Colour Effect</legend>
 			Set U:Y channels &nbsp U:<input type="number" class="options" max="255" min="0" value="0" id="u_channel" style="width: 3em" disabled> Y:<input type="number" max="255" min="0" value="0" id="y_channel" style="width: 3em" disabled>
 		</fieldset>
 	</div>
@@ -234,16 +252,31 @@
 	<div id="rot_or_pane" class="additional_camera_options">
 		<fieldset>
 			<legend>Rotation & Orientation</legend>
-		Rotation:
-		<select id="rotation" name="--rotation" class="options">
-			<option value="0">0</option>
-			<option value="90">90</option>
-			<option value="180">180</option>
-			<option value="270">270</option>
-		</select>
-		Flip:
-		Vertical<input type="checkbox" id="vflip" name="--vflip" class="options">
-		Horizontal<input type="checkbox" id="hflip" name="--hflip" class="options">
+			<table>
+				<tr>
+					<td>
+						Rotation
+					</td>
+					<td>
+						<select id="rotation" name="--rotation" class="options">
+							<option value="0">0</option>
+							<option value="90">90</option>
+							<option value="180">180</option>
+							<option value="270">270</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><hr></td>
+				<tr>
+					<td>
+						Vertical Flip<input type="checkbox" id="vflip" name="--vflip" class="options">
+					</td>
+					<td>
+						Horizontal Flip<input type="checkbox" id="hflip" name="--hflip" class="options">
+					</td>
+				</tr>
+			</table>
 		</fieldset>
 	</div>
 	
