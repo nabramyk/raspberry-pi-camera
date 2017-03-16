@@ -2,8 +2,36 @@
 	<div id="output_settings_pane">
 	<fieldset>
 		<legend>Output Settings</legend>
-		Output filename<input id="output" name="-o" type="text">
-		<div style="display:none" id="output_session_title">Session Title<input id="output_session"></div>
+		<table>
+			<tr>
+				<td>
+					Output filename
+				</td>
+				<td>
+					<input id="output" name="-o" type="text">
+				</td>
+			</tr>
+			<tr style="display:none" id="output_session_title">
+				<td>
+					Session Title
+				</td>
+				<td>
+					<input id="output_session">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<p></p>Date and times can automatically be added using expressions where:<br>
+					%S = seconds, %M = minutes, %H for hours, %Y for years, %m for months, %d for days, %C for an interative counter.
+					</p>
+				</td>
+			</tr>
+		</table>
 	</fieldset>
 	</div>
 	<div id="output_button_pane">
@@ -11,7 +39,6 @@
 	</div>
 </div>
 <div id="camera_options">
-	
 	<div id="camera_modes_pane">
 		<fieldset>
 		<legend>Camera Mode</legend>
