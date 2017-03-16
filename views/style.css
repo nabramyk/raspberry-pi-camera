@@ -73,7 +73,7 @@ th, td {
 }
 		
 .additional_camera_options, .camera_modes {
-	width: 50%;
+	width: auto;
 	background-color: #2952a3;
 	color: white;
 	font-size: 16px;
