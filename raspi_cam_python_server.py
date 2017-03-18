@@ -59,13 +59,14 @@ def camera_grab(cr, parameters):
 			timelapse_interval = timelapse_interval * 60
 		elif timelapse_time_unit=='hours':
 			timelapse_interval = timelapse_interval * 60 * 60
-		while timelapse_running=="true":
+		while cr.value:
 			#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
 			time.sleep(int(timelapse_interval))
+			print("timelapse");
 	else:
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
@@ -86,7 +87,7 @@ def convert_bytes(b):
 class myHandler(BaseHTTPRequestHandler):
 	
 	def do_GET(self):
-
+		
 		temp = urllib.parse.urlparse(self.path)
 		
 		if self.path=="/":
@@ -121,6 +122,13 @@ class myHandler(BaseHTTPRequestHandler):
 			self.wfile.write(f.read())
 			f.close()
 				
+		if self.path=="/views/running_camera/":		
+			f = open('views/running_camera.html',"rb")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+		
 		if self.path=="/monitor/":
 			self.send_response(200)
 			self.send_header("Content-type","xml")
@@ -169,8 +177,14 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 	
 	def do_POST(self):
+		temp = urllib.parse.urlparse(self.path)
 
-		p = Process(target=camera_grab, args=(camera_running, self.path)).start()
+		if temp.path=="/stop_sequence/":
+			print("stopping")
+			camera_running.value=False;
+		elif temp.path=="/start_sequence/":
+			print("starting")
+			p = Process(target=camera_grab, args=(camera_running, self.path)).start()
 	
 		self.send_response(200)
 		self.end_headers()
