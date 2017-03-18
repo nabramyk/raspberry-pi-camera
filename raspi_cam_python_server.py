@@ -12,7 +12,8 @@ except ImportError:
 
 HTTP_PORT = 8080
 
-timelapse_running = Value(ctypes.c_bool, False)
+camera_running = Value(ctypes.c_bool, False)
+timelapse_running = False
 timelapse_interval = 0
 timelapse_time_unit = ''
 
@@ -22,8 +23,9 @@ output_format = ""
 NO_PREVIEW = "-n"
 
 #Functionality for camera handling
-def camera_grab(parameters):
+def camera_grab(cr, parameters):
 
+	cr.value = True
 	global timelapse_running
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
@@ -32,7 +34,7 @@ def camera_grab(parameters):
 		t = p.split('=')
 		for t2 in t:
 			if t2=='timelapse':
-				timelapse_running.value = t[1]
+				timelapse_running = t[1]
 				break
 			elif t2=='interval':
 				timelapse_interval = int(t[1])
@@ -50,31 +52,28 @@ def camera_grab(parameters):
 				break
 			else:
 				params.append(t2)
-	
-	camera_status = "Running"
 		
-	if timelapse_running.value:
+	if timelapse_running=="true":
 		#Convert the interval from seconds to the requested time unit
 		if timelapse_time_unit=='minutes':
 			timelapse_interval = timelapse_interval * 60
 		elif timelapse_time_unit=='hours':
 			timelapse_interval = timelapse_interval * 60 * 60
-		while timelapse_running.value:
+		while timelapse_running=="true":
 			#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
-			print(interval)
 			time.sleep(int(timelapse_interval))
 	else:
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
 		# on a device that is not a raspberry pi
 		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
-		camera_status = "Not Running"
-		print(camera_status)
+		print('else')
 
+	cr.value = False
 
 #A small function for converting memory sizes to human readable strings
 def convert_bytes(b):
@@ -105,7 +104,11 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 		
 		if self.path=="/views/camera/":
-			f = open('views/camera.html',"rb")
+			f = ""
+			if not camera_running.value:
+				f = open('views/camera.html',"rb")
+			else:
+				f = open('views/running_camera.html',"rb")
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(f.read())
@@ -143,7 +146,7 @@ class myHandler(BaseHTTPRequestHandler):
 			temp = 'blank'
 			
 			data = 	{
-					'camera_status':'not running',
+					'camera_status':camera_running.value,
 					'cpu_temperature':temp,
 					'cpu_percent':psutil.cpu_percent(),
 					'platform_machine':platform.machine(),
@@ -167,7 +170,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 
-		p = Process(target=camera_grab, args=([self.path])).start()
+		p = Process(target=camera_grab, args=(camera_running, self.path)).start()
 	
 		self.send_response(200)
 		self.end_headers()
