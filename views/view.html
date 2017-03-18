@@ -107,7 +107,13 @@
 				}
 			}
 			
-			xmlHttp.open("POST", url+sendToServer, true);
+			xmlHttp.onreadystatechange = function() {
+				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					switch_modes('running_camera');
+				}
+			}
+			
+			xmlHttp.open("POST", url+'start_sequence/'+sendToServer, true);
 
 			xmlHttp.send(null);
 		}
@@ -299,6 +305,16 @@
 			document.getElementById("aspect_height").value = res[1];
 		}
 		
+		function stop_image() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					switch_modes('camera');
+				}
+			}
+			xmlHttp.open("POST", url + 'stop_sequence/');
+			xmlHttp.send(null);
+		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
 </head>
