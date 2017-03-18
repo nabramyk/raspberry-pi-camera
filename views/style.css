@@ -107,8 +107,8 @@ th, td {
 }
 		
 #shutter_button {
-	width: 100%;
-	height: 100px;
+	width: 555px;
+	height: 200px;
 	font-size: 24px;
 	color: white;
 	background-color: #2952a3;
@@ -118,23 +118,11 @@ th, td {
 }
 
 #shutter_button:disabled {
-	width: 100%;
+	width: 100px;
 	height: 100px;
 	font-size: 24px;
 	color: white;
 	background-color: #525f7a;
 	border: 5px solid #cccccc;
 	margin: auto;
-}
-	
-#output {
-	margin-left:auto;
-	margin-right:auto;
-	border: 1px solid black;
-}
-
-#output_button_pane, #output_settings_pane {
-	display: inline-block;
-	width: 49%;
-	height: 100%;
 }
