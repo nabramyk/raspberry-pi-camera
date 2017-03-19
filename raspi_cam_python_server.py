@@ -115,6 +115,13 @@ class myHandler(BaseHTTPRequestHandler):
 			self.wfile.write(f.read())
 			f.close()
 	
+		if self.path=="/views/tags/":
+			f = open('views/tags.html',"rb")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+	
 		if self.path=="/views/system_info/":
 			f = open('views/system_info.html',"rb")
 			self.send_response(200)
