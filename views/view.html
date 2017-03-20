@@ -320,14 +320,7 @@
 		}
 		
 		function update_viewfinder() {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					document.getElementById("viewfinder").src = 'data:image/jpeg;base64,' + window.btoa(xmlHttp.responseText);
-				}
-			}
-			xmlHttp.open("GET", url + 'viewfinder/');
-			xmlHttp.send(null);
+			document.getElementById("viewfinder").src = 'http://192.168.1.21:8080/viewfinder/';
 		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
