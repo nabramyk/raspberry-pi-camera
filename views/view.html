@@ -338,11 +338,19 @@
 			<header>
 				<h1 id="header">RasPiCam</h1>
 			</header>
-			<div id="navigation_menu">
-				<button id="monitor" type="button" class="navigation_button" value="selected" onClick="switch_modes(this.id)">MONITOR</button>
-				<button id="camera" type="button" class="navigation_button" value="unselected" onClick="switch_modes(this.id)">CAMERA</button>
-				<button id="system_info" type="button" class="navigation_button" value="unselected" onclick="switch_modes(this.id)">SYSTEM INFO</button>
-			</div>
+			<table id="navigation_menu">
+				<tr>
+					<td>
+						<button id="monitor" type="button" class="navigation_button" value="selected" onClick="switch_modes(this.id)">MONITOR</button>
+					</td>
+					<td>
+						<button id="camera" type="button" class="navigation_button" value="unselected" onClick="switch_modes(this.id)">CAMERA</button>
+					</td>
+					<td>
+						<button id="system_info" type="button" class="navigation_button" value="unselected" onclick="switch_modes(this.id)">SYSTEM INFO</button>
+					</td>
+				</tr>
+			</table>
 			<div id="selection_pane"></div>
 		</div>
 		</div>
