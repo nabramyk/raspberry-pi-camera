@@ -45,7 +45,7 @@ th, td {
 	color: white;
 	font-size: 16px;
 	border: 1px solid #24478f;
-	width: 25%;
+	width: 100%;
 	padding: 16px;
 	margin-left: 0px;
 	margin-right: -4px;
@@ -59,7 +59,7 @@ th, td {
 	border-left: 1px solid #24478f;
 	border-right: 1px solid #24478f;
 	border-bottom: 1px solid white;
-	width: 25%;
+	width: 100%;
 	padding: 16px;
 	margin-left: 0px;
 	margin-right: -5px;
