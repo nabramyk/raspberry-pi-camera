@@ -168,7 +168,7 @@ class myHandler(BaseHTTPRequestHandler):
 			
 			# Grabs the temperature of the raspberry pi's cpu
 			# Uncomment this line for use on the raspberry pi
-			# output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
+			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
 			temperature = output.communicate()[0].decode()
 			temp = temperature[5:7] + '.' + temperature[8]
 			# temp = 'blank'
