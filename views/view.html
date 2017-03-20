@@ -318,6 +318,17 @@
 			xmlHttp.open("POST", url + 'stop_sequence/');
 			xmlHttp.send(null);
 		}
+		
+		function update_viewfinder() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					document.getElementById("viewfinder").src = xmlHttp.responseText;
+				}
+			}
+			xmlHttp.open("GET", url + 'viewfinder/');
+			xmlHttp.send(null);
+		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
 </head>
