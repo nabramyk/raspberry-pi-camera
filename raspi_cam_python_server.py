@@ -17,6 +17,8 @@ timelapse_running = False
 timelapse_interval = 0
 timelapse_time_unit = ''
 
+auto_image_naming_default = "IMG"
+
 image_directory = "images/"
 output_format = ""
 
@@ -43,9 +45,12 @@ def camera_grab(cr, parameters):
 				timelapse_time_unit = t[1]
 				break
 			elif t2=='-o':
-				params.append(image_directory + t[1])
+				params.append(t2)
+				params.append(image_directory + t[1] + '.' + output_format)
 				break
 			elif t2=='--encoding':
+				params.append(t2)
+				params.append(t[1])
 				output_format = t[1]
 				break
 			elif t2=='':
@@ -53,6 +58,8 @@ def camera_grab(cr, parameters):
 			else:
 				params.append(t2)
 		
+	print(params)
+	
 	if timelapse_running=="true":
 		#Convert the interval from seconds to the requested time unit
 		if timelapse_time_unit=='minutes':
@@ -72,7 +79,7 @@ def camera_grab(cr, parameters):
 		# The next line is commented out for the purposes of testing the program
 		# on a device that is not a raspberry pi
 		# output = subprocess.Popen(params, stdout=subprocess.PIPE)
-		print('else')
+		print('single')
 
 	cr.value = False
 
@@ -136,6 +143,12 @@ class myHandler(BaseHTTPRequestHandler):
 			self.wfile.write(f.read())
 			f.close()
 		
+		if self.path=="/viewfinder/":
+			output = subprocess.Popen(['raspistill','--width','320','--height','240','-o','-'], stdout=subprocess.PIPE)
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(output.communicate()[0])
+		
 		if self.path=="/monitor/":
 			self.send_response(200)
 			self.send_header("Content-type","xml")
@@ -156,9 +169,9 @@ class myHandler(BaseHTTPRequestHandler):
 			# Grabs the temperature of the raspberry pi's cpu
 			# Uncomment this line for use on the raspberry pi
 			# output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
-			# temperature = output.communicate()[0].decode()
-			# temp = temperature[5:7] + '.' + temperature[8]
-			temp = 'blank'
+			temperature = output.communicate()[0].decode()
+			temp = temperature[5:7] + '.' + temperature[8]
+			# temp = 'blank'
 			
 			data = 	{
 					'camera_status':camera_running.value,

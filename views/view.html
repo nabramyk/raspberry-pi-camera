@@ -2,7 +2,7 @@
 <head>
 	<script>
 
-		var server_url = 'localhost';
+		var server_url = '192.168.1.21';
 		var server_port = ':8080';
 		var url = 'http://' + server_url + server_port + '/';
 
@@ -221,6 +221,7 @@
 				document.getElementById("timelapse_window").disabled = false;
 				document.getElementById("output_session_title").style.display = 'table-row';
 				document.getElementById("shutter_button").innerHTML = "Begin Sequence";
+				document.getElementById("output_optional_subfolders").style.display = 'table-row';
 				if(document.getElementById("timelapse_window").checked) {
 					toggle_timelapse_window(true);
 				}
@@ -230,6 +231,7 @@
 				document.getElementById("timelapse_window").disabled = true;
 				toggle_timelapse_window(false);
 				document.getElementById("output_session_title").style.display = 'none';
+				document.getElementById("output_optional_subfolders").style.display = 'none';
 				document.getElementById("shutter_button").innerHTML = "Record Image";
 			}
 		}
@@ -317,7 +319,7 @@
 			xmlHttp.send(null);
 		}
 	</script>
-	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
+	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
 </head>
 	<body>
 		<div id="main_panel">
