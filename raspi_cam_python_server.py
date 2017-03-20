@@ -144,7 +144,7 @@ class myHandler(BaseHTTPRequestHandler):
 			f.close()
 		
 		if self.path=="/viewfinder/":
-			output = subprocess.Popen(['raspistill','--width','320','--height','240','-o','-'], stdout=subprocess.PIPE)
+			output = subprocess.Popen(['raspistill','--width','800','--height','600','-o','-'], stdout=subprocess.PIPE)
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(output.communicate()[0])
