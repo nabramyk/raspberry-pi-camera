@@ -323,7 +323,7 @@
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					document.getElementById("viewfinder").src = xmlHttp.responseText;
+					document.getElementById("viewfinder").src = 'data:image/jpeg;base64,' + xmlHttp.responseText;
 				}
 			}
 			xmlHttp.open("GET", url + 'viewfinder/');
