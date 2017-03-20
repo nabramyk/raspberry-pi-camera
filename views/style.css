@@ -45,7 +45,7 @@ th, td {
 	color: white;
 	font-size: 16px;
 	border: 1px solid #24478f;
-	width: 33.333%;
+	width: 25%;
 	padding: 16px;
 	margin-left: 0px;
 	margin-right: -4px;
@@ -59,7 +59,7 @@ th, td {
 	border-left: 1px solid #24478f;
 	border-right: 1px solid #24478f;
 	border-bottom: 1px solid white;
-	width: 33.333%;
+	width: 25%;
 	padding: 16px;
 	margin-left: 0px;
 	margin-right: -5px;
@@ -104,7 +104,7 @@ th, td {
 		
 #navigation_menu {
 	width: 100%;
-	background: gray;
+	background: #1a3365;
 }
 		
 #shutter_button {
