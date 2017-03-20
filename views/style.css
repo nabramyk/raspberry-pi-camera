@@ -46,9 +46,6 @@ th, td {
 	font-size: 16px;
 	border: 1px solid #24478f;
 	width: 100%;
-	padding: 16px;
-	margin-left: 0px;
-	margin-right: -4px;
 }
 		
 .navigation_button[value=selected] {
@@ -60,9 +57,6 @@ th, td {
 	border-right: 1px solid #24478f;
 	border-bottom: 1px solid white;
 	width: 100%;
-	padding: 16px;
-	margin-left: 0px;
-	margin-right: -5px;
 }
 		
 .shooting_modes #selected {
