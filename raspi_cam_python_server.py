@@ -46,7 +46,7 @@ def camera_grab(cr, parameters):
 				break
 			elif t2=='-o':
 				params.append(t2)
-				params.append(image_directory + t[1] + '.' + output_format)
+				params.append(image_directory + '/' + t[1] + '.' + output_format)
 				break
 			elif t2=='--encoding':
 				params.append(t2)
