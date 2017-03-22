@@ -3,6 +3,7 @@
 		<legend>Viewfinder</legend>
 		<img id="viewfinder" src="http://192.168.1.21:8080/viewfinder/" style="background: black; width: 100%; height: 100%;">
 		<button onClick="update_viewfinder()">Update viewfinder</button>
+		<button>Select Region of Interest</button>
 	</fieldset>
 </div>
 <div id="output_pane">
@@ -36,6 +37,15 @@
 			</td>
 			<td style="text-align: left;">
 				<button id="shutter_button" onClick="take_image()">Take Image</button>
+				<p>
+					Convention allows using expressions for adding time related names.<br>
+					%S = Seconds<br>
+					%M = Minutes<br>
+					%H = 24 Hours<br>
+					%I = 12 Hours<br>
+					%p = Period (AM/PM)<br>
+					Use this convention carfully as it can possibly overwrite an existing file.
+				</p>
 			</td>
 		</tr>
 	</table>
@@ -340,13 +350,6 @@
 					<td colspan="2"><input type="checkbox">Automatically stop at <input type="number" max="9999" min="1" value="1" style="width: 4em"> images.</td>
 				</tr>
 			</table>
-		</fieldset>
-	</div>
-	
-	<div id="roi_pane" class="additional_camera_options">
-		<fieldset>
-			<legend>Region of Interest</legend>
-		Coming Soon!
 		</fieldset>
 	</div>
 	
