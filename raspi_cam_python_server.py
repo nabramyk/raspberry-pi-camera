@@ -19,7 +19,7 @@ timelapse_time_unit = ''
 
 auto_image_naming_default = "IMG"
 
-image_directory = "images/"
+image_directory = "/images/"
 output_format = ""
 
 NO_PREVIEW = "-n"
@@ -213,6 +213,10 @@ class myHandler(BaseHTTPRequestHandler):
 		return
 
 if __name__ == '__main__':
+	print("Checking for default images directory: " + image_directory)
+	if not os.path_exists(image_directory):
+		print("Directory " + image_directory + " does not exist, creating it now")
+		os.makedirs(image_directory)
 	server = HTTPServer(('', HTTP_PORT), myHandler)
 	print('RaspiCam server running')
 		
