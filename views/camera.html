@@ -10,30 +10,33 @@
 	<table>
 		<tr>
 			<td style="text-align: left; display: table-row;">
-					<fieldset>
-						<legend>Output Filename</legend>
-						<input id="output" name="-o" type="text">
-					</fieldset>
-					<div style="display:none" id="output_session_title">
-						<fieldset>
-						<legend>Session Title</legend>
-						<input id="output_session">
-						</fieldset>
-					</div>
-					<div style="display:none" id="output_optional_subfolders">
-						<fieldset>
-						Automatically separate images into subfolders<input type="checkbox"><br>
-						Subfolder Naming<input type="">
-						</fieldset>
-					</div>
-					<fieldset>
-						<legend>Camera Mode</legend>
-						<select id="camera_mode" class="mode" onchange="switch_camera_modes(this.value)">
+				<table>
+					<tr>
+						<td>Output Filename</td>
+						<td><input id="output" name="-o" type="text"></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td>Use default naming scheme</td>
+					</tr>
+					<tr style="display:none" id="output_session_title">
+						<td>Session Title</td>
+						<td><input id="output_session"></td>
+					</tr>
+					<tr style="display: none" id="output_optional_subfolders">
+						<td>Automatically separate images into subfolders<br>Subfolder Naming</td>
+						<td><input type="checkbox"><br><input id="subfolder_naming" type="text"></td>
+					</tr>
+					<tr>
+						<td>Camera Mode</td>
+						<td><select id="camera_mode" class="mode" onchange="switch_camera_modes(this.value)">
 							<option id="still" value="raspistill">Still Capture</option>
 							<option id="video" value="raspivid">Video Capture</option>
 							<option id="yuv" value="raspiyuv">YUV Capture</option>
-						</select>
-					</fieldset>
+							</select>
+						</td>
+					</tr>
+				</table>
 			</td>
 			<td style="text-align: left;">
 				<button id="shutter_button" onClick="take_image()">Take Image</button>
@@ -44,7 +47,8 @@
 					%H = 24 Hours<br>
 					%I = 12 Hours<br>
 					%p = Period (AM/PM)<br>
-					Use this convention carfully as it can possibly overwrite an existing file.
+					%C = Iterative counter<br>
+					Use this convention carefully as it can possibly overwrite an existing file.
 				</p>
 			</td>
 		</tr>
