@@ -82,7 +82,7 @@
 				alert("Need an output file name");
 				return;
 			}
-			if(document.getElementById("timelapse_enabled").checked && document.getElementById("output_session").value==="") {
+			if(document.getElementById("timelapse_enabled").checked && document.getElementById("session_title").value==="") {
 				alert("Need an output session name");
 				return;
 			}
@@ -103,7 +103,6 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
-				alert(params[i]);
 				if(document.getElementById(params[i]).type==="checkbox") {
 					if(document.getElementById(params[i]).checked) {
 						sendToServer = sendToServer + document.getElementById(params[i]).name;
