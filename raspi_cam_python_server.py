@@ -96,7 +96,6 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 		
 		temp = urllib.parse.urlparse(self.path)
-		print(self.path)
 		
 		if self.path=="/":
 			f = open('views/view.html',"rb")
