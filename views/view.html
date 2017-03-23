@@ -78,10 +78,12 @@
 		/* Function for compiling the page and sending the options to the server */
 		function take_image() {
 			
+			//Check to see that the user has supplied an output name
 			if(document.getElementById("output").value==="") {
 				alert("Need an output file name");
 				return;
 			}
+			//Check to see if the user has enabled timelapse mode AND has supplied a session name
 			if(document.getElementById("timelapse_enabled").checked && document.getElementById("session_title").value==="") {
 				alert("Need an output session name");
 				return;
