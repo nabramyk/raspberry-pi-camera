@@ -21,7 +21,7 @@
 					</tr>
 					<tr style="display:none" id="output_session_title">
 						<td>Session Title</td>
-						<td><input id="output_session" name="session"></td>
+						<td><input id="output_session" name="session_title"></td>
 					</tr>
 					<tr style="display: none" id="output_optional_subfolders">
 						<td>Automatically separate images into subfolders</td>
@@ -29,7 +29,7 @@
 					</tr>
 					<tr style="display: none" id="output_subfolder_names">
 						<td>Subfolder Naming</td>
-						<td><input id="subfolder_naming" name="subfolder" type="text"></td>
+						<td><input id="subfolder_naming" name="subfolder_naming" type="text"></td>
 					</tr>
 					<tr>
 						<td>Camera Mode</td>
@@ -48,8 +48,8 @@
 					Convention allows using expressions for adding time related names.<br>
 					%S = Seconds<br>
 					%M = Minutes<br>
-					%H = 24 Hours<br>
-					%I = 12 Hours<br>
+					%H = Hours (24)<br>
+					%I = Hours (12)<br>
 					%p = Period (AM/PM)<br>
 					%C = Iterative counter<br>
 					Use this convention carefully as it can possibly overwrite an existing file.
