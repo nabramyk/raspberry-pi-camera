@@ -218,15 +218,9 @@
 		}
 			
 		function toggle_uv_mode(checked) {
-			if(checked) {
-				document.getElementById("u_channel").disabled = false;
-				document.getElementById("y_channel").disabled = false;
-				document.getElementById("encoding").disabled = true;
-			} else {
-				document.getElementById("u_channel").disabled = true;
-				document.getElementById("y_channel").disabled = true;
-				document.getElementById("encoding").disabled = false;
-			}
+			document.getElementById("u_channel").disabled = !checked;
+			document.getElementById("y_channel").disabled = !checked;
+			document.getElementById("encoding").disabled = checked;
 		}
 		
 		function toggle_timelapse_mode(checked) {
@@ -254,21 +248,12 @@
 		}
 		
 		function toggle_timelapse_window(checked) {
-			if(checked) {
-				document.getElementById("timelapse_start_hours").disabled = false;
-				document.getElementById("timelapse_start_minutes").disabled = false;
-				document.getElementById("timelapse_start_period").disabled = false;
-				document.getElementById("timelapse_end_hours").disabled = false;
-				document.getElementById("timelapse_end_minutes").disabled = false;
-				document.getElementById("timelapse_end_period").disabled = false;
-			} else {
-				document.getElementById("timelapse_start_hours").disabled = true;
-				document.getElementById("timelapse_start_minutes").disabled = true;
-				document.getElementById("timelapse_start_period").disabled = true;
-				document.getElementById("timelapse_end_hours").disabled = true;
-				document.getElementById("timelapse_end_minutes").disabled = true;
-				document.getElementById("timelapse_end_period").disabled = true;
-			}
+			document.getElementById("timelapse_start_hours").disabled = !checked;
+			document.getElementById("timelapse_start_minutes").disabled = !checked;
+			document.getElementById("timelapse_start_period").disabled = !checked;
+			document.getElementById("timelapse_end_hours").disabled = !checked;
+			document.getElementById("timelapse_end_minutes").disabled = !checked;
+			document.getElementById("timelapse_end_period").disabled = !checked;
 		}
 		
 		function toggle_encoding(val) {
