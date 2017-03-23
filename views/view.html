@@ -225,26 +225,21 @@
 		
 		function toggle_timelapse_mode(checked) {
 			if(checked) {
-				document.getElementById("timelapse_interval").disabled = false;
-				document.getElementById("timelapse_time_unit").disabled = false;
-				document.getElementById("timelapse_window").disabled = false;
 				document.getElementById("output_session_title").style.display = 'table-row';
 				document.getElementById("output_subfolder_names").style.display = 'table-row';
 				document.getElementById("shutter_button").innerHTML = "Begin Sequence";
 				document.getElementById("output_optional_subfolders").style.display = 'table-row';
-				if(document.getElementById("timelapse_window").checked) {
-					toggle_timelapse_window(true);
-				}
 			} else {
-				document.getElementById("timelapse_interval").disabled = true;
-				document.getElementById("timelapse_time_unit").disabled = true;
-				document.getElementById("timelapse_window").disabled = true;
-				toggle_timelapse_window(false);
 				document.getElementById("output_session_title").style.display = 'none';
 				document.getElementById("output_subfolder_names").style.display = 'none';
 				document.getElementById("output_optional_subfolders").style.display = 'none';
 				document.getElementById("shutter_button").innerHTML = "Record Image";
 			}
+			document.getElementById("timelapse_image_limit_toggle").disabled = !checked;
+			document.getElementById("timelapse_interval").disabled = !checked;
+			document.getElementById("timelapse_time_unit").disabled = !checked;
+			document.getElementById("timelapse_window").disabled = !checked;
+			toggle_timelapse_window(checked);
 		}
 		
 		function toggle_timelapse_window(checked) {
