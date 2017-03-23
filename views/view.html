@@ -103,6 +103,7 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
+				alert(params[i]);
 				if(document.getElementById(params[i]).type==="checkbox") {
 					if(document.getElementById(params[i]).checked) {
 						sendToServer = sendToServer + document.getElementById(params[i]).name;
