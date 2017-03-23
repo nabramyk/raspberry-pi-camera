@@ -17,10 +17,7 @@
 					</tr>
 					<tr>
 						<td>Use default naming scheme</td>
-						<td><input type="checkbox" id="default_naming_scheme_toggle"></td>
-						<script>
-							document.getElementById("default_naming_scheme_toggle").onchange = function { document.getElementById("output").disabled = document.getElementById("default_naming_scheme_toggle").checked; };
-						</script>
+						<td><input type="checkbox" id="default_naming_scheme_toggle" onchange="toggle_default_filename(this.checked)"></td>
 					</tr>
 					<tr style="display:none" id="output_session_title">
 						<td>Session Title</td>
