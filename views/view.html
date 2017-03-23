@@ -346,6 +346,10 @@
 			xmlHttp.open("GET", url + 'viewfinder/');
 			xmlHttp.send(null);
 		}
+		
+		function toggle_default_filename(checked) {
+			document.getElementById("output").disabled = checked;
+		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
 </head>
