@@ -278,7 +278,7 @@
 		
 		
 		function retrieve() {
-			communicate_with_server("GET", url+'monitor/',function() {
+			communicate_with_server("GET", url+'monitor/', function(xmlHttp) {
 				var p = xmlHttp.responseXML;
 				for (var i = 0; i < monitor_data_points.length; i++) {
 					document.getElementById(monitor_data_points[i]).innerHTML = p.getElementsByTagName(monitor_data_points[i])[0].childNodes[0].nodeValue;
@@ -288,7 +288,7 @@
 		}
 	
 		function switch_modes(mode) {
-			communicate_with_server("GET", url+'views/'+mode+'/', function() {
+			communicate_with_server("GET", url+'views/'+mode+'/', function(xmlHttp) {
 				document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
 			});
 			
@@ -325,7 +325,7 @@
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					callback();
+					callback(xmlHttp);
 				}
 			}
 			xmlHttp.open(http_Method, http_URL);
