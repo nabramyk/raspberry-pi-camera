@@ -78,6 +78,10 @@
 		/* Function for compiling the page and sending the options to the server */
 		function take_image() {
 			
+			//Disable the shutter button until the input is sent
+			document.getElementById("shutter_button").disabled = true;
+			document.getElementById("shutter_button").innerHTML = "Starting..."
+			
 			//Check to see that the user has supplied an output name
 			if(document.getElementById("output").value==="") {
 				alert("Need an output file name");
@@ -89,10 +93,6 @@
 				return;
 			}
 			
-			document.getElementById("shutter_button").disabled = true;
-			document.getElementById("shutter_button").innerHTML = "Starting..."
-			
-			var xmlHttp = new XMLHttpRequest();
 			var params = [];
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
 			
@@ -122,7 +122,7 @@
 				}
 			}
 			
-			
+			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					switch_modes('running_camera');
@@ -135,27 +135,10 @@
 		}
 
 		window.onload = function() {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			communicate_with_server("GET", url+'views/monitor/', function() {
 					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
 					retrieve();
-				}
-			};
-			xmlHttp.open("GET", url + 'views/monitor/');
-			xmlHttp.send(null);
-		}
-		
-		function update() {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				i.innerHTML = xmlHttp.responseText;
-				setTimeout(update, 1000);
-				}
-			}					
-			xmlHttp.open("GET", url + 'temp/');
-			xmlHttp.send(null);
+			});
 		}
 		
 		function show_hide_options(pane) {
@@ -183,6 +166,7 @@
 								"storage_free",
 								"storage_percent"];
 	
+	/* Function for changing resources on the page depending on the mode of the camera */
 	function switch_camera_modes(mode) {	
 		var options = null;
 		if(mode==="raspistill") {
@@ -204,6 +188,7 @@
 		}
 	}
 	
+		/* Function for equating the aspect ratio to respective resolution sizes */
 		function scale_aspect_ratio(axis, amount) {
 			if(document.getElementById("aspect_ratio_lock").checked) {
 				var ratio = document.getElementById("aspect_ratio").value;
@@ -285,33 +270,28 @@
 			document.getElementById("subfolder_naming").disabled = !checked;
 		}
 		
+		function toggle_default_filename(checked) {
+			document.getElementById("output").disabled = checked;
+		}
+		
 		/* TOGGLING FUNCTIONALITY */
 		
 		
 		function retrieve() {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					var p = xmlHttp.responseXML;
-					for (var i = 0; i < monitor_data_points.length; i++) {
-						document.getElementById(monitor_data_points[i]).innerHTML = p.getElementsByTagName(monitor_data_points[i])[0].childNodes[0].nodeValue;
-					}
-					setTimeout(retrieve, 1000);
+			communicate_with_server("GET", url+'monitor/',function() {
+				var p = xmlHttp.responseXML;
+				for (var i = 0; i < monitor_data_points.length; i++) {
+					document.getElementById(monitor_data_points[i]).innerHTML = p.getElementsByTagName(monitor_data_points[i])[0].childNodes[0].nodeValue;
 				}
-			};
-			xmlHttp.open("GET", url + 'monitor/');
-			xmlHttp.send(null);
+				setTimeout(retrieve, 1000);
+			});
 		}
 	
 		function switch_modes(mode) {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
-				}
-			};			
-			xmlHttp.open("GET", url + 'views/' + mode + '/');
-			xmlHttp.send(null);
+			communicate_with_server("GET", url+'views/'+mode+'/', function() {
+				document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+			});
+			
 			var params = document.getElementsByClassName("navigation_button");
 			for(var i = 0; i < params.length; i++) {
 				params[i].value="unselected";
@@ -329,29 +309,27 @@
 		}
 		
 		function stop_image() {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			communicate_with_server("POST", url+'stop_sequence/', function() {
 					switch_modes('camera');
-				}
-			}
-			xmlHttp.open("POST", url + 'stop_sequence/');
-			xmlHttp.send(null);
+			});
 		}
 		
 		function update_viewfinder() {
+			communicate_with_server("GET", url+'viewfinder/', function() {
+				document.getElementById("viewfinder").src = 'data:image/jpeg;base64,' + xmlHttp.responseText;
+			});
+		}
+		
+		/* Function for sending and recieving data to and from the server */
+		function communicate_with_server(http_Method, http_URL, callback) {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					document.getElementById("viewfinder").src = 'data:image/jpeg;base64,' + xmlHttp.responseText;
+					callback();
 				}
 			}
-			xmlHttp.open("GET", url + 'viewfinder/');
+			xmlHttp.open(http_Method, http_URL);
 			xmlHttp.send(null);
-		}
-		
-		function toggle_default_filename(checked) {
-			document.getElementById("output").disabled = checked;
 		}
 	</script>
 	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
