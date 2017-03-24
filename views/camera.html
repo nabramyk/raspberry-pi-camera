@@ -355,7 +355,7 @@
 					<td><select style="width:60px" id="timelapse_end_period" disabled><option>AM</option><option>PM</option></select></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" id="timelapse_image_limit_toggle" disabled>Automatically stop at <input type="number" max="9999" min="1" value="1" style="width: 4em" disabled> images.</td>
+					<td colspan="2"><input type="checkbox" id="timelapse_image_limit_toggle" onchange="toggle_timelapse_image_limit(this.checked)" disabled>Automatically stop at <input id="timelapse_image_limit" type="number" max="9999" min="1" value="1" style="width: 4em" disabled> images.</td>
 				</tr>
 			</table>
 		</fieldset>
