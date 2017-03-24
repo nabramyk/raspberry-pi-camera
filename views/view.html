@@ -238,6 +238,9 @@
 			if(document.getElementById("timelapse_window").checked) {
 				toggle_timelapse_window(checked);
 			}
+			if(document.getElementById("timelapse_image_limit_toggle").checked) {
+				toggle_timelapse_image_limit(checked);
+			}
 			document.getElementById("timelapse_image_limit_toggle").disabled = !checked;
 			document.getElementById("timelapse_interval").disabled = !checked;
 			document.getElementById("timelapse_time_unit").disabled = !checked;
@@ -264,7 +267,11 @@
 		}
 		
 		function toggle_aspect_ratio(checked) {
-				document.getElementById("aspect_ratio").disabled = !checked;
+			document.getElementById("aspect_ratio").disabled = !checked;
+		}
+		
+		function toggle_timelapse_image_limit(checked) {
+			document.getElementById("timelapse_image_limit").disabled = !checked;
 		}
 		
 		function retrieve() {
