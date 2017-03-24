@@ -135,7 +135,7 @@
 		}
 
 		window.onload = function() {
-			communicate_with_server("GET", url+'views/monitor/', function() {
+			communicate_with_server("GET", url+'views/monitor/', function(xmlHttp) {
 					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
 					retrieve();
 			});
@@ -325,7 +325,6 @@
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					alert("here");
 					callback(xmlHttp);
 				}
 			}
