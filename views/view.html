@@ -217,6 +217,9 @@
 			}
 		}
 			
+			
+		/* TOGGLING FUNCTIONALITY */
+	
 		function toggle_uv_mode(checked) {
 			document.getElementById("u_channel").disabled = !checked;
 			document.getElementById("y_channel").disabled = !checked;
@@ -273,6 +276,17 @@
 		function toggle_timelapse_image_limit(checked) {
 			document.getElementById("timelapse_image_limit").disabled = !checked;
 		}
+		
+		function toggle_default_filename(checked) {
+			document.getElementById("output").disabled = checked;
+		}
+		
+		function toggle_subfolder_naming(checked) {
+			document.getElementById("subfolder_naming").disabled = !checked;
+		}
+		
+		/* TOGGLING FUNCTIONALITY */
+		
 		
 		function retrieve() {
 			var xmlHttp = new XMLHttpRequest();
