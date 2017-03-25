@@ -32,10 +32,6 @@
 						"hflip",
 						"raw",
 						"timelapse_enabled",
-						"timelapse_interval",
-						"timelapse_time_unit",
-						"session_title",
-						"subfolder_naming",
 						"output" ];
 					
 		//Array with object names relating to options to YUV images
@@ -82,20 +78,15 @@
 			document.getElementById("shutter_button").disabled = true;
 			document.getElementById("shutter_button").innerHTML = "Starting..."
 			
+			var params = [];
+			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
+			
 			//Check to see that the user has supplied an output name
 			if(document.getElementById("output").value==="") {
 				alert("Need an output file name");
 				return;
 			}
-			//Check to see if the user has enabled timelapse mode AND has supplied a session name
-			if(document.getElementById("timelapse_enabled").checked && document.getElementById("session_title").value==="") {
-				alert("Need an output session name");
-				return;
-			}
-			
-			var params = [];
-			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
-			
+
 			if(document.getElementById("camera_mode").value==="raspistill") {
 				params = still;
 			} else if(document.getElementById("camera_mode").value==="raspivid") {
@@ -105,34 +96,61 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
-				if(document.getElementById(params[i]).type==="checkbox") {
-					if(document.getElementById(params[i]).checked) {
-						sendToServer = sendToServer + document.getElementById(params[i]).name;
-					}
-					if(params[i]==="timelapse_enabled") {
-						sendToServer = sendToServer + "=" + document.getElementById(params[i]).checked + "&";
-					} else {
-						sendToServer += "&";
-					}
-				} else {
-					sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
-					if(document.getElementById(params[i]).value==="jpg") {
-						sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
-					} 
-				}
-			}
-			
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-					switch_modes('running_camera');
-				}
-			}
-			
-			xmlHttp.open("POST", url+'start_sequence/'+sendToServer, true);
+				
+				sendToServer = sendToServer + document.getElementById(params[i]).name;
 
-			xmlHttp.send(null);
+				//Check and see if the user selected timelapse mode, and compile
+				//all of the timelapse option if so
+				if(document.getElementById("timelapse_enabled").checked) {
+					
+					sendToServer += "timelapse=true&";
+					sendToServer += "interval=" + document.getElementById("timelapse_interval").value + "&";
+					sendToServer += "time-unit=" + document.getElementById("timelapse_time_unit").value + "&";
+					
+					//Check to see if the user has supplied a session name
+					if(document.getElementById("session_title").value==="") {
+						alert("Need an output session name");
+						return;
+					}	
+					
+					//If the user has requested that the images are automatically saved into
+					//individual file folders....
+					if(document.getElementById("subfolder_checkbox").checked) {
+						//Add the subfolder naming to the parameters string
+						sendToServer += "subfolder="+document.getElementbyId("subfolder_naming").value + "&"; 
+					}
+					
+					//Check and see if the user has set an image limit, and append it if so
+					if(document.getElementById("timelapse_image_limit_toggle").checked) {
+						sendToServer += "limit=" + document.getElementById("timelapse_image_limit").value + "&";
+					}
+					
+					//Check and see if the user has set a timelapse window, and append it if so
+					if(document.getElementById("timelapse_window").checked) {
+						sendToServer += "start-time=" + document.getElementById("timelapse_start_hours").value + ":" + document.getElementById("timelapse_start_minutes") + "&";
+						sendToServer += "end-time=" + document.getElementById("timelapse_end_hours").value + ":" + document.getElementById("timelapse_end_minutes") + "&";
+					}
+				} 
+
+				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
+			
+				if(document.getElementById(params[i]).value==="jpg") {
+					sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
+				} 
+			}
+			
+			//Check and see if the user is using the default naming scheme or not
+			if(document.getElementById("default_naming_scheme_toggle").checked) {
+				sendToServer += "-o=IMGP_%C"; 
+			} else {
+				sendToServer += "-o=" + document.getElementById("output");
+			}
+			
+			communicate_with_server("POST", url+'start_sequence/'+sendToServer, function() { switch_modes('running_camera'); });				
+				
 		}
+			
+
 
 		window.onload = function() {
 			communicate_with_server("GET", url+'views/monitor/', function(xmlHttp) {
