@@ -90,9 +90,10 @@
 			
 			for(var i = 0; i < params.length; i++) {
 
-			
 				if(document.getElementById(params[i]).type === "checkbox") {
-					sendToServer += document.getElementById(params[i]).name + "&";
+					if(document.getElementById(params[i]).checked) {
+						sendToServer += document.getElementById(params[i]).name + "&";
+					}
 				} else {
 					sendToServer += document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 				}
