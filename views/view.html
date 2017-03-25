@@ -134,8 +134,8 @@
 				
 				//Check and see if the user has set a timelapse window, and append it if so
 				if(document.getElementById("timelapse_window").checked) {
-					sendToServer += "start-time=" + document.getElementById("timelapse_start_hours").value + ":" + document.getElementById("timelapse_start_minutes") + "&";
-					sendToServer += "end-time=" + document.getElementById("timelapse_end_hours").value + ":" + document.getElementById("timelapse_end_minutes") + "&";
+					sendToServer += "start-time=" + document.getElementById("timelapse_start_hours").value + ":" + document.getElementById("timelapse_start_minutes").value + "&";
+					sendToServer += "end-time=" + document.getElementById("timelapse_end_hours").value + ":" + document.getElementById("timelapse_end_minutes").value + "&";
 				}
 			}
 			
