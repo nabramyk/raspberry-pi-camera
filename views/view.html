@@ -116,7 +116,8 @@
 				if(document.getElementById("session_title").value==="") {
 					alert("Need an output session name");
 					return;
-				}	
+				}
+				sendToServer += "session_title=" + document.getElementById("session_title").value + "&";
 				
 				//If the user has requested that the images are automatically saved into
 				//individual file folders....
