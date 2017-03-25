@@ -34,7 +34,7 @@ NO_PREVIEW = "-n"
 def camera_grab(cr, parameters):
 
 	cr.value = True
-	global timelapse_running, image_subdirectory
+	global timelapse_running, image_subdirectory, camera_counter
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
