@@ -13,27 +13,32 @@ except ImportError:
 HTTP_PORT = 8080
 
 camera_running = Value(ctypes.c_bool, False)
+
 timelapse_running = False
 timelapse_interval = 0
 timelapse_time_unit = ''
+timelapse_image_limit = 0
+timelapse_start_time = ''
+timelapse_end_time = ''
 
-auto_image_naming_default = "IMG"
+camera_counter = 1
 
-image_directory = "../images"
+image_directory = "../images/"
+image_subdirectory = ""
 output_format = ""
+output_filename = ""
 
 NO_PREVIEW = "-n"
 
 #Functionality for camera handling
 def camera_grab(cr, parameters):
 
-	print(parameters)
-
 	cr.value = True
 	global timelapse_running
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
+	output_filename
 	for p in temp:
 		t = p.split('=')
 		for t2 in t:
@@ -46,9 +51,19 @@ def camera_grab(cr, parameters):
 			elif t2=='time-unit':
 				timelapse_time_unit = t[1]
 				break
+			elif t2=='limit':
+				timelapse_image_limit = int(t[1])
+				break
+			elif t2=='start-time':
+				timelapse_start_time = t[1]
+				break
+			elif t2=='end-time':
+				timelapse_end_time = t[1]
 			elif t2=='-o':
-				params.append(t2)
-				params.append(image_directory + '/' + t[1] + '.')
+				output_filename = t[1]
+				break
+			elif t2=="subfolder":
+				image_subdirectory = t[1]
 				break
 			elif t2=='--encoding':
 				params.append(t2)
@@ -60,6 +75,8 @@ def camera_grab(cr, parameters):
 			else:
 				params.append(t2)
 	
+	params.append('-o')
+	
 	if timelapse_running=="true":
 		#Convert the interval from seconds to the requested time unit
 		if timelapse_time_unit=='minutes':
@@ -67,13 +84,18 @@ def camera_grab(cr, parameters):
 		elif timelapse_time_unit=='hours':
 			timelapse_interval = timelapse_interval * 60 * 60
 		while cr.value:
+			temp = parse_time_replacement_characters(image_subdirectory) + "/"
+			if temp!="":
+				if not os.path.exists(image_directory + temp):
+					os.mkdir(image_directory + temp)
+			params.append(image_directory + temp + parse_time_replacement_characters(output_filename) + '.' + output_format)
 			#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
 			time.sleep(int(timelapse_interval))
-			print("timelapse");
+			print(params);
 	else:
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
@@ -89,6 +111,12 @@ def convert_bytes(b):
 	i = math.floor(math.log10(b) / math.log10(1024))
 	return str(round(b / math.pow(1024, i), 2)) + ' ' + sizes[i]
 
+def parse_time_replacement_characters(s):
+	while(s.find('%C')!=-1):
+		i = s.find('%C')
+		s = s[:i] + camera_counter + s[i+2:]
+		camera_counter++
+	return time.strftime(s)
 
 #This is the local server
 class myHandler(BaseHTTPRequestHandler):
