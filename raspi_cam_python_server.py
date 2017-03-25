@@ -34,7 +34,7 @@ NO_PREVIEW = "-n"
 def camera_grab(cr, parameters):
 
 	cr.value = True
-	global timelapse_running, image_subdirectory, camera_counter
+	global timelapse_running, image_subdirectory
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
@@ -112,6 +112,7 @@ def convert_bytes(b):
 	return str(round(b / math.pow(1024, i), 2)) + ' ' + sizes[i]
 
 def parse_time_replacement_characters(s):
+	global camera_counter
 	while(s.find('%C')!=-1):
 		i = s.find('%C')
 		s = s[:i] + camera_counter + s[i+2:]
