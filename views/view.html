@@ -96,46 +96,46 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
-				alert(params[i]);
-
-				//Check and see if the user selected timelapse mode, and compile
-				//all of the timelapse option if so
-				if(document.getElementById("timelapse_enabled").checked) {
-					
-					sendToServer += "timelapse=true&";
-					sendToServer += "interval=" + document.getElementById("timelapse_interval").value + "&";
-					sendToServer += "time-unit=" + document.getElementById("timelapse_time_unit").value + "&";
-					
-					//Check to see if the user has supplied a session name
-					if(document.getElementById("session_title").value==="") {
-						alert("Need an output session name");
-						return;
-					}	
-					
-					//If the user has requested that the images are automatically saved into
-					//individual file folders....
-					if(document.getElementById("subfolder_checkbox").checked) {
-						//Add the subfolder naming to the parameters string
-						sendToServer += "subfolder="+document.getElementbyId("subfolder_naming").value + "&"; 
-					}
-					
-					//Check and see if the user has set an image limit, and append it if so
-					if(document.getElementById("timelapse_image_limit_toggle").checked) {
-						sendToServer += "limit=" + document.getElementById("timelapse_image_limit").value + "&";
-					}
-					
-					//Check and see if the user has set a timelapse window, and append it if so
-					if(document.getElementById("timelapse_window").checked) {
-						sendToServer += "start-time=" + document.getElementById("timelapse_start_hours").value + ":" + document.getElementById("timelapse_start_minutes") + "&";
-						sendToServer += "end-time=" + document.getElementById("timelapse_end_hours").value + ":" + document.getElementById("timelapse_end_minutes") + "&";
-					}
-				} 
+				alert(params[i]); 
 
 				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 			
 				if(document.getElementById(params[i]).value==="jpg") {
 					sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
 				} 
+			}
+			
+			//Check and see if the user selected timelapse mode, and compile
+			//all of the timelapse option if so
+			if(document.getElementById("timelapse_enabled").checked) {
+				
+				sendToServer += "timelapse=true&";
+				sendToServer += "interval=" + document.getElementById("timelapse_interval").value + "&";
+				sendToServer += "time-unit=" + document.getElementById("timelapse_time_unit").value + "&";
+				
+				//Check to see if the user has supplied a session name
+				if(document.getElementById("session_title").value==="") {
+					alert("Need an output session name");
+					return;
+				}	
+				
+				//If the user has requested that the images are automatically saved into
+				//individual file folders....
+				if(document.getElementById("subfolder_checkbox").checked) {
+					//Add the subfolder naming to the parameters string
+					sendToServer += "subfolder="+document.getElementbyId("subfolder_naming").value + "&"; 
+				}
+				
+				//Check and see if the user has set an image limit, and append it if so
+				if(document.getElementById("timelapse_image_limit_toggle").checked) {
+					sendToServer += "limit=" + document.getElementById("timelapse_image_limit").value + "&";
+				}
+				
+				//Check and see if the user has set a timelapse window, and append it if so
+				if(document.getElementById("timelapse_window").checked) {
+					sendToServer += "start-time=" + document.getElementById("timelapse_start_hours").value + ":" + document.getElementById("timelapse_start_minutes") + "&";
+					sendToServer += "end-time=" + document.getElementById("timelapse_end_hours").value + ":" + document.getElementById("timelapse_end_minutes") + "&";
+				}
 			}
 			
 			//Check and see if the user is using the default naming scheme or not
