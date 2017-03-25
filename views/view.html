@@ -30,8 +30,7 @@
 						"rotation",
 						"vflip",
 						"hflip",
-						"raw",
-						"timelapse_enabled"];
+						"raw"];
 					
 		//Array with object names relating to options to YUV images
 		var yuv = [	"aspect_width",
@@ -98,6 +97,8 @@
 					sendToServer += document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 				}
 				
+				//If the user has selected to use jpg encoding, then append the quality setting
+				//(this only applies to the jpg encoding)
 				if(document.getElementById(params[i]).value==="jpg") {
 					sendToServer += "--quality=" + document.getElementById("quality").value + "&";
 				} 
