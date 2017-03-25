@@ -113,7 +113,7 @@ th, td {
 }
 
 #shutter_button:disabled {
-	width: 555px;
+	width: 400px;
 	height: 200px;
 	font-size: 24px;
 	color: white;
