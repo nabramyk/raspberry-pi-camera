@@ -25,6 +25,7 @@ camera_counter = 1
 
 image_directory = "../images/"
 image_subdirectory = ""
+output_session_name = ""
 output_format = ""
 output_filename = ""
 
@@ -34,7 +35,7 @@ NO_PREVIEW = "-n"
 def camera_grab(cr, parameters):
 
 	cr.value = True
-	global timelapse_running, image_subdirectory
+	global timelapse_running, image_subdirectory, output_session_name
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
@@ -58,6 +59,10 @@ def camera_grab(cr, parameters):
 				break
 			elif t2=='end-time':
 				timelapse_end_time = t[1]
+				break
+			elif t2=='session_title':
+				output_session_name = parse_time_replacement_characters(t[1])
+				break
 			elif t2=='-o':
 				output_filename = t[1]
 				break
@@ -94,7 +99,7 @@ def camera_grab(cr, parameters):
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
 			time.sleep(int(timelapse_interval))
-			print(params + [image_directory + temp + parse_time_replacement_characters(output_filename) + '.' + output_format]);
+			print(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format]);
 	else:
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
