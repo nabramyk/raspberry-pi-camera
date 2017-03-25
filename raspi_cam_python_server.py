@@ -88,7 +88,7 @@ def camera_grab(cr, parameters):
 				temp = parse_time_replacement_characters(image_subdirectory) + "/"
 				if not os.path.exists(image_directory + temp):
 					os.mkdir(image_directory + temp)
-			#output = subprocess.Popen(parameters, stdout=subprocess.PIPE)
+			#output = subprocess.Popen(params + [image_directory + temp + parse_time_replacement_characters(output_filename) + '.' + output_format], stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
