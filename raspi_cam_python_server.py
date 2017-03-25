@@ -38,7 +38,6 @@ def camera_grab(cr, parameters):
 	p = urllib.parse.urlparse(parameters)
 	temp = p.query.split('&')
 	params = []
-	output_filename
 	for p in temp:
 		t = p.split('=')
 		for t2 in t:
