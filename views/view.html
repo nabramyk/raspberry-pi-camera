@@ -92,6 +92,10 @@
 
 				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 			
+				if(document.getElementById(params[i]).checked) {
+					alert(params[i]);
+				}
+				
 				if(document.getElementById(params[i]).value==="jpg") {
 					sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
 				} 
