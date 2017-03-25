@@ -79,12 +79,6 @@
 			
 			var params = [];
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
-			
-			//Check to see that the user has supplied an output name
-			if(document.getElementById("output").value==="") {
-				alert("Need an output file name");
-				return;
-			}
 
 			if(document.getElementById("camera_mode").value==="raspistill") {
 				params = still;
@@ -141,7 +135,12 @@
 			if(document.getElementById("default_naming_scheme_toggle").checked) {
 				sendToServer += "-o=IMGP_%C"; 
 			} else {
-				sendToServer += "-o=" + document.getElementById("output");
+				//Check to see that the user has supplied an output name
+				if(document.getElementById("output").value==="") {
+					alert("Need an output file name");
+					return;
+				}
+				sendToServer += "-o=" + document.getElementById("output").value;
 			}
 			
 			communicate_with_server("POST", url+'start_sequence/'+sendToServer, function() { switch_modes('running_camera'); });				
