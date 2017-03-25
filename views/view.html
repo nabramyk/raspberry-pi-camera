@@ -108,8 +108,6 @@
 			//all of the timelapse option if so
 			if(document.getElementById("timelapse_enabled").checked) {
 				
-				alert("here");
-				
 				sendToServer += "timelapse=true&";
 				sendToServer += "interval=" + document.getElementById("timelapse_interval").value + "&";
 				sendToServer += "time-unit=" + document.getElementById("timelapse_time_unit").value + "&";
@@ -124,12 +122,13 @@
 				//individual file folders....
 				if(document.getElementById("subfolder_checkbox").checked) {
 					//Add the subfolder naming to the parameters string
-					sendToServer += "subfolder="+document.getElementbyId("subfolder_naming").value + "&"; 
+					sendToServer += "subfolder=" + document.getElementbyId("subfolder_naming").value + "&"; 
 				}
 				
 				//Check and see if the user has set an image limit, and append it if so
 				if(document.getElementById("timelapse_image_limit_toggle").checked) {
 					sendToServer += "limit=" + document.getElementById("timelapse_image_limit").value + "&";
+					alert("here");
 				}
 				
 				//Check and see if the user has set a timelapse window, and append it if so
