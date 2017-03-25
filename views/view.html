@@ -90,14 +90,15 @@
 			
 			for(var i = 0; i < params.length; i++) {
 
-				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 			
 				if(document.getElementById(params[i]).checked) {
-					alert(params[i]);
+					sendToServer += document.getElementById(params[i]).name + "&";
+				} else {
+					sendToServer += document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 				}
 				
 				if(document.getElementById(params[i]).value==="jpg") {
-					sendToServer = sendToServer + "--quality=" + document.getElementById("quality").value + "&";
+					sendToServer += "--quality=" + document.getElementById("quality").value + "&";
 				} 
 			}
 			
