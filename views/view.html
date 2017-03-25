@@ -122,7 +122,7 @@
 				//individual file folders....
 				if(document.getElementById("subfolder_checkbox").checked) {
 					//Add the subfolder naming to the parameters string
-					sendToServer += "subfolder=" + document.getElementbyId("subfolder_naming").value + "&"; 
+					sendToServer += "subfolder=" + document.getElementById("subfolder_naming").value + "&"; 
 				}
 				
 				//Check and see if the user has set an image limit, and append it if so
