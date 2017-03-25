@@ -36,7 +36,7 @@ def camera_grab(cr, parameters):
 		t = p.split('=')
 		for t2 in t:
 			if t2=='timelapse':
-				timelapse_running = True
+				timelapse_running = "true"
 				break
 			elif t2=='interval':
 				timelapse_interval = int(t[1])
