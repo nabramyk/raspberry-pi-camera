@@ -115,7 +115,7 @@ def parse_time_replacement_characters(s):
 	while(s.find('%C')!=-1):
 		i = s.find('%C')
 		s = s[:i] + camera_counter + s[i+2:]
-		camera_counter++
+		camera_counter += 1
 	return time.strftime(s)
 
 #This is the local server
