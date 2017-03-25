@@ -27,6 +27,8 @@ NO_PREVIEW = "-n"
 #Functionality for camera handling
 def camera_grab(cr, parameters):
 
+	print(parameters)
+
 	cr.value = True
 	global timelapse_running
 	p = urllib.parse.urlparse(parameters)
@@ -57,8 +59,6 @@ def camera_grab(cr, parameters):
 				break
 			else:
 				params.append(t2)
-		
-	print(params)
 	
 	if timelapse_running=="true":
 		#Convert the interval from seconds to the requested time unit
