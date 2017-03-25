@@ -96,7 +96,6 @@
 			}
 			
 			for(var i = 0; i < params.length; i++) {
-				alert(params[i]); 
 
 				sendToServer = sendToServer + document.getElementById(params[i]).name + "=" + document.getElementById(params[i]).value + "&";
 			
@@ -108,6 +107,8 @@
 			//Check and see if the user selected timelapse mode, and compile
 			//all of the timelapse option if so
 			if(document.getElementById("timelapse_enabled").checked) {
+				
+				alert("here");
 				
 				sendToServer += "timelapse=true&";
 				sendToServer += "interval=" + document.getElementById("timelapse_interval").value + "&";
