@@ -61,7 +61,7 @@ def camera_grab(cr, parameters):
 				timelapse_end_time = t[1]
 				break
 			elif t2=='session_title':
-				output_session_name = parse_time_replacement_characters(t[1])
+				output_session_name = parse_time_replacement_characters(t[1]) + '/'
 				break
 			elif t2=='-o':
 				output_filename = t[1]
