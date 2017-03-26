@@ -104,6 +104,10 @@
 				} 
 			}
 			
+			if(document.getElementById("uv_mode").checked) {
+				sendToServer += "--colfx=" + document.getElementById("u_channel").value + ":" + document.getElementById("y_channel").value + "&";
+			}
+			
 			//Check and see if the user selected timelapse mode, and compile
 			//all of the timelapse option if so
 			if(document.getElementById("timelapse_enabled").checked) {
