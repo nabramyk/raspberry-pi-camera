@@ -97,13 +97,12 @@ def camera_grab(cr, parameters):
 				temp = parse_time_replacement_characters(image_subdirectory) + "/"
 				if not os.path.exists(image_directory + output_session_name + "/" + temp):
 					os.mkdir(image_directory + output_session_name + "/" + temp)
-			#output = subprocess.Popen(params + [image_directory + temp + parse_time_replacement_characters(output_filename) + '.' + output_format], stdout=subprocess.PIPE)
+			#output = subprocess.Popen(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format], stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
 			time.sleep(int(timelapse_interval))
-			print(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format]);
 	else:
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
