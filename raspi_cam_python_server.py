@@ -88,11 +88,15 @@ def camera_grab(cr, parameters):
 		elif timelapse_time_unit=='hours':
 			timelapse_interval = timelapse_interval * 60 * 60
 		while cr.value:
+			
+			if not os.path.exists(image_directory + output_session_name):
+				os.mkdir(image_directory + output_session_name)
+				
 			temp = ""
 			if image_subdirectory!="":
 				temp = parse_time_replacement_characters(image_subdirectory) + "/"
-				if not os.path.exists(image_directory + temp):
-					os.mkdir(image_directory + temp)
+				if not os.path.exists(image_directory + output_session_name + "/" + temp):
+					os.mkdir(image_directory + output_session_name + "/" + temp)
 			#output = subprocess.Popen(params + [image_directory + temp + parse_time_replacement_characters(output_filename) + '.' + output_format], stdout=subprocess.PIPE)
 			#i = Image()
 			#i.data = output.communicate()[0]
