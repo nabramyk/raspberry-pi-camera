@@ -107,7 +107,7 @@ def camera_grab(pid, cr, parameters, camera_counter):
 				temp = parse_time_replacement_characters(image_subdirectory) + "/"
 				if not os.path.exists(image_directory + output_session_name + "/" + temp):
 					os.mkdir(image_directory + output_session_name + "/" + temp)
-			subprocess.run(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format])
+			subprocess.Popen(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format])
 						
 			camera_counter += 1
 			time.sleep(int(timelapse_interval))
@@ -115,7 +115,7 @@ def camera_grab(pid, cr, parameters, camera_counter):
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
 		# on a device that is not a raspberry pi
-		output = subprocess.run(params + [image_directory + parse_time_replacement_characters(output_filename) + '.' + output_format])
+		output = subprocess.Popen(params + [image_directory + parse_time_replacement_characters(output_filename) + '.' + output_format])
 
 	cr.value = False
 
