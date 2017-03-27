@@ -83,7 +83,6 @@ def camera_grab(cr, parameters):
 	
 	if timelapse_running=="true":
 		
-		global timelapse_image_limit
 		iterative_counter = 1
 		
 		#Convert the interval from seconds to the requested time unit
