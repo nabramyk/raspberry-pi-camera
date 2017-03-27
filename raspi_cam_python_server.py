@@ -13,7 +13,7 @@ except ImportError:
 HTTP_PORT = 8080
 
 camera_running = Value(ctypes.c_bool, False)
-process = Value(ctypes.c_int, 0)
+pid = Value(ctypes.c_int, 0)
 
 timelapse_running = False
 timelapse_interval = 0
@@ -33,7 +33,7 @@ output_filename = ""
 NO_PREVIEW = "-n"
 
 #Functionality for camera handling
-def camera_grab(cr, parameters, camera_counter):
+def camera_grab(pid, cr, parameters, camera_counter):
 
 	cr.value = True
 	global timelapse_running, image_subdirectory, output_session_name
@@ -247,7 +247,7 @@ class myHandler(BaseHTTPRequestHandler):
 			camera_running.value=False;
 		elif temp.path=="/start_sequence/":
 			print("starting")
-			p = Process(target=camera_grab, args=(process, camera_running, self.path, camera_counter)).start()
+			p = Process(target=camera_grab, args=(pid, camera_running, self.path, camera_counter)).start()
 	
 		self.send_response(200)
 		self.end_headers()
