@@ -107,10 +107,6 @@ def camera_grab(cr, parameters):
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
 			
-			if(timelapse_image_limit != 0) {
-				
-			}
-			
 			camera_counter += 1
 			time.sleep(int(timelapse_interval))
 	else:
