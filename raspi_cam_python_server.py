@@ -13,6 +13,7 @@ except ImportError:
 HTTP_PORT = 8080
 
 camera_running = Value(ctypes.c_bool, False)
+process = Value(int, 0)
 
 timelapse_running = False
 timelapse_interval = 0
@@ -246,7 +247,7 @@ class myHandler(BaseHTTPRequestHandler):
 			camera_running.value=False;
 		elif temp.path=="/start_sequence/":
 			print("starting")
-			p = Process(target=camera_grab, args=(camera_running, self.path, camera_counter)).start()
+			p = Process(target=camera_grab, args=(process, camera_running, self.path, camera_counter)).start()
 	
 		self.send_response(200)
 		self.end_headers()
