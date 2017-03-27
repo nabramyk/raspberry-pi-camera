@@ -32,7 +32,7 @@ output_filename = ""
 NO_PREVIEW = "-n"
 
 #Functionality for camera handling
-def camera_grab(cr, parameters):
+def camera_grab(cr, parameters, camera_counter):
 
 	cr.value = True
 	global timelapse_running, image_subdirectory, output_session_name
@@ -246,7 +246,7 @@ class myHandler(BaseHTTPRequestHandler):
 			camera_running.value=False;
 		elif temp.path=="/start_sequence/":
 			print("starting")
-			p = Process(target=camera_grab, args=(camera_running, self.path)).start()
+			p = Process(target=camera_grab, args=(camera_running, self.path, camera_counter)).start()
 	
 		self.send_response(200)
 		self.end_headers()
