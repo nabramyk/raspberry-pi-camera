@@ -114,7 +114,7 @@ def camera_grab(cr, parameters, camera_counter):
 		# Sends the parameters string to the os and calls the camera function
 		# The next line is commented out for the purposes of testing the program
 		# on a device that is not a raspberry pi
-		output = subprocess.Popen(params, stdout=subprocess.PIPE)
+		output = subprocess.Popen(params + [image_directory + parse_time_replacement_characters(output_filename) + '.' + output_format], stdout=subprocess.PIPE)
 
 	cr.value = False
 
@@ -240,7 +240,6 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 		temp = urllib.parse.urlparse(self.path)
-		print(self.path)
 
 		if temp.path=="/stop_sequence/":
 			print("stopping")
