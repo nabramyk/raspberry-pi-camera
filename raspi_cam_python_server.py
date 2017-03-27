@@ -107,7 +107,7 @@ def camera_grab(pid, cr, parameters, camera_counter):
 				temp = parse_time_replacement_characters(image_subdirectory) + "/"
 				if not os.path.exists(image_directory + output_session_name + "/" + temp):
 					os.mkdir(image_directory + output_session_name + "/" + temp)
-			subprocess.Popen(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format])
+			subprocess.call(params + [image_directory + output_session_name + temp + parse_time_replacement_characters(output_filename) + '.' + output_format])
 						
 			camera_counter += 1
 			time.sleep(int(timelapse_interval))
