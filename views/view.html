@@ -67,8 +67,7 @@
 						"vflip",
 						"hflip",
 						"bitrate",
-						"fps",
-						"intra" ];
+						"fps" ];
 
 		/* Function for compiling the page and sending the options to the server */
 		function take_image() {
@@ -120,7 +119,6 @@
 				
 			} else if(document.getElementById("camera_mode").value==="raspivid") {
 				params = video;
-				
 			} else {
 				params = yuv;
 			}
