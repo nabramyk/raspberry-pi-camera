@@ -82,6 +82,10 @@ def camera_grab(cr, parameters):
 	params.append('-o')
 	
 	if timelapse_running=="true":
+		
+		global timelapse_image_limit
+		iterative_counter = 1
+		
 		#Convert the interval from seconds to the requested time unit
 		if timelapse_time_unit=='minutes':
 			timelapse_interval = timelapse_interval * 60
@@ -102,6 +106,12 @@ def camera_grab(cr, parameters):
 			#i.data = output.communicate()[0]
 			#i.timestamp = time.ctime()
 			#temp = output.communicate()[0]
+			
+			if(timelapse_image_limit != 0) {
+				
+			}
+			
+			camera_counter += 1
 			time.sleep(int(timelapse_interval))
 	else:
 		# Sends the parameters string to the os and calls the camera function
