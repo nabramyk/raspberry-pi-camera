@@ -13,7 +13,7 @@ except ImportError:
 HTTP_PORT = 8080
 
 camera_running = Value(ctypes.c_bool, False)
-process = Value(int, 0)
+process = Value(ctypes.c_int, 0)
 
 timelapse_running = False
 timelapse_interval = 0
