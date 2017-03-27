@@ -43,6 +43,7 @@ def camera_grab(pid, cr, parameters, camera_counter):
 	for p in temp:
 		t = p.split('=')
 		for t2 in t:
+			print(t2)
 			if t2=='timelapse':
 				timelapse_running = t[1]
 				break
