@@ -92,8 +92,6 @@ def camera_grab(cr, parameters):
 			timelapse_interval = timelapse_interval * 60 * 60
 		while cr.value:
 			
-			print(params)
-			
 			if not os.path.exists(image_directory + output_session_name):
 				os.mkdir(image_directory + output_session_name)
 				
@@ -241,6 +239,7 @@ class myHandler(BaseHTTPRequestHandler):
 	
 	def do_POST(self):
 		temp = urllib.parse.urlparse(self.path)
+		print(self.path)
 
 		if temp.path=="/stop_sequence/":
 			print("stopping")
