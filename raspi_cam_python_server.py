@@ -74,6 +74,12 @@ def camera_grab(cr, parameters, camera_counter):
 				params.append(t[1])
 				output_format = t[1]
 				break
+			elif t2=='raspivid':
+				output_format = 'h264'
+				break
+			elif t2=='raspistillyuv':
+				output_format = 'YUV'
+				break
 			elif t2=='':
 				break
 			else:
