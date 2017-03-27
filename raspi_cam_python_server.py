@@ -92,6 +92,8 @@ def camera_grab(cr, parameters):
 			timelapse_interval = timelapse_interval * 60 * 60
 		while cr.value:
 			
+			print(params)
+			
 			if not os.path.exists(image_directory + output_session_name):
 				os.mkdir(image_directory + output_session_name)
 				
