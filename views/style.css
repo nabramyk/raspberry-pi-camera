@@ -67,7 +67,7 @@ th, td {
 	border-color: yellow;
 }
 		
-.additional_camera_options, .camera_modes {
+.additional_camera_options, .camera_modes, .general_buttons {
 	width: auto;
 	background-color: #2952a3;
 	color: white;
