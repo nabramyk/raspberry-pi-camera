@@ -143,6 +143,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 		
 		temp = urllib.parse.urlparse(self.path)
+		print(temp)
 		
 		if self.path=="/":
 			f = open('views/view.html',"rb")
@@ -150,6 +151,20 @@ class myHandler(BaseHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(f.read())
 			f.close()
+		
+		if self.path=="/libs/jquery/jquery-3.2.0.js":
+			f = open('libs/jquery/jquery-3.2.0.js',"rb")
+			self.send_response(200)
+			self.end_headers()
+			self.wfile.write(f.read())
+			f.close()
+		
+		#Implementing mechanic for handling file porting to a different
+		#machine
+		if self.path=="/pull/":
+			self.send_response(200)
+			self.end_headers()
+			
 		
 		if self.path=="/views/monitor/":
 			f = open('views/monitor.html',"rb")
@@ -214,11 +229,12 @@ class myHandler(BaseHTTPRequestHandler):
 							</root>"""
 			
 			# Grabs the temperature of the raspberry pi's cpu
-			# Uncomment this line for use on the raspberry pi
-			output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
-			temperature = output.communicate()[0].decode()
-			temp = temperature[5:7] + '.' + temperature[8]
-			# temp = 'blank'
+			# Uncomment this line for use on the raspberry pi 
+			# output = subprocess.Popen(["/opt/vc/bin/vcgencmd","measure_temp"], stdout=subprocess.PIPE)
+			# temperature = output.communicate()[0].decode()
+			# temp = temperature[5:7] + '.' + temperature[8]
+			
+			temp = 'blank'
 			
 			data = 	{
 					'camera_status':camera_running.value,
