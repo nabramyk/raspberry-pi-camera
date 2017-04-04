@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <head>
+	<script src="http://localhost:8080/libs/jquery/jquery-3.2.0.js"></script>
 	<script>
 
 		//The server IP
 		//Should change this so that the server injects the proper IP
 		//into the page depending on how the call is made to the server
-		var server_url = '192.168.1.21';
+		var server_url = 'localhost';
 		
 		//The port which the server is listening on
 		var server_port = ':8080';
@@ -13,8 +14,7 @@
 		//The above information compiled into a usable url
 		var url = 'http://' + server_url + server_port + '/';
 
-		//Array with object names relating to options for still images
-		var still = [	"aspect_width",
+		var general = [	"aspect_width",
 						"aspect_height",
 						"encoding",
 						"sharpness",
@@ -30,44 +30,13 @@
 						"rotation",
 						"vflip",
 						"hflip",
-						"raw"];
-					
-		//Array with object names relating to options to YUV images
-		var yuv = [	"aspect_width",
-					"aspect_height",
-					"sharpness",
-					"contrast",
-					"brightness",
-					"saturation",
-					"iso",
-					"ev",
-					"exposure",
-					"aws",
-					"imxfx",
-					"metering",
-					"rotation",
-					"hflip",
-					"vflip" ];
+					];
+
+		//Array with object names relating to options for still images
+		var still = [ "raw" ];
 					
 		//Array with object names relating to options for video capture
-		var video = [	"aspect_width",
-						"aspect_height",
-						"vstab",
-						"sharpness",
-						"contrast",
-						"brightness",
-						"saturation",
-						"iso",
-						"ev",
-						"exposure",
-						"aws",
-						"imxfx",
-						"metering",
-						"rotation",
-						"vflip",
-						"hflip",
-						"bitrate",
-						"fps" ];
+		var video = [	"vstab", "bitrate",	"fps" ];
 
 		/* Function for compiling the page and sending the options to the server */
 		function take_image() {
@@ -76,11 +45,11 @@
 			document.getElementById("shutter_button").disabled = true;
 			document.getElementById("shutter_button").innerHTML = "Starting..."
 			
-			var params = [];
+			var params = general;
 			var sendToServer = "?" + document.getElementById("camera_mode").value + "&";
 
 			if(document.getElementById("camera_mode").value==="raspistill") {
-				params = still;
+				params = params.concat(still);
 				
 				//Check and see if the user selected timelapse mode, and compile
 				//all of the timelapse option if so
@@ -117,10 +86,8 @@
 					}
 				}
 				
-			} else if(document.getElementById("camera_mode").value==="raspivid") {
-				params = video;
 			} else {
-				params = yuv;
+				params = params.concat(video);
 			}
 			
 			for(var i = 0; i < params.length; i++) {
@@ -156,15 +123,13 @@
 				sendToServer += "-o=" + document.getElementById("output").value;
 			}
 			
-			communicate_with_server("POST", url+'start_sequence/'+sendToServer, function() { switch_modes('running_camera'); });				
+			$.post(url+'start_sequence/'+sendToServer, function() { switch_modes('running_camera'); });				
 				
 		}
-			
-
 
 		window.onload = function() {
-			communicate_with_server("GET", url+'views/monitor/', function(xmlHttp) {
-					document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+			$.get(url+'views/monitor/', function(data, status) {
+					document.getElementById("selection_pane").innerHTML = data;
 					retrieve();
 			});
 		}
@@ -179,7 +144,6 @@
 		}
 		
 	//Arrays of object names which will be invisible depending on the camera mode
-	var yuv_options = ["tags_pane","bayer_data_pane","encoding_pane","quality_pane","vid_stab_pane","bitrate_pane","framerate_pane","timeout_pane"];
 	var still_options = ["vid_stab_pane","framerate_pane","bitrate_pane","timeout_pane"];
 	var video_options = ["tags_pane","bayer_data_pane","timelapse_pane","quality_pane","encoding_pane"];
 	
@@ -200,12 +164,9 @@
 		if(mode==="raspistill") {
 			options = still_options;
 			document.getElementById("shutter_button").innerHTML = "Take Image";
-		} else if(mode==="raspivid") {
+		} else {
 			options = video_options;
 			document.getElementById("shutter_button").innerHTML = "Record Video";
-		} else if(mode==="raspiyuv") {
-			options = yuv_options;
-			document.getElementById("shutter_button").innerHTML = "Record Image";
 		}
 		var temp = document.querySelectorAll(".additional_camera_options");
 		for(var i=0; i<temp.length; i++) {
@@ -264,7 +225,7 @@
 		}
 		
 		function toggle_timelapse_window(checked) {
-			document.getElementById("timelapse_start_hours").disabled = !checked;
+			$("#timelapse_start_hours").prop("disabled",!checked);
 			document.getElementById("timelapse_start_minutes").disabled = !checked;
 			document.getElementById("timelapse_start_period").disabled = !checked;
 			document.getElementById("timelapse_end_hours").disabled = !checked;
@@ -306,8 +267,8 @@
 		
 		
 		function retrieve() {
-			communicate_with_server("GET", url+'monitor/', function(xmlHttp) {
-				var p = xmlHttp.responseXML;
+			$.get(url+'monitor/', function(data, status) {
+				var p = data;
 				for (var i = 0; i < monitor_data_points.length; i++) {
 					document.getElementById(monitor_data_points[i]).innerHTML = p.getElementsByTagName(monitor_data_points[i])[0].childNodes[0].nodeValue;
 				}
@@ -316,8 +277,8 @@
 		}
 	
 		function switch_modes(mode) {
-			communicate_with_server("GET", url+'views/'+mode+'/', function(xmlHttp) {
-				document.getElementById("selection_pane").innerHTML = xmlHttp.responseText;
+			$.get(url+'views/'+mode+'/', function(data, status) {
+				document.getElementById("selection_pane").innerHTML = data;
 			});
 			
 			var params = document.getElementsByClassName("navigation_button");
@@ -360,7 +321,7 @@
 			xmlHttp.send(null);
 		}
 	</script>
-	<link rel="stylesheet" type="text/css" href="http://192.168.1.21:8080/views/style.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:8080/views/style.css">
 </head>
 	<body>
 		<div id="main_panel">
